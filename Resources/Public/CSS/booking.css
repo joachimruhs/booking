@@ -24,12 +24,40 @@
 .tx-booking div.multiRow {
 }
 
-.tx-myseminars .legend  div.partialDay  {
+/* multiRowCalendar legend*/
+.tx-booking .legend {
+	margin: 20px 0px;
+	
+}
+.tx-booking .legend .item {
+		position: relative;
+		margin: 20px;
+		float: left;
+}
+
+.tx-booking .legend div.day {
+	font-weight: bold;
+	line-height: 26px;
+	vertical-align: middle;
+}
+
+
+.tx-booking .legend  div.day  {
+	display: table-cell;
+	width: 29px;
+	height: 29px;
+	vertical-align: middle;
+	text-align: center;
+}
+.tx-booking .legend  div.partialDay  {
 	background-image: url('../Icons/partialBooked.png');
 	background-size: 32px 40px;
 }
 .tx-booking .legend  div.bookedDay  {
 	background-color: #FF9933;
+}
+.tx-booking .legend  div.vacantDay  {
+	background-color: #FFF;
 }
 
 

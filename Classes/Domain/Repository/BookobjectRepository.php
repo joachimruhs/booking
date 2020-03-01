@@ -61,7 +61,7 @@ class BookobjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				)
 			)
 		);
-		$result =  $queryBuilder->execute()->fetchAll();
+		$result =  $queryBuilder->orderBy('sorting')->execute()->fetchAll();
 		return $result;		
 	}
 

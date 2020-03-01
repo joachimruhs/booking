@@ -195,6 +195,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		if ($requestArguments['calendar'] === 'week') {	
 			$out = $this->showWeek();
 		}
+		if ($requestArguments['calendar'] === 'form') {	
+			$out = $this->showBookingForm();
+		}
 	
 //print_r ($requestArguments);
 //exit;
@@ -271,7 +274,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $mon = ($m < 10) ? '0'. $m : $m ;
 
                 if ( $conf['displayMode'] == 'monthMultiRow' ) {
-                    if ($column-1 % $conf['calendarColumns'] == 0)
+//                    if ($column-1 % $conf['calendarColumns'] == 0)
 
                         $out.= '<tr>';
                         $out .= '<td class="monthMultiRow"><table class="tableMultiRow">
@@ -402,7 +405,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 					// booked
 					if ( ($booked == 2 && !$start && !$end)  ) {
-                        $out .= '<td class="bookedWeekend vacantWeekend' . '" '. $title .'>' . '<div>'.$d .'</div></td>';
+                        $out .= '<td class="bookedWeekend vacantWeekend' . '" '. $title .'>' . '<div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
                     }
 					// booked && start
                     if ( ($booked == 2 && $start && !$end && !$startAndEnd)  ) {
@@ -417,10 +420,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// partialDay
                     if ( ($booked == 3 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="partialDay holiday day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</div></td>';
+	                        $out .= '<td class="partialDay holiday day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
 							
-	                        $out .= '<td class="partialDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</div></td>';
+	                        $out .= '<td class="partialDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -433,9 +436,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 */
 					if ( $booked == 0){
 						if ($title) {
-							$out .= '<td class="vacantWeekend holiday' . '"' . $title . '><div>' . $d . '</div></td>';
+							$out .= '<td class="vacantWeekend holiday' . '"' . $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-							$out .= '<td class="vacantWeekend"><div>' . $d . '</div></td>';
+							$out .= '<td class="vacantWeekend"><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
 					}
 /*  
@@ -452,9 +455,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// requested
                     if ( ($booked == 1 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</div></td>';
+	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</div></td>';
+	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -481,9 +484,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// partialfDay
                     if ( ($booked == 3 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</div></td>';
+	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</div></td>';
+	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -530,9 +533,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					//booked
                      if ( ($booked == 2 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="bookedDay holiday' . '" '.$title . '><div>' . $d . '</div></td>';
+	                        $out .= '<td class="bookedDay holiday' . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="bookedDay' . '" '.$title . '><div>' . $d . '</div></td>';
+	                        $out .= '<td class="bookedDay' . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -601,8 +604,13 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * 
      * @return void
      */
-    public function showBookingFormAction()
+    public function showBookingForm()
     {
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+print_r($requestArguments);
+		echo 'in show bookingForm';
+		
+		
     }
 
     /**

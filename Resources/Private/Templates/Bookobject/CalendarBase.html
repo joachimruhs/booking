@@ -16,6 +16,24 @@
 </f:comment>
 
 
+<div class="clearer"></div>
+<div class="legend">
+	<div class="item">
+		<div class="day partialDay day1">24</div><div class="legendTitle">teilweise</div>
+	</div>
+	<div class="item">
+		<div class="day bookedDay day1">24</div><div class="legendTitle">belegt</div>
+	</div>
+	<div class="item">
+		<div class="day vacantDay day1">24</div><div class="legendTitle">verfügbar</div>
+	</div>
+</div>
+
+<div class="clearer"></div>
+
+
+
+
 		<div id="ajaxResult"></div>
 
 <script>
@@ -24,8 +42,9 @@
 	var year = <f:format.raw>{year}</f:format.raw>;
 	var month = <f:format.raw>{month}</f:format.raw>;
 	var calendar = "<f:format.raw>{settings.defaultCalendar}</f:format.raw>";
-
-	function getCalendar(m, y) {
+	//var bookingDate = '';
+	
+	function getCalendar(m, y, calendar, bookingDate) {
 		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
@@ -34,32 +53,54 @@
 					year: y,
 					month: m,
 					calendar: calendar,
+					date: bookingDate
 				}
 			};
 
 		$.post(ajaxRequestUrl, requestParameter, function (data) {
 			$('#ajaxResult').html(data);
 
+		$('table.tableMultiRow td div').click(function() {
+			//console.log($(this).children().attr('date'));
+$(this).children().css('border', '3px solid green');			
+console.log($(this).children().attr('date'));
+				var bookingDate = $(this).children().attr('date');
+				getCalendar(month, year, 'form', bookingDate);
+
+
+		});
+
+		
+
 			$('.prevMonth').click(function() {
 				month--;
 				if (month == 0) {
 					month = 12; year--;
 				}
-				getCalendar(month, year);
+				getCalendar(month, year, 'month', '');
 			});
 			$('.nextMonth').click(function() {
 				month++;
 				if (month > 12) {
 					month = 1; year++;
 				}
-				getCalendar(month, year);
+				getCalendar(month, year, 'month', '');
 			});
 
 		});
 	}
 
 	$(function() {
-		getCalendar(<f:format.raw>{month},{year}</f:format.raw>);
+
+		getCalendar(<f:format.raw>{month},{year}</f:format.raw>, 'month');
+
+//console.log($('.tableMultiRow td div').html());
+//$('.monthMultiRow').css('font-size', '30px');
+//		$('.monthMultiRow td div').css('border', '5px solid red !important');
+		$('table.tableMultiRow td.vacantDay div').click(function() {
+			alert(88);
+		});
+
 	});
 
 
