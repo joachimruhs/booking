@@ -236,10 +236,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
-		$bookObjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookObjectRepository');
+		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
-		$bookObjects = $bookObjectRepository->findAllNew($this->conf['storagePid']);			
+		$bookObjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
 
         $lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
