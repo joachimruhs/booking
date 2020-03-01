@@ -23,6 +23,7 @@
 	var id = <f:format.raw>{id}</f:format.raw>;
 	var year = <f:format.raw>{year}</f:format.raw>;
 	var month = <f:format.raw>{month}</f:format.raw>;
+	var calendar = "<f:format.raw>{settings.defaultCalendar}</f:format.raw>";
 
 	function getCalendar(m, y) {
 		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
@@ -32,7 +33,7 @@
 					action : 'ajaxPsr',
 					year: y,
 					month: m,
-					calendar: 'month',
+					calendar: calendar,
 				}
 			};
 

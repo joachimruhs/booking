@@ -27,4 +27,11 @@ plugin.tx_booking {
         # cat=plugin.tx_booking//a; type=string; label=Default storage PID
         storagePid =
     }
+	settings {
+		# customsubcategory=generalOptions=General Options
+
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Default calendar: Default Calender [month|week] 
+		defaultCalendar = month
+
+	}
 }

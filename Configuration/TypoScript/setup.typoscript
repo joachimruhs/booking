@@ -22,6 +22,10 @@ plugin.tx_booking {
     mvc {
         #callDefaultActionIfActionCantBeResolved = 1
     }
+
+	settings {
+		defaultCalendar = {$plugin.tx_booking.settings.defaultCalendar}
+	}	
 }
 
 # these classes are only used in auto-generated templates

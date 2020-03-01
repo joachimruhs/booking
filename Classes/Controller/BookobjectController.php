@@ -196,7 +196,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$out = $this->showWeek();
 		}
 	
-
+//print_r ($requestArguments);
+//exit;
 		echo $out;
 		return $response;
 
@@ -369,7 +370,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					}
 				}
 
-//echo $bookObjects[$o]['hours'];
+				// we have only partial and booked and vacant days
 				$booked = 0;
 				// partial
 				if ($counts && $counts < count(explode(',', $bookObjects[$o]['hours']))) {
@@ -590,8 +591,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * 
      * @return void
      */
-    public function showWeekAction()
+    public function showWeek()
     {
+		echo 'in show week';
     }
 
     /**
