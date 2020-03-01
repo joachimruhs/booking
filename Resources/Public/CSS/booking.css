@@ -1,0 +1,134 @@
+
+
+.tx-booking {
+		border: 2px solid red;
+}
+
+.tx-booking .typo3-messages {
+	list-style: none !important;
+	border-radius: 10px;
+}		
+.tx-booking .typo3-messages li {
+	border-radius: 10px;
+}		
+
+.tx-booking .basket ul {
+		padding-left: 0;
+}
+
+
+.tx-booking .monthMultiRowList th {
+	cursor: pointer;
+}
+
+.tx-booking div.multiRow {
+}
+
+.tx-myseminars .legend  div.partialDay  {
+	background-image: url('../Icons/partialBooked.png');
+	background-size: 32px 40px;
+}
+.tx-booking .legend  div.bookedDay  {
+	background-color: #FF9933;
+}
+
+
+
+.tx-booking table.monthMultiRow td div {
+		width: 32px;
+		height: 40px;
+		font-size: 20px;
+		padding-top: 8px;
+}
+
+.tx-booking table.monthMultiRow {
+	border: 1px solid black;
+	float: left;
+	display: block;
+	height: 410px;
+	background-color: #d0d0d0;
+}
+
+.tx-booking table.monthMultiRow  table {
+	border-spacing: 2px;
+}
+.tx-booking table.monthMultiRow .nextMonth {
+	vertical-align: middle;
+	line-height: 25px;
+	font-size: 25px;
+}
+.tx-booking table.monthMultiRow .prevMonth {
+	line-height: 25px;
+	font-size: 25px;
+}
+
+
+.tx-booking table.monthMultiRow td {
+	font-size: 18px;
+}
+
+.tx-booking table.monthMultiRow .monthNameMultiRow {
+	font-weight: bold;
+	vertical-align: middle;
+}
+.tx-booking .bookObjectName {
+	font-weight: normal !important;
+	text-align: center;
+}
+
+
+.tx-booking .tableMultiRow td.vacantWeekend {
+	text-align: center;
+	background-color: #8080ff;
+}
+
+
+.tx-booking .tableMultiRow td.vacantDay,
+.tx-booking .tableMultiRow td.bookedDay,
+.tx-booking .tableMultiRow td.bookingEnd,
+.tx-booking .tableMultiRow td.bookingStartAndEnd,
+.tx-booking .tableMultiRow td.bookedWeekend {
+	text-align: center;
+	background-color: #fff;
+}
+
+
+
+
+.tx-booking .tableMultiRow td.bookedDay,
+.tx-booking .tableMultiRow td.bookedWeekend {
+	background-color: #FF9933;
+}
+.tx-booking .tableMultiRow td.bookingStart,
+.tx-booking .tableMultiRow td.bookingEnd {
+	background-color: #00e000;
+}
+
+
+
+/* partial booking */
+.tx-booking .tableMultiRow td.partialDay {
+	background-image: url('../Icons/partialBooked.png');
+	background-size: 32px 40px;
+	line-height: 23px;
+	text-align: center;
+}
+/* booked day booking */
+.tx-booking .tableMultiRow td.bookedDay {
+	background-color: #FF9933;
+}
+
+
+
+.tx-booking .tableMultiRow td.bookingEnd {
+	background-color: #fff;
+	background-image:url("/typo3conf/ext/booking/Resources/Public/Icons/bookingEndRed.gif");
+}	
+.tx-booking .tableMultiRow td.bookingStartAndEnd {
+	background-color: #fff;
+	background-image:url("/typo3conf/ext/booking/Resources/Public/Icons/bookerChangedDayRed.gif");
+}	
+
+
+
+

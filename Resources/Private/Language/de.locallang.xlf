@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target="de" datatype="plaintext" original="messages" date="2020-01-15T19:43:59Z" product-name="booking">
+		<header/>
+		<body>
+			<trans-unit id="dayNamesShortMultiRow">
+				<target>Mo,Di,Mi,Do,Fr,Sa,So</target>
+			</trans-unit>
+			<trans-unit id="monthNamesShort">
+				<target>Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember</target>
+			</trans-unit>
+
+
+
+			<!-- messages -->
+
+		</body>
+	</file>
+</xliff>

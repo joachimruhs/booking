@@ -1,0 +1,70 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+	
+	<f:layout name="Default" />
+
+	<f:section name="content">
+		<h1>CalendarBase</h1>
+		<f:flashMessages />
+
+<f:debug>{_all}</f:debug>
+<f:debug>{_all}</f:debug>
+
+<f:comment>
+		<f:link.action action="list">Back to list</f:link.action><br />
+		<f:link.action action="new">New Bookobject</f:link.action>
+</f:comment>
+
+
+		<div id="ajaxResult"></div>
+
+<script>
+	
+	var id = <f:format.raw>{id}</f:format.raw>;
+	var year = <f:format.raw>{year}</f:format.raw>;
+	var month = <f:format.raw>{month}</f:format.raw>;
+
+	function getCalendar(m, y) {
+		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+			requestParameter = {
+				tx_booking_ajax : {
+					controller : 'BookObject',
+					action : 'ajaxPsr',
+					year: y,
+					month: m,
+					calendar: 'month',
+				}
+			};
+
+		$.post(ajaxRequestUrl, requestParameter, function (data) {
+			$('#ajaxResult').html(data);
+
+			$('.prevMonth').click(function() {
+				month--;
+				if (month == 0) {
+					month = 12; year--;
+				}
+				getCalendar(month, year);
+			});
+			$('.nextMonth').click(function() {
+				month++;
+				if (month > 12) {
+					month = 1; year++;
+				}
+				getCalendar(month, year);
+			});
+
+		});
+	}
+
+	$(function() {
+		getCalendar(<f:format.raw>{month},{year}</f:format.raw>);
+	});
+
+
+</script>
+
+
+
+	</f:section>
+</html>

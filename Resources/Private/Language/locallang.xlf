@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking">
+		<header/>
+		<body>
+			<trans-unit id="tx_booking_domain_model_bookobject">
+				<source>Bookobject</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_bookobject.name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_bookobject.hours">
+				<source>Hours</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_book">
+				<source>Book</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_book.objectuid">
+				<source>Objectuid</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_book.startdate">
+				<source>Startdate</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_book.enddate">
+				<source>Enddate</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_book.feuseruid">
+				<source>Feuseruid</source>
+			</trans-unit>
+			<trans-unit id="tx_booking_domain_model_book.memo">
+				<source>Memo</source>
+			</trans-unit>
+
+			<trans-unit id="dayNamesShortMultiRow">
+				<source>M,T,W,T,F,S,S</source>
+			</trans-unit>
+			<trans-unit id="monthNamesShort">
+				<source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,28 @@
+{
+    "name": "wsr/booking",
+    "type": "typo3-cms-extension",
+    "description": "Booking extension for FE users",
+    "authors": [
+        {
+            "name": "Joachim Ruhs",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "WSR\\Booking\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WSR\\Booking\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "wsr/booking": "self.version",
+        "typo3-ter/booking": "self.version"
+    }
+}

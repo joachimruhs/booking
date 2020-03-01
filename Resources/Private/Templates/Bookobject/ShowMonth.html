@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:book="http://typo3.org/ns/WSR/Booking/ViewHelpers"
+	  data-namespace-typo3-fluid="true">
+	
+	<f:layout name="Default" />
+
+	This Template is responsible for displaying a single view for a domain object
+
+	If you modify this template, do not forget to change the overwrite settings
+	in /Configuration/ExtensionBuilder/settings.yaml:
+	  Resources:
+		Private:
+		  Templates:
+			Show.html: keep
+
+	Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+	<f:section name="content">
+		<h1>Month View for Booking Objects</h1>
+		<f:flashMessages />
+
+<f:debug>{_all}</f:debug>
+<f:debug>{_all}</f:debug>
+
+
+<f:for each="{bookObjects}" as="bookObject">
+	<f:format.raw>
+		<div class="multiRow">
+		<book:multiRowCalendar bookObject="{bookObject}" year="{year}" month="{month}" settings="{settings}"></book:multiRowCalendar>
+		</div>
+	</f:format.raw>
+</f:for>
+
+		<f:render partial="Bookobject/Properties" arguments="{bookobject:bookobject}" />
+		<f:link.action action="list">Back to list</f:link.action><br />
+		<f:link.action action="new">New Bookobject</f:link.action>
+	</f:section>
+</html>
