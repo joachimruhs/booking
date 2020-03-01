@@ -60,10 +60,11 @@
 		$.post(ajaxRequestUrl, requestParameter, function (data) {
 			$('#ajaxResult').html(data);
 
-		$('table.tableMultiRow td div').click(function() {
-			//console.log($(this).children().attr('date'));
-$(this).children().css('border', '3px solid green');			
-console.log($(this).children().attr('date'));
+			$('table.tableMultiRow td.vacantDay div, table.tableMultiRow td.bookedDay div,' +
+			  'table.tableMultiRow td.vacantWeekend div, table.tableMultiRow td.partialDay div').click(function() {
+//console.log($(this).children().attr('date'));
+			$(this).children().css('border', '3px solid green');			
+//console.log($(this).children().attr('date'));
 				var bookingDate = $(this).children().attr('date');
 				getCalendar(month, year, 'form', bookingDate);
 
@@ -97,9 +98,9 @@ console.log($(this).children().attr('date'));
 //console.log($('.tableMultiRow td div').html());
 //$('.monthMultiRow').css('font-size', '30px');
 //		$('.monthMultiRow td div').css('border', '5px solid red !important');
-		$('table.tableMultiRow td.vacantDay div').click(function() {
-			alert(88);
-		});
+//		$('table.tableMultiRow td.vacantDay div').click(function() {
+//			alert(88);
+//		});
 
 	});
 

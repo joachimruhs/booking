@@ -608,8 +608,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 print_r($requestArguments);
+		$month = intval($requestArguments['month']);
+		$year = intval($requestArguments['year']);
 		echo 'in show bookingForm';
 		
+		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
+		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
+
+		echo $out;
 		
     }
 
