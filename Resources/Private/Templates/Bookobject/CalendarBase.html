@@ -42,9 +42,10 @@
 	var year = <f:format.raw>{year}</f:format.raw>;
 	var month = <f:format.raw>{month}</f:format.raw>;
 	var calendar = "<f:format.raw>{settings.defaultCalendar}</f:format.raw>";
-	//var bookingDate = '';
+	var bookobjectUid = '';
+//var bookingDate = '';
 	
-	function getCalendar(m, y, calendar, bookingDate) {
+	function getCalendar(m, y, calendar, bookingDate, bookobjectUid) {
 		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
@@ -53,7 +54,8 @@
 					year: y,
 					month: m,
 					calendar: calendar,
-					date: bookingDate
+					date: bookingDate,
+					bookobjectUid: bookobjectUid
 				}
 			};
 
@@ -62,17 +64,20 @@
 
 			$('table.tableMultiRow td.vacantDay div, table.tableMultiRow td.bookedDay div,' +
 			  'table.tableMultiRow td.vacantWeekend div, table.tableMultiRow td.partialDay div').click(function() {
+
 //console.log($(this).children().attr('date'));
-			$(this).children().css('border', '3px solid green');			
-//console.log($(this).children().attr('date'));
+//console.log($(this).children().attr('objectUid'));
+
 				var bookingDate = $(this).children().attr('date');
-				getCalendar(month, year, 'form', bookingDate);
+				var bookobjectUid = $(this).children().attr('objectUid');
+				getCalendar(month, year, 'form', bookingDate, bookobjectUid);
+			});
 
-
-		});
-
-		
-
+			$('.tx-booking table img.deleteBooking').click(function() {
+				var bookUid = $(this).attr('bookuid');
+				deleteBooking(bookUid);
+			});		
+	
 			$('.prevMonth').click(function() {
 				month--;
 				if (month == 0) {
@@ -91,6 +96,30 @@
 		});
 	}
 
+	function deleteBooking(bookUid, bookobjectUid, bookingDate) {
+		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+			requestParameter = {
+				tx_booking_ajax : {
+					controller : 'BookObject',
+					action : 'ajaxPsr',
+					calendar: 'deleteBooking',
+					date: bookingDate,
+					bookobjectUid: bookobjectUid,
+					bookUid: bookUid
+				}
+			};
+
+		$.post(ajaxRequestUrl, requestParameter, function (data) {
+			$('#ajaxResult').html(data);
+			$('.tx-booking table img.deleteBooking').click(function() {
+				var bookUid = $(this).attr('bookuid');
+				deleteBooking(bookUid);
+			});		
+		});
+	}
+
+	
+	
 	$(function() {
 
 		getCalendar(<f:format.raw>{month},{year}</f:format.raw>, 'month');
@@ -108,6 +137,6 @@
 </script>
 
 
-
+	<div class="clearer"></div>
 	</f:section>
 </html>

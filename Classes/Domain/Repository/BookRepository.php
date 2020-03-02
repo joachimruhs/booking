@@ -59,4 +59,86 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$count = $queryBuilder->execute()->fetchColumn(0);
 		return $count;		
 	}
+
+
+	/*
+	 *	get bookings for a date
+	 *
+	 *	@param int $pid
+	 *	@param int $day
+	 *
+	 *	@return array
+	 */	
+	function getBookingsOfDate($pid, $day, $bookobjectUid) {
+		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+		$queryBuilder->from('tx_booking_domain_model_book', 'a');
+		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
+
+		$queryBuilder->join(
+			'a',
+			'fe_users',
+			'users',
+			 $queryBuilder->expr()->eq('users.uid', $queryBuilder->quoteIdentifier('a.feuseruid'))
+		)
+		->where(
+			$queryBuilder->expr()->eq(
+				'a.pid',
+				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+			)
+		)			
+		->andWhere($queryBuilder->expr()->andX(
+			$queryBuilder->expr()->eq(
+				'objectuid', $queryBuilder->createNamedParameter($bookobjectUid, \PDO::PARAM_INT)
+			),
+			$queryBuilder->expr()->gte(
+				'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
+			),
+			$queryBuilder->expr()->lte(
+				'enddate', $queryBuilder->createNamedParameter(($day + 86400), \PDO::PARAM_INT)
+			)
+			
+		)
+		);
+
+
+
+		$result = $queryBuilder->execute()->fetchAll();
+//print_r($result);		
+		return $result;
+
+	}
+
+	/*
+	 *	delete a booking
+	 *
+	 *	@param int $bookUid
+	 *	@param int $feUserUid
+	 *
+	 *	@return array
+	 */	
+	function deleteBooking($bookUid, $feUserUid) {
+		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+//		$queryBuilder->from('tx_booking_domain_model_book');
+		$queryBuilder->update('tx_booking_domain_model_book')
+		->andWhere($queryBuilder->expr()->andX(
+				$queryBuilder->expr()->andX(
+					$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($bookUid, \PDO::PARAM_INT))
+				),
+				$queryBuilder->expr()->andX(
+					$queryBuilder->expr()->eq('feuseruid', $queryBuilder->createNamedParameter($feUserUid, \PDO::PARAM_INT))
+				)
+			)
+		)
+		->set('hidden', 1)
+		->execute();
+
+//echo $bookUid;
+//echo $queryBuilder->getSql();
+//print_r ($queryBuilder->getParameters());
+		exit;
+	}
+	
+
 }

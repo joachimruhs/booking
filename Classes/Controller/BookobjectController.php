@@ -9,6 +9,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Core\Environment;
 
+use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Utility\RootlineUtility;
+use TYPO3\CMS\Fluid\View\StandaloneView;
+
+
+
 /***
  *
  * This file is part of the "Booking" Extension for TYPO3 CMS.
@@ -58,6 +64,24 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function injectBookRepository(\WSR\Booking\Domain\Repository\BookRepository $bookRepository) {
         $this->bookRepository = $bookRepository;
+    }
+
+
+	/**
+	 * usersRepository
+	 * 
+	 * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+ 	 */
+	protected $feUsersRepository = NULL;
+
+    /**
+     * Inject a userRepository to enable DI
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUsersRepository
+     * @return void
+     */
+    public function injectFeUsersRepository(\TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUsersRepository) {
+        $this->feUsersRepository = $feUsersRepository;
     }
 
 
@@ -132,6 +156,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function calendarBaseAction()
     {
 		$bookObjects = $this->bookobjectRepository->findAll();
+
+//krexx ($GLOBALS['TSFE']->fe_user->user['uid']);
+//exit;
+
 		$this->view->assign('id', $GLOBALS['TSFE']->id);
 		$this->view->assign('settings', $this->settings);
 		$this->view->assign('month', date('m', time()));
@@ -199,8 +227,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$out = $this->showBookingForm();
 		}
 	
-//print_r ($requestArguments);
-//exit;
+		if ($requestArguments['calendar'] === 'deleteBooking') {	
+			$out = $this->deleteBooking();
+		}
+
 		echo $out;
 		return $response;
 
@@ -268,6 +298,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		
 		// loop over the bookingObjects
 		for ($o = 0; $o < count($bookObjects); $o++) {
+			$bookobjectUid = $bookObjects[$o]['uid'];
 			$m = $month;
 			$out .= '<table class="monthMultiRow">';
                 // adding leading zero
@@ -343,7 +374,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$end = 0;
 				$startAndEnd = 0;
 				
-				
+/*				
 				if (is_array($arrivals)) {
 					for ($i = 0; $i < count($arrivals); $i++) {
 						if (mktime(0,0,0,$mon,$day,$theYear) >= $arrivals[$i] &&
@@ -372,7 +403,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	
 					}
 				}
-
+*/
 				// we have only partial and booked and vacant days
 				$booked = 0;
 				// partial
@@ -405,7 +436,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 					// booked
 					if ( ($booked == 2 && !$start && !$end)  ) {
-                        $out .= '<td class="bookedWeekend vacantWeekend' . '" '. $title .'>' . '<div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+                        $out .= '<td class="bookedWeekend vacantWeekend' . '" '. $title .'>' . '<div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
                     }
 					// booked && start
                     if ( ($booked == 2 && $start && !$end && !$startAndEnd)  ) {
@@ -420,10 +451,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// partialDay
                     if ( ($booked == 3 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="partialDay holiday day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay holiday day' . $wd . '" '. $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
 							
-	                        $out .= '<td class="partialDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay day' . $wd . '" '. $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -436,9 +467,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 */
 					if ( $booked == 0){
 						if ($title) {
-							$out .= '<td class="vacantWeekend holiday' . '"' . $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+							$out .= '<td class="vacantWeekend holiday' . '"' . $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-							$out .= '<td class="vacantWeekend"><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+							$out .= '<td class="vacantWeekend"><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
 					}
 /*  
@@ -455,9 +486,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// requested
                     if ( ($booked == 1 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '" '. $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" '. $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -465,9 +496,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// requested && start
                     if ( ($booked == 1 && $start && !$end && !$startAndEnd) ) {
 						if ($title) {
-	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '" '.$title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" '.$title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
 
                     }
@@ -475,18 +506,18 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// requested && end
                     if ( $booked == 1 && $start == 0 && $end == 1 && !$startAndEnd){
 						if ($title) {
-	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '"' . $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="requestedDay holiday bookedDay day' . $wd . '"' . $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" ><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="requestedDay bookedDay day' . $wd . '" ><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
 					// partialfDay
                     if ( ($booked == 3 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '" '. $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" '. $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" '. $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -494,9 +525,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// partialDay && start
                     if ( ($booked == 3 && $start && !$end && !$startAndEnd) ) {
 						if ($title) {
-	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '" '.$title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" '.$title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
 
                     }
@@ -504,9 +535,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					// partialDay && end
                     if ( $booked == 3 && $start == 0 && $end == 1 && !$startAndEnd){
 						if ($title) {
-	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '"' . $title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay holiday vacantDay day' . $wd . '"' . $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" ><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="partialDay vacantDay day' . $wd . '" ><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -533,17 +564,17 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					//booked
                      if ( ($booked == 2 && !$start &&  !$end) ) {
 						if ($title) {
-	                        $out .= '<td class="bookedDay holiday' . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="bookedDay holiday' . '" '.$title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-	                        $out .= '<td class="bookedDay' . '" '.$title . '><div><span date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
+	                        $out .= '<td class="bookedDay' . '" '.$title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m .'.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
                     if ( $booked == 0) {
 						if ($title) {
-							$out .= '<td class="vacantDay holiday day' . $wd . '"' . $title . '><div><span date="' . $d . '.' . $m . '.' . $year .'">' . $d . '</span></div></td>';
+							$out .= '<td class="vacantDay holiday day' . $wd . '"' . $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m . '.' . $year .'">' . $d . '</span></div></td>';
 						} else {
-							$out .= '<td class="vacantDay day' . $wd . '"' . $title . '><div><span date="' . $d . '.' . $m . '.' . $year .'">' . $d . '</span></div></td>';
+							$out .= '<td class="vacantDay day' . $wd . '"' . $title . '><div><span objectUid="' . $bookobjectUid . '" date="' . $d . '.' . $m . '.' . $year .'">' . $d . '</span></div></td>';
 						}
                     }
 
@@ -596,7 +627,45 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showWeek()
     {
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+
+		$year = intval($requestArguments['year']);
+		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
+		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
+		$month = intval($requestArguments['month']);
+		$theYear = $year;
+
+
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
+		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
+		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
+
+		$bookObjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
+
+
+        $lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+
+        if (!$year)
+		$theYear = date('Y', time());
+
+        // leap year calculating....
+        if ( date("L", mktime(0,0,0,1,1,$theYear)) == 1) {
+            $lengthOfMonth[2] = 29;
+        }
+
+		
+		
+
 		echo 'in show week';
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+print_r($requestArguments);
+		$month = intval($requestArguments['month']);
+		$year = intval($requestArguments['year']);
+		
+		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
+		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
+
+		echo $out;
     }
 
     /**
@@ -606,18 +675,191 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showBookingForm()
     {
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-print_r($requestArguments);
-		$month = intval($requestArguments['month']);
-		$year = intval($requestArguments['year']);
-		echo 'in show bookingForm';
-		
-		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
+		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
+		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
+		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
+
+		if (!$this->deletedData['bookingDate']) { //showBoojingForm called not from deleteBooking
+			$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+//print_r($requestArguments);
+	
+			$year = intval($requestArguments['year']);
+			if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
+			if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
+			$month = intval($requestArguments['month']);
+			$theYear = $year;
+	
+			$lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+	
+			if (!$year)
+			$theYear = date('Y', time());
+	
+			// leap year calculating....
+			if ( date("L", mktime(0,0,0,1,1,$theYear)) == 1) {
+				$lengthOfMonth[2] = 29;
+			}
+	
+			$month = intval($requestArguments['month']);
+			$year = intval($requestArguments['year']);
+	
+			$bookingDate = $requestArguments['date'];
+			list($day, $month, $year) = GeneralUtility::intExplode('.', $bookingDate);
+			
+			if ($day > 31 || $day < 1) $error = 1;
+			if ($month > 12 || $month < 1) $error = 1;
+			if ($year > 2030 || $year < 2020) $error = 1;
+			if ($error) {
+				echo '<div class="typo3-messages error">Fehler in Datumseingabe!</div>';
+				exit;
+			}
+			
+	//		$bookingobjectUid = intval($requestArguments['bookingobjectUid']);
+			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid']));
+			// get bookings of the day
+			$dayTime = strtotime($day . '-' . $month . '-' . $year);
+			$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $requestArguments['bookobjectUid']);
+
+		} else { ///////////////////  we have $data form deleteBooking ////////////////////
+
+			$bookobject	= $this->bookobjectRepository->findByUid(intval($this->deletedData['bookobjectUid']));
+			// the day
+			$day = date('d', $this->deletedData['bookingDate']);
+			$month = date('m', $this->deletedData['bookingDate']);
+			$year = date('Y', $this->deletedData['bookingDate']);
+			$dayTime = mktime(0,0,0,$month,$day,$year);
+			$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobject->getUid());
+		}
+
+print_r($this->deletedData);
+
+		$out .= $this->deletedData['error'];
+		$out .= '<div class="bookingForm">';
+		$out .= '<div class="bookobjectTitle">' . $bookobject->getName() . '</div>';
+		$out .= '<div class="Date">' . $day . '.' . $month . '.' . $year . '</div>';
+
+		$out .= '<table class="bookingTable"><tr>
+			<th>Uhrzeit</th><th>Name</th><th>Memo</th><th>Buchen</th><th>Löschen</th></tr>';
+
+		$hours = $bookobject->getHours();			
+		$hours = GeneralUtility::intExplode(',', $hours);
+		for ($h = 0; $h < count($hours); $h++) {			
+			
+			$out .= '<tr><td>' . $hours[$h] . ':00 - ' . ($hours[$h] + 1) . ':00'  . '</td>';
+
+			$booked = 0;
+			for ($i = 0; $i < count($bookings); $i++) {
+//			$out .= '<tr><td>' . date('H:i', $bookings[$i]['startdate']) . '</td><td>';
+				if ( date('H', $bookings[$i]['startdate']) == $hours[$h]) {
+					$booked = 1;
+					if ($GLOBALS['TSFE']->fe_user->user['uid'] == $bookings[$i]['feuseruid']) {
+						$out .= '<td class="username">' . $bookings[$i]['username'] . '</td>' .
+//								'<td class="firstname">' . $bookings[$i]['first_name'] . '</td>
+//								'<td class="lastname">' . $bookings[$i]['lastname'] . '</td>
+								'<td><textarea disabled="disabled">' . $bookings[$i]['memo'] . '</textarea></td>
+								<td></td><td><img class="deleteBooking" src="typo3conf/ext/booking/Resources/Public/Icons/actions-delete.svg" bookUid="' . $bookings[$i]['uid'] . '" /></td></tr>';
+					} else {
+						$out .= '<td class="username">' . $bookings[$i]['username'] . '</td></td><td><textarea disabled="disabled">' . $bookings[$i]['memo'] . '</textarea></td>
+								<td></td><td></td></tr>';
+						
+					}
+
+				}
+			}
+			if (!$booked) {
+					$out .= '<td></td><td><textarea></textarea></td><td>
+					<img src="typo3conf/ext/booking/Resources/Public/Icons/actions-save.svg"/></td><td></td></tr>';
+			}
+		}
+
+		$out .= '</table>';			
+
+		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 
-		echo $out;
+		$out .= '</div>';
+		return $out;
+
+//		$view = $this->getView();
+//		print_r($view-render());
 		
     }
+
+    /**
+     * delete booking
+     *  
+     * @return void
+     */
+    public function deleteBooking()
+    {
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$bookUid = $requestArguments['bookUid'];
+		
+		$bookobjectUid = $this->bookRepository->findByUid($bookUid)->getObjectuid();
+		$bookobject = $this->bookobjectRepository->findByUid($bookobjectUid);
+		
+		$startdate = $this->bookRepository->findByUid($bookUid)->getStartdate();
+
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+//		$feUserUid++; //for tests
+
+
+		if ($this->bookRepository->findByUid($bookUid)->getFeuseruid() != $feUserUid) {
+			$error = '<div class="error">You are not allowed to delete this booking!</div>';
+		}
+
+//		if (!$error)
+//			$result = $this->bookRepository->deleteBooking($bookUid, $feUserUid);
+
+		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+		return $this->showBookingForm($data);
+	}
+
+
+
+	/**
+	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
+	 */
+	protected function getView() {
+	//    $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+		$templateService = GeneralUtility::makeInstance(TemplateService::class);
+		// get the rootline
+	//    $rootLine = $pageRepository->getRootLine($pageRepository->getDomainStartPage(GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY')));
+		$rootlineUtility = GeneralUtility::makeInstance(RootlineUtility::class, 0);
+	
+		$rootLine = $rootlineUtility->get();
+
+
+	
+
+print_r($this->configuration['view']);
+//exit;
+
+		// initialize template service and generate typoscript configuration
+		$templateService->init();
+		$templateService->runThroughTemplates($rootLine);
+		$templateService->generateConfig();
+	
+		$fluidView = new StandaloneView();
+/*
+		$fluidView->setLayoutRootPaths($templateService->setup['plugin.']['tx_booking.']['view.']['layoutRootPaths.']);
+		$fluidView->setTemplateRootPaths($templateService->setup['plugin.']['tx_booking.']['view.']['templateRootPaths.']);
+		$fluidView->setPartialRootPaths($templateService->setup['plugin.']['tx_booking.']['view.']['partialRootPaths.']);
+*/
+
+		$fluidView->setLayoutRootPaths($this->configuration['view']['layoutRootPaths']);
+		$fluidView->setTemplateRootPaths($this->configuration['view']['templateRootPaths']);
+		$fluidView->setPartialRootPaths($this->configuration['view']['partialRootPaths']);
+		$fluidView->getRequest()->setControllerExtensionName('Booking');
+		$fluidView->setTemplate('index');
+	
+		return $fluidView;
+	}
+
+
+
+
+
+
 
     /**
      * action insertBooking

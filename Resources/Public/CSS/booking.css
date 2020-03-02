@@ -6,11 +6,18 @@
 
 .tx-booking .typo3-messages {
 	list-style: none !important;
-	border-radius: 10px;
+	border-radius: 20px;
 }		
 .tx-booking .typo3-messages li {
 	border-radius: 10px;
+	padding: 20px;
 }		
+.tx-booking .error {
+	padding: 20px;
+	background-color: orange;
+	font-weight: bold;
+	
+}
 
 .tx-booking .basket ul {
 		padding-left: 0;
@@ -157,6 +164,22 @@
 	background-image:url("/typo3conf/ext/booking/Resources/Public/Icons/bookerChangedDayRed.gif");
 }	
 
+/********** booking form **********/
 
+.tx-booking .bookingForm .bookobjectTitle {
+	font-size: 20px;
+	font-weight: bold;
+}
+.tx-booking .bookingForm .date {
+	font-weight: bold;
+}
 
-
+.tx-booking .bookingTable {
+	border-collapse: collapse;
+}
+.tx-booking .bookingTable td {
+	padding: 10px;
+}
+.tx-booking .bookingTable tr:nth-child(2n) {
+	background-color: #e0e0e0;
+}
