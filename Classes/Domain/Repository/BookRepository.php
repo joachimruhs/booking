@@ -128,6 +128,9 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$queryBuilder->insert('tx_booking_domain_model_book')
 		->values([
 			'pid' => $pid,
+			'crdate' => time(),
+			'tstamp' => time(),
+			'cruser_id' => $feUserUid,
 			'feuseruid' => $feUserUid,
 			'objectuid' => $bookobjectUid,
 			'startdate' => $startdate,

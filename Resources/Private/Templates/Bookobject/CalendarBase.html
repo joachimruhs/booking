@@ -7,9 +7,9 @@
 
 		<f:flashMessages />
 
+<f:debug>{_all}</f:debug>
+<f:debug>{_all}</f:debug>
 <f:comment>
-<f:debug>{_all}</f:debug>
-<f:debug>{_all}</f:debug>
 
 		<f:link.action action="list">Back to list</f:link.action><br />
 		<f:link.action action="new">New Bookobject</f:link.action>
@@ -45,6 +45,7 @@
 	var bookobjectUid = '';
 //var bookingDate = '';
 	
+	////////// main ajax function //////////////
 	function getCalendar(m, y, calendar, bookingDate, bookobjectUid) {
 		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
 			requestParameter = {
@@ -101,6 +102,11 @@
 				getCalendar(month, year, 'month', '');
 			});
 
+			
+			// weekView
+			//$('span.booked').prev().css('border', '4px solid green');
+			$('span.booked').parent().css('background-color', 'rgb(253, 141, 22)');
+//			alert($('span.booked').parent().parent().html());
 		});
 	}
 
@@ -168,7 +174,8 @@
 	
 	$(function() {
 
-		getCalendar(<f:format.raw>{month},{year}</f:format.raw>, 'month');
+		getCalendar(<f:format.raw>{month},{year}</f:format.raw>, '{settings.defaultCalendar}');
+//		getCalendar(<f:format.raw>{month},{year}</f:format.raw>, 'week');
 
 //console.log($('.tableMultiRow td div').html());
 //$('.monthMultiRow').css('font-size', '30px');

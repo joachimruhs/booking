@@ -593,20 +593,78 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function showWeek()
     {
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+print_r($requestArguments);
+
 
 		$year = intval($requestArguments['year']);
 		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
 		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
 		$month = intval($requestArguments['month']);
 		$theYear = $year;
-
+		$week = intval($requestArguments['week']);
+		if (!$week) $week = date('W', time());
+		$theWeek = $week;
 
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
 		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
-		$bookObjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
+		$bookobjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
+
+
+		if (!$this->deletedData['bookingDate']) { //showWeek called not from bookingForm
+			$month = intval($requestArguments['month']);
+			$year = intval($requestArguments['year']);
+	
+			$bookingDate = $requestArguments['date'];
+
+			$offset = date('z', time());
+			$offset = 0;
+			$startOfWeek = strtotime($theYear . 'W' . str_pad($theWeek, 2, '0', STR_PAD_LEFT) . ' +' . $offset . 'days'); 
+			$endOfWeek = $startOfWeek + 6 * 86400 + 86399;
+echo '****' . $week . '++++';			
+print_r(date('d.m.Y H:i:s', $startOfWeek));
+echo '****END++++';			
+print_r(date('d.m.Y H:i:s', $endOfWeek));
+
+
+			$bookingDate = date('d.m.Y',time());
+
+			list($day, $month, $year) = GeneralUtility::intExplode('.', $bookingDate);
+			
+			if ($day > 31 || $day < 1) $error = 1;
+			if ($month > 12 || $month < 1) $error = 1;
+			if ($year > 2030 || $year < 2020) $error = 1;
+			if ($error) {
+				echo '<div class="typo3-messages error">Fehler in Datumseingabe!</div>';
+				exit;
+			}
+			
+	//		$bookingobjectUid = intval($requestArguments['bookingobjectUid']);
+			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid']));
+			// get bookings of the day
+			$dayTime = strtotime($day . '-' . $month . '-' . $year);
+			$bookobjectUid = 2;
+
+			for ($wd = 0; $wd < 7; $wd++) {
+
+				$dayTime = $startOfWeek + $wd * 86400;
+				$theDays[] = date('d.m.Y', $dayTime);
+
+				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
+
+			}
+
+		} else { ///////////////////  we have $data form bookingForm ////////////////////
+			// the day
+			$day = date('d', $this->deletedData['bookingDate']);
+			$month = date('m', $this->deletedData['bookingDate']);
+			$year = date('Y', $this->deletedData['bookingDate']);
+			$dayTime = mktime(0,0,0,$month,$day,$year);
+			$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobject->getUid());
+		
+		}
 
         $lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
@@ -630,7 +688,33 @@ print_r($requestArguments);
 		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 
-		echo $out;
+		
+		$view = $this->getView('week');
+		$view->assign('out', $out);
+		
+		$view->assign('message', $this->deletedData['error']);
+		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid']);
+		$view->assign('year', $theYear);
+		$view->assign('week', $theWeek);
+		$view->assign('bookobjects', $bookobjects);
+		$view->assign('weekdays', [0,1,2,3,4,5,6]);
+		
+		$view->assign('days', $theDays);
+		
+		
+		$view->assign('dayTime', $dayTime);
+		$view->assign('bookobject', $bookobject);
+		$view->assign('bookings', $bookings);
+		$view->assign('hours', [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
+		$view->assign('hours', [10,11,12]);
+		$view->assign('disabledHours', $disabledHours);
+
+		$view->assign('now', time());
+
+		print_r($view->render());
+		exit;		
+		
+		
     }
 
     /**
@@ -705,6 +789,7 @@ print_r($requestArguments);
 			else $disabledHours[] = 0;
 		}
 
+/*
 		$out .= $this->deletedData['error'];
 		$out .= '<div class="bookingForm">';
 		$out .= '<div class="bookobjectTitle">' . $bookobject->getName() . '</div>';
@@ -748,9 +833,10 @@ print_r($requestArguments);
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 
 		$out .= '</div>';
+*/		
 /////////////////////////////////////////////////////////
 
-		$view = $this->getView();
+		$view = $this->getView('bookingForm');
 		$view->assign('out', $out);
 		
 		$view->assign('message', $this->deletedData['error']);
@@ -764,7 +850,7 @@ print_r($requestArguments);
 		$view->assign('now', time());
 
 		print_r($view->render());
-exit;		
+		exit;		
 
 
 
@@ -854,7 +940,7 @@ print_r($requestArguments);
 	/**
 	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
 	 */
-	protected function getView() {
+	protected function getView($template) {
 	//    $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 		$templateService = GeneralUtility::makeInstance(TemplateService::class);
 		// get the rootline
@@ -862,12 +948,6 @@ print_r($requestArguments);
 		$rootlineUtility = GeneralUtility::makeInstance(RootlineUtility::class, 0);
 	
 		$rootLine = $rootlineUtility->get();
-
-
-	
-
-//print_r($this->configuration['view']);
-//exit;
 
 		// initialize template service and generate typoscript configuration
 		$templateService->init();
@@ -886,10 +966,9 @@ print_r($requestArguments);
 		$fluidView->setPartialRootPaths($this->configuration['view']['partialRootPaths']);
 		$fluidView->getRequest()->setControllerExtensionName('Booking');
 //		$fluidView->setTemplate('index');
-		$fluidView->setTemplate('bookingForm');
+		$fluidView->setTemplate($template);
 
 //print_r($fluidView->render());
-	
 		return $fluidView;
 	}
 

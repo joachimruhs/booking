@@ -200,3 +200,10 @@
   background-color: rgba(0, 0, 0, .3);
 }
 
+/******* week view **********/
+.tx-booking .weekdayTable {
+	border: 1px solid red;
+	position: relative;
+	float: left;
+}
+

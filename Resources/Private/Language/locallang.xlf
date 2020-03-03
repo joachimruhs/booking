@@ -37,6 +37,9 @@
 			<trans-unit id="monthNamesShort">
 				<source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
 			</trans-unit>
+			<trans-unit id="calendarWeek">
+				<source>Calendarweek</source>
+			</trans-unit>
 
 			<!-- messages -->
 			<trans-unit id="insertPastBooking">

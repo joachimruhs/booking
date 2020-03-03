@@ -3,6 +3,8 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:booking/Resources/Private/Language/locallang_db.xlf:tx_booking_domain_model_book',
         'label' => 'objectuid',
+	    'label_alt' => 'objectuid,startdate',
+		'default_sortby' => 'objectuid asc, startdate desc',		
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -19,7 +21,8 @@ return [
         'showRecordFieldList' => 'hidden, objectuid, startdate, enddate, feuseruid, memo',
     ],
     'types' => [
-        '1' => ['showitem' => 'hidden, objectuid, startdate, enddate, feuseruid, memo, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+//        '1' => ['showitem' => 'hidden, objectuid, startdate, enddate, feuseruid, memo, --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access, starttime, endtime'],
+        '1' => ['showitem' => 'hidden, objectuid, startdate, enddate, feuseruid, memo'],
     ],
     'columns' => [
         'hidden' => [
