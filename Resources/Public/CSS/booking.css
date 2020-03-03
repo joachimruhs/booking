@@ -207,3 +207,11 @@
 	float: left;
 }
 
+.tx-booking .weekdayTable div {
+	background-color: #83d266;
+}
+
+.tx-booking .bookobjectWeek  {
+	margin: 20px 0px;
+	background-color: #e0e0e0;
+}

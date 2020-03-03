@@ -86,21 +86,34 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				'a.pid',
 				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
 			)
-		)			
-		->andWhere($queryBuilder->expr()->andX(
-			$queryBuilder->expr()->eq(
-				'objectuid', $queryBuilder->createNamedParameter($bookobjectUid, \PDO::PARAM_INT)
-			),
-			$queryBuilder->expr()->gte(
-				'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
-			),
-			$queryBuilder->expr()->lte(
-				'enddate', $queryBuilder->createNamedParameter(($day + 86400), \PDO::PARAM_INT)
-			)
-			
-		)
 		);
+		if ($bookobjectUid) {
+			$queryBuilder->andWhere($queryBuilder->expr()->andX(
+				$queryBuilder->expr()->eq(
+					'objectuid', $queryBuilder->createNamedParameter($bookobjectUid, \PDO::PARAM_INT)
+				),
+				$queryBuilder->expr()->gte(
+					'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
+				),
+				$queryBuilder->expr()->lte(
+					'enddate', $queryBuilder->createNamedParameter(($day + 86400), \PDO::PARAM_INT)
+				)
+				
+			)
+			);
+		} else {
+			$queryBuilder->andWhere($queryBuilder->expr()->andX(
+				$queryBuilder->expr()->gte(
+					'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
+				),
+				$queryBuilder->expr()->lte(
+					'enddate', $queryBuilder->createNamedParameter(($day + 86400), \PDO::PARAM_INT)
+				)
+				
+			)
+			);
 
+		}
 
 
 		$result = $queryBuilder->execute()->fetchAll();

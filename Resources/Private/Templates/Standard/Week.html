@@ -22,16 +22,18 @@
 		<div class="bookobjectTitle">{bookobject.name}</div>
 		<div class="Date"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
 		
-			
+		<f:for each="{bookobjects}" as="bookobject">
+++++{bookobject.uid}+++{bookobject.name}
+			<div class="bookobjectWeek">
 			<f:for each="{weekdays}" as="weekday" iteration="iterWeekday">
 				<table class="weekdayTable">
-<f:for each="{days}" as="day" iteration="iterDay">
-<f:if condition="{iterWeekday.index} == {iterDay.index}">
-	<f:variable name="weekDate" value='{day}' />
-</f:if>		
-</f:for>
+					<f:for each="{days}" as="day" iteration="iterDay">
+					<f:if condition="{iterWeekday.index} == {iterDay.index}">
+						<f:variable name="weekDate" value='{day}' />
+					</f:if>		
+					</f:for>
 
-					<tr><td>{weekDate}</td></tr>
+					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">{weekDate}</td></tr>
 	
 	
 					<tr><td>
@@ -44,16 +46,14 @@
 <f:debug>{booking}</f:debug>
 </f:comment>	
 								<f:for each="{booking}" as="book" iteration="iterBook">
-
 										<f:variable name="theHour" value='<f:format.date format="H">{book.startdate}</f:format.date>' />
 										<f:variable name="theDate" value='<f:format.date format="d.m.Y">{book.startdate}</f:format.date>' />
-										
-										<f:if condition="{hour} == {theHour} && {theDate} == {weekDate}">
+
+										<f:if condition="{hour} == {theHour} && {theDate} == {weekDate} && {bookobject.uid} == {book.objectuid}">
 											<f:then>
-												<span class="booked"></span><f:format.date format="d.m.Y H:00">{book.startdate}</f:format.date> - {day} {book.uid} {book.username} {book.memo}
+												<span class="booked"></span> - {day} {book.uid} {book.username}
 											</f:then>
 											<f:else>
-												
 											</f:else>
 										</f:if>
 								</f:for>
@@ -66,7 +66,9 @@
 				</td></tr>
 				</table>
 			</f:for>
-		
+		</div>
+<div class="clearer"></div>			
+		</f:for> 		
 		
 <f:comment>
 		<f:for each="{hours}" as="hour" iteration="iter">

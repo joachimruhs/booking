@@ -105,8 +105,16 @@
 			
 			// weekView
 			//$('span.booked').prev().css('border', '4px solid green');
-			$('span.booked').parent().css('background-color', 'rgb(253, 141, 22)');
-//			alert($('span.booked').parent().parent().html());
+			$('.weekdayTable span.booked').parent().css('background-color', 'rgb(253, 141, 22)');
+			$('.weekdayTable').click(function() {
+				var bookingDate = $(this).find('td.weekdayTable').attr('date');;
+				var bookobjectUid = $(this).find('td.weekdayTable').attr('bookobjectUid');;
+alert(bookobjectUid);
+//				getCalendar(month, year, 'form', bookingDate, bookobjectUid);
+			});
+
+
+
 		});
 	}
 

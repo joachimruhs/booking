@@ -645,7 +645,8 @@ print_r(date('d.m.Y H:i:s', $endOfWeek));
 			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid']));
 			// get bookings of the day
 			$dayTime = strtotime($day . '-' . $month . '-' . $year);
-			$bookobjectUid = 2;
+
+//			$bookobjectUid = 2;
 
 			for ($wd = 0; $wd < 7; $wd++) {
 
@@ -706,7 +707,7 @@ print_r($requestArguments);
 		$view->assign('bookobject', $bookobject);
 		$view->assign('bookings', $bookings);
 		$view->assign('hours', [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
-		$view->assign('hours', [10,11,12]);
+		$view->assign('hours', [10,11,12,13]);
 		$view->assign('disabledHours', $disabledHours);
 
 		$view->assign('now', time());
