@@ -109,6 +109,37 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
 	}
 
+	
+	/*
+	 *	insert a booking
+	 *
+	 * @param int $pid
+	 *	@param int $bookobjectUid
+	 *	@param int $stardate
+	 *	@param int $enddate
+	 *	@param int $feUserUid
+	 *	@param string $memo
+	 *
+	 *	@return array
+	 */	
+	function insertBooking($pid, $bookobjectUid, $startdate, $enddate, $feUserUid, $memo) {
+		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+		$queryBuilder->insert('tx_booking_domain_model_book')
+		->values([
+			'pid' => $pid,
+			'feuseruid' => $feUserUid,
+			'objectuid' => $bookobjectUid,
+			'startdate' => $startdate,
+			'enddate' => $enddate,
+			'memo' => $memo,
+		
+		])
+		->execute();
+	}
+	
+	
+	
 	/*
 	 *	delete a booking
 	 *
@@ -133,11 +164,6 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		)
 		->set('hidden', 1)
 		->execute();
-
-//echo $bookUid;
-//echo $queryBuilder->getSql();
-//print_r ($queryBuilder->getParameters());
-		exit;
 	}
 	
 

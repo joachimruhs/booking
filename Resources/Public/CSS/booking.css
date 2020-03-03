@@ -1,8 +1,5 @@
 
 
-.tx-booking {
-		border: 2px solid red;
-}
 
 .tx-booking .typo3-messages {
 	list-style: none !important;
@@ -183,3 +180,23 @@
 .tx-booking .bookingTable tr:nth-child(2n) {
 	background-color: #e0e0e0;
 }
+
+/* scrollable table */
+.table-scrollable {
+  width: 100%;
+  overflow-y: auto;
+  margin: 0 0 1em;
+}
+
+.table-scrollable::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+}
+
+.table-scrollable::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 3px solid #fff;
+  background-color: rgba(0, 0, 0, .3);
+}
+

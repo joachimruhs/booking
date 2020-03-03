@@ -1,0 +1,63 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:layout name="Default" />
+
+
+	<f:section name="content">
+
+<f:comment>
+<f:debug>{_all}</f:debug>
+		<f:flashMessages />
+</f:comment>
+
+
+		<f:format.raw>{message}</f:format.raw>
+
+		<div class="bookingForm">
+		<div class="bookobjectTitle">{bookobject.name}</div>
+		<div class="Date"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
+		
+		<table class="bookingTable">
+			<tr></tr><th>Uhrzeit</th><th>Name</th><th>Memo</th><th>Buchen</th><th>Löschen</th></tr>
+			
+		<f:for each="{hours}" as="hour" iteration="iter">
+				<f:variable name="hourBooked" value="0" />
+				<tr><td>{hour}:00 - {hour + 1}:00 </td>
+					<f:for each="{bookings}" as="booking" iteration="iterator">
+						<f:if condition="<f:format.date format='H'>{booking.startdate}</f:format.date> == {hour}">
+							<f:then>
+								<f:variable name="hourBooked" value="1" />
+								<td> {booking.username}<br />{booking.first_name} {booking.last_name} </td><td><textarea disabled="disabled">{booking.memo}</textarea></td><td></td>
+								<td>
+									<f:if condition="{feUserUid} == {booking.feuseruid}">
+									<img class="deleteBooking" src="typo3conf/ext/booking/Resources/Public/Icons/actions-delete.svg" bookUid="{booking.uid}" /></td>
+									</f:if>
+								</td>
+							</f:then>
+							
+						</f:if>
+					</f:for>
+					<f:if condition="{hourBooked} == 0">
+						<td></td><td><textarea id="{hour}" ></textarea></td><td>
+						<f:for each="{disabledHours}" as="disabledHour" iteration="iterdisabled">
+						<f:if condition="{iterdisabled} == {iter} && {disabledHour} == 0">
+						<img class="insertBooking" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="typo3conf/ext/booking/Resources/Public/Icons/actions-save.svg"/>
+						</f:if>
+						</f:for>
+						</td><td></td>
+					</f:if>
+				</tr>
+		</f:for>
+		</table>
+		</div>
+
+
+<f:comment>
+	<f:format.raw>{out}</f:format.raw>
+</f:comment>
+
+
+
+
+
+	</f:section>
+</html>

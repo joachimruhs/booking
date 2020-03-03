@@ -4,13 +4,13 @@
 	<f:layout name="Default" />
 
 	<f:section name="content">
-		<h1>CalendarBase</h1>
+
 		<f:flashMessages />
 
+<f:comment>
 <f:debug>{_all}</f:debug>
 <f:debug>{_all}</f:debug>
 
-<f:comment>
 		<f:link.action action="list">Back to list</f:link.action><br />
 		<f:link.action action="new">New Bookobject</f:link.action>
 </f:comment>
@@ -62,17 +62,25 @@
 		$.post(ajaxRequestUrl, requestParameter, function (data) {
 			$('#ajaxResult').html(data);
 
+			$("table.bookingTable").wrap('<div class="table-scrollable"></div>');
+
 			$('table.tableMultiRow td.vacantDay div, table.tableMultiRow td.bookedDay div,' +
 			  'table.tableMultiRow td.vacantWeekend div, table.tableMultiRow td.partialDay div').click(function() {
-
-//console.log($(this).children().attr('date'));
-//console.log($(this).children().attr('objectUid'));
-
 				var bookingDate = $(this).children().attr('date');
 				var bookobjectUid = $(this).children().attr('objectUid');
+				$('.tx-booking .legend').css('display', 'none');
 				getCalendar(month, year, 'form', bookingDate, bookobjectUid);
+				
+				
 			});
 
+			$('.tx-booking table img.insertBooking').click(function() {
+				var dayTime = $(this).attr('date');
+				var hour = $(this).attr('hour');
+				var bookobjectUid = $(this).attr('bookobjectUid');
+				var memo = $('textarea#' + hour).val();
+				insertBooking(bookobjectUid, dayTime, hour, memo);
+			});		
 			$('.tx-booking table img.deleteBooking').click(function() {
 				var bookUid = $(this).attr('bookuid');
 				deleteBooking(bookUid);
@@ -111,13 +119,51 @@
 
 		$.post(ajaxRequestUrl, requestParameter, function (data) {
 			$('#ajaxResult').html(data);
+			$("table.bookingTable").wrap('<div class="table-scrollable"></div>');
+			eventFunctions();
+		});
+	}
+
+	function insertBooking(bookobjectUid, dayTime, hour, memo) {
+		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+			requestParameter = {
+				tx_booking_ajax : {
+					controller : 'BookObject',
+					action : 'ajaxPsr',
+					calendar: 'insertBooking',
+					dayTime: dayTime,
+					hour: hour,
+					bookobjectUid: bookobjectUid,
+					memo: memo
+				}
+			};
+
+//console.log(requestParameter);			
+
+		$.post(ajaxRequestUrl, requestParameter, function (data) {
+			$('#ajaxResult').html(data);
+			$("table.bookingTable").wrap('<div class="table-scrollable"></div>');
+			eventFunctions();
+
+		});
+		
+	}
+	
+	function eventFunctions() {
+			$('.tx-booking table img.insertBooking').click(function() {
+				var dayTime = $(this).attr('date');
+				var hour = $(this).attr('hour');
+				var bookobjectUid = $(this).attr('bookobjectUid');
+				var memo = $('textarea#' + hour).val();
+				insertBooking(bookobjectUid, dayTime, hour, memo);
+			});		
 			$('.tx-booking table img.deleteBooking').click(function() {
 				var bookUid = $(this).attr('bookuid');
 				deleteBooking(bookUid);
 			});		
-		});
 	}
-
+	
+	
 	
 	
 	$(function() {

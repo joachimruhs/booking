@@ -13,6 +13,12 @@
 
 
 			<!-- messages -->
+			<trans-unit id="insertPastBooking">
+				<target>Vergangene Buchungen können nicht angelegt werden!</target>
+			</trans-unit>
+			<trans-unit id="deletePastBooking">
+				<target>Vergangene Buchungen können nicht gelöscht werden!</target>
+			</trans-unit>
 
 		</body>
 	</file>

@@ -38,6 +38,14 @@
 				<source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
 			</trans-unit>
 
+			<!-- messages -->
+			<trans-unit id="insertPastBooking">
+				<source>Past bookings can not be inserted!</source>
+			</trans-unit>
+			<trans-unit id="deletePastBooking">
+				<source>Past bookings can not be deleted!</source>
+			</trans-unit>
+			
 		</body>
 	</file>
 </xliff>

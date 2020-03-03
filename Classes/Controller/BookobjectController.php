@@ -231,6 +231,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$out = $this->deleteBooking();
 		}
 
+		if ($requestArguments['calendar'] === 'insertBooking') {	
+			$out = $this->insertBooking();
+		}
+
 		echo $out;
 		return $response;
 
@@ -273,7 +277,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
 		$bookObjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
-
 
         $lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
@@ -345,9 +348,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                            $out .= '<td class="noDay">&nbsp;</td>';
                          }
                 }
-				
-			
-				
 
             // day loop
             for ($d=1; $d <= $lengthOfMonth[$m]; $d++){
@@ -355,7 +355,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			// fetch the bookings for the object
 			$dayTime = strtotime($theYear."-".$mon."-".$d);			
 			$counts = $bookRepository->getBookingCounts($this->conf['storagePid'], $bookObjects[$o]['uid'], $dayTime);
-
 			
                 $wd = date('w', strtotime($theYear."-".$m."-". $d));
 
@@ -370,40 +369,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
                 $day = ($d < 10) ? '0'. $d : $d ;
 
 				$booked = 0;
-
 				$end = 0;
 				$startAndEnd = 0;
 				
-/*				
-				if (is_array($arrivals)) {
-					for ($i = 0; $i < count($arrivals); $i++) {
-						if (mktime(0,0,0,$mon,$day,$theYear) >= $arrivals[$i] &&
-							mktime(0,0,0,$mon,$day,$theYear) <= $departures[$i]) {
-							$booked = 1;
-							$booked = $bookingStates[$i];
-
-							if ( (mktime(0,0,0,$mon,$day,$theYear) <= $arrivals[$i]  && mktime(23, 59, 59, $mon,$day,$theYear) >= $arrivals[$i] )) {
-								$start = 1;
-							}
-							else $start = 0;	
-							if ( (mktime(0,0,0,$mon,$day,$theYear) <= $departures[$i] && (mktime(23, 59, 59,$mon,$day,$theYear) >= $departures[$i] ))) {
-									$end = 1;
-							}
-							else $end = 0;	
-							// now check for startAndEnd
-							if ($end && $i < (count($arrivals) - 1)) {
-								if ( (mktime(0,0,0,$mon,$day,$theYear) <= $arrivals[$i + 1] && (mktime(23, 59, 59,$mon,$day,$theYear) >= $arrivals[$i + 1] ))) {
-									$startAndEnd = 1;
-								} else {
-									$startAndEnd = 0;
-								}
-							}
-							
-						}
-	
-					}
-				}
-*/
 				// we have only partial and booked and vacant days
 				$booked = 0;
 				// partial
@@ -420,9 +388,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					$end = 0;
 					$booked = 2;
 				}
-				
-				
-				
 				
                 // display the day with correct class
                 if ( $weekend == 1){
@@ -675,13 +640,15 @@ print_r($requestArguments);
      */
     public function showBookingForm()
     {
+
+	
+	
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
 		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
 		if (!$this->deletedData['bookingDate']) { //showBoojingForm called not from deleteBooking
 			$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-//print_r($requestArguments);
 	
 			$year = intval($requestArguments['year']);
 			if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
@@ -729,8 +696,14 @@ print_r($requestArguments);
 			$dayTime = mktime(0,0,0,$month,$day,$year);
 			$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobject->getUid());
 		}
+		$hours = $bookobject->getHours();			
+		$hours = GeneralUtility::intExplode(',', $hours);
 
-print_r($this->deletedData);
+		for ($h = 0; $h < count($hours); $h++) {
+			if (($dayTime + $hours[$h] * 3600) < time())  
+			$disabledHours[] = 1;
+			else $disabledHours[] = 0;
+		}
 
 		$out .= $this->deletedData['error'];
 		$out .= '<div class="bookingForm">';
@@ -740,8 +713,6 @@ print_r($this->deletedData);
 		$out .= '<table class="bookingTable"><tr>
 			<th>Uhrzeit</th><th>Name</th><th>Memo</th><th>Buchen</th><th>Löschen</th></tr>';
 
-		$hours = $bookobject->getHours();			
-		$hours = GeneralUtility::intExplode(',', $hours);
 		for ($h = 0; $h < count($hours); $h++) {			
 			
 			$out .= '<tr><td>' . $hours[$h] . ':00 - ' . ($hours[$h] + 1) . ':00'  . '</td>';
@@ -777,13 +748,73 @@ print_r($this->deletedData);
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 
 		$out .= '</div>';
-		return $out;
+/////////////////////////////////////////////////////////
+
+		$view = $this->getView();
+		$view->assign('out', $out);
+		
+		$view->assign('message', $this->deletedData['error']);
+		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid']);
+		$view->assign('dayTime', $dayTime);
+		$view->assign('bookobject', $bookobject);
+		$view->assign('bookings', $bookings);
+		$view->assign('hours', $hours);
+		$view->assign('disabledHours', $disabledHours);
+
+		$view->assign('now', time());
+
+		print_r($view->render());
+exit;		
+
+
+
+//		return $out;
 
 //		$view = $this->getView();
 //		print_r($view-render());
 		
     }
 
+    /**
+     * insert booking
+     *  
+     * @return void
+     */
+    public function insertBooking()
+    {
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+
+print_r($requestArguments);
+
+		$startdate = intval($requestArguments['dayTime']);
+		$hour = intval($requestArguments['hour']);
+		$bookobjectUid = intval($requestArguments['bookobjectUid']);
+		$memo = $requestArguments['memo'];
+
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+		if (!$feUserUid) {
+			$error = '<div class="error">A logged in FE user is required for inserting any bookings!</div>';
+		}
+		
+		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+
+		$startdate = $startdate + $hour * 3600;
+		$enddate = $startdate + 3600;
+		if ($startdate < time()) {
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertPastBooking', 'booking') . '</div>';
+		}
+		
+
+
+		if (!$error)
+			$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
+			
+		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+
+		return $this->showBookingForm();
+	}	
+	
+	
     /**
      * delete booking
      *  
@@ -799,6 +830,10 @@ print_r($this->deletedData);
 		
 		$startdate = $this->bookRepository->findByUid($bookUid)->getStartdate();
 
+		if ($startdate < time()) {
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deletePastBooking', 'booking') . '</div>';
+		}
+
 		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
 //		$feUserUid++; //for tests
 
@@ -807,11 +842,11 @@ print_r($this->deletedData);
 			$error = '<div class="error">You are not allowed to delete this booking!</div>';
 		}
 
-//		if (!$error)
-//			$result = $this->bookRepository->deleteBooking($bookUid, $feUserUid);
+		if (!$error)
+			$result = $this->bookRepository->deleteBooking($bookUid, $feUserUid);
 
 		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
-		return $this->showBookingForm($data);
+		return $this->showBookingForm();
 	}
 
 
@@ -831,7 +866,7 @@ print_r($this->deletedData);
 
 	
 
-print_r($this->configuration['view']);
+//print_r($this->configuration['view']);
 //exit;
 
 		// initialize template service and generate typoscript configuration
@@ -850,7 +885,10 @@ print_r($this->configuration['view']);
 		$fluidView->setTemplateRootPaths($this->configuration['view']['templateRootPaths']);
 		$fluidView->setPartialRootPaths($this->configuration['view']['partialRootPaths']);
 		$fluidView->getRequest()->setControllerExtensionName('Booking');
-		$fluidView->setTemplate('index');
+//		$fluidView->setTemplate('index');
+		$fluidView->setTemplate('bookingForm');
+
+//print_r($fluidView->render());
 	
 		return $fluidView;
 	}
