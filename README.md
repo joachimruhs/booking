@@ -10,9 +10,14 @@ What does it do
 
 The extension shows calendars of booking objects.  FE users can book / reservate the object on an hourly base.
 
-#### Month calendar of booking object
+#### Month calendar of booking objects
 ![Calendar](Documentation/Images/Introduction/MonthCalendar.png "Calendar of month")
 
+#### Week view
+![Calendar](Documentation/Images/Introduction/WeekCalendar.png "Calendar of week")
+
+#### Booking form
+![Calendar](Documentation/Images/Introduction/BookingForm.png "Booking form")
 
 
 For details see [Introduction](https://github.com/joachimruhs/booking/blob/master/Documentation/Introduction/Index.rst "Introduction")
