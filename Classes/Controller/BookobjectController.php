@@ -693,9 +693,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		
 		
 
-		echo 'in show week';
+//		echo 'in show week';
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-print_r($requestArguments);
 		$month = intval($requestArguments['month']);
 		$year = intval($requestArguments['year']);
 		
