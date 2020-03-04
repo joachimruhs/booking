@@ -202,16 +202,39 @@
 
 /******* week view **********/
 .tx-booking .weekdayTable {
-	border: 1px solid red;
 	position: relative;
 	float: left;
 }
 
 .tx-booking .weekdayTable div {
-	background-color: #83d266;
+	background-color: #808080; /* disabled */
+}
+.tx-booking .weekdayTable .operating
+{
+	background-color: #83d266; /* operating hour */
 }
 
 .tx-booking .bookobjectWeek  {
 	margin: 20px 0px;
 	background-color: #e0e0e0;
+}
+
+/* Links for week and month view */
+
+.tx-booking .showWeekView  {
+}
+
+.tx-booking .showMonthView  {
+}
+
+.tx-booking .weekView {
+		background-color: #e0e0e0;
+}
+.tx-booking .weekView .bookobjectTitle {
+		margin-top: 30px;
+		font-size: 25px;
+}
+/* Links for previos week */
+.tx-booking .previousWeek, .tx-booking .nextWeek  {
+		width: 20px;
 }

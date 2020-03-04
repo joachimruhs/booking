@@ -8,43 +8,51 @@
 <f:debug>{_all}</f:debug>
 		<f:flashMessages />
 </f:comment>
-<f:debug>{_all}</f:debug>
+
+		<script>
+			$('.tx-booking .legend').css('display', 'none');
+		</script>
 
 
 		<f:format.raw>{message}</f:format.raw>
 
-		<f:translate key="calendarWeek" />
-		{week} - {year}
+		<div class="weekView">
 
-
-
-		<div class="bookingForm">
-		<div class="bookobjectTitle">{bookobject.name}</div>
-		<div class="Date"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
+		<div id="bookingDate">{dayTime}</div>
 		
 		<f:for each="{bookobjects}" as="bookobject">
-++++{bookobject.uid}+++{bookobject.name}
+			<div class="bookobjectTitle">{bookobject.name}</div>
+			<img class="previousWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-previous.svg"/>
+			<f:translate key="calendarWeek" />
+			{week} - {year}
+			<img class="nextWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-next.svg"/>
+
 			<div class="bookobjectWeek">
 			<f:for each="{weekdays}" as="weekday" iteration="iterWeekday">
 				<table class="weekdayTable">
 					<f:for each="{days}" as="day" iteration="iterDay">
-					<f:if condition="{iterWeekday.index} == {iterDay.index}">
-						<f:variable name="weekDate" value='{day}' />
-					</f:if>		
+						<f:if condition="{iterWeekday.index} == {iterDay.index}">
+							<f:variable name="weekDate" value='{day}' />
+						</f:if>		
 					</f:for>
-
 					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">{weekDate}</td></tr>
-	
-	
 					<tr><td>
+
 					<f:for each="{hours}" as="hour">
-						<div>{hour}:00
+						<div class="object{bookobject.uid}-{hour}" hours="{bookobject.hours}">{hour}:00
+						
+			
+					<script>
+					var hours = $(".object{bookobject.uid}-{hour}").attr('hours');
+					var hourArr = hours.split(',');
+					pos = ($.inArray('{hour}', hourArr)); 
+					if (pos >= 0) {
+//						console.log({hour} + ' ' + pos);
+						$(".tx-booking .object{bookobject.uid}-{hour}").addClass("operating");
+					}
+					</script>
+
 						<f:for each="{bookings}" as="booking" iteration="iterBooking">
-
-
-<f:comment>
-<f:debug>{booking}</f:debug>
-</f:comment>	
 								<f:for each="{booking}" as="book" iteration="iterBook">
 										<f:variable name="theHour" value='<f:format.date format="H">{book.startdate}</f:format.date>' />
 										<f:variable name="theDate" value='<f:format.date format="d.m.Y">{book.startdate}</f:format.date>' />
@@ -58,7 +66,6 @@
 										</f:if>
 								</f:for>
 
-
 						</f:for>
 						</div>
 
@@ -67,40 +74,9 @@
 				</table>
 			</f:for>
 		</div>
-<div class="clearer"></div>			
+		<div class="clearer"></div>			
 		</f:for> 		
 		
-<f:comment>
-		<f:for each="{hours}" as="hour" iteration="iter">
-				<f:variable name="hourBooked" value="0" />
-				<tr><td>{hour}:00 - {hour + 1}:00 </td>
-					<f:for each="{bookings}" as="booking" iteration="iterator">
-						<f:if condition="<f:format.date format='H'>{booking.startdate}</f:format.date> == {hour}">
-							<f:then>
-								<f:variable name="hourBooked" value="1" />
-								<td> {booking.username}<br />{booking.first_name} {booking.last_name} </td><td><textarea disabled="disabled">{booking.memo}</textarea></td><td></td>
-								<td>
-									<f:if condition="{feUserUid} == {booking.feuseruid}">
-									<img class="deleteBooking" src="typo3conf/ext/booking/Resources/Public/Icons/actions-delete.svg" bookUid="{booking.uid}" /></td>
-									</f:if>
-								</td>
-							</f:then>
-							
-						</f:if>
-					</f:for>
-					<f:if condition="{hourBooked} == 0">
-						<td></td><td><textarea id="{hour}" ></textarea></td><td>
-						<f:for each="{disabledHours}" as="disabledHour" iteration="iterdisabled">
-						<f:if condition="{iterdisabled} == {iter} && {disabledHour} == 0">
-						<img class="insertBooking" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="typo3conf/ext/booking/Resources/Public/Icons/actions-save.svg"/>
-						</f:if>
-						</f:for>
-						</td><td></td>
-					</f:if>
-				</tr>
-		</f:for>
-		</table>
-</f:comment>
 
 
 		</div>

@@ -164,6 +164,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->view->assign('settings', $this->settings);
 		$this->view->assign('month', date('m', time()));
 		$this->view->assign('year', date('Y', time()));
+		$this->view->assign('bookingDate', time());
 //		$this->view->assign('bookObjects', $bookObjects);
 		return;
     }
@@ -593,7 +594,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function showWeek()
     {
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-print_r($requestArguments);
+//print_r($requestArguments);
 
 
 		$year = intval($requestArguments['year']);
@@ -601,37 +602,35 @@ print_r($requestArguments);
 		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
 		$month = intval($requestArguments['month']);
 		$theYear = $year;
+
 		$week = intval($requestArguments['week']);
 		if (!$week) $week = date('W', time());
 		$theWeek = $week;
-
+		
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
 		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
 		$bookobjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
-
-
 		if (!$this->deletedData['bookingDate']) { //showWeek called not from bookingForm
+
 			$month = intval($requestArguments['month']);
 			$year = intval($requestArguments['year']);
 	
 			$bookingDate = $requestArguments['date'];
 
-			$offset = date('z', time());
-			$offset = 0;
-			$startOfWeek = strtotime($theYear . 'W' . str_pad($theWeek, 2, '0', STR_PAD_LEFT) . ' +' . $offset . 'days'); 
+			$dayOfWeek = date('N', $requestArguments['date']);
+			$startOfWeek = $requestArguments['date'] - ($dayOfWeek - 1) * 86400;
 			$endOfWeek = $startOfWeek + 6 * 86400 + 86399;
-echo '****' . $week . '++++';			
-print_r(date('d.m.Y H:i:s', $startOfWeek));
-echo '****END++++';			
-print_r(date('d.m.Y H:i:s', $endOfWeek));
 
+			$theWeek = date("W", $startOfWeek);
+			$theYear = date("Y", $startOfWeek);
 
-			$bookingDate = date('d.m.Y',time());
+			if (!$requestArguments['bookingDate'])
+			$requestArguments['bookingDate'] = time();
 
-			list($day, $month, $year) = GeneralUtility::intExplode('.', $bookingDate);
+			list($day, $month, $year) = GeneralUtility::intExplode('.', date('d.m.Y', $requestArguments['bookingDate']));
 			
 			if ($day > 31 || $day < 1) $error = 1;
 			if ($month > 12 || $month < 1) $error = 1;
@@ -644,17 +643,13 @@ print_r(date('d.m.Y H:i:s', $endOfWeek));
 	//		$bookingobjectUid = intval($requestArguments['bookingobjectUid']);
 			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid']));
 			// get bookings of the day
-			$dayTime = strtotime($day . '-' . $month . '-' . $year);
-
-//			$bookobjectUid = 2;
-
 			for ($wd = 0; $wd < 7; $wd++) {
 
 				$dayTime = $startOfWeek + $wd * 86400;
 				$theDays[] = date('d.m.Y', $dayTime);
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
-
+				$operating[$bookobjectUid] = 33;
 			}
 
 		} else { ///////////////////  we have $data form bookingForm ////////////////////
@@ -663,8 +658,26 @@ print_r(date('d.m.Y H:i:s', $endOfWeek));
 			$month = date('m', $this->deletedData['bookingDate']);
 			$year = date('Y', $this->deletedData['bookingDate']);
 			$dayTime = mktime(0,0,0,$month,$day,$year);
-			$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobject->getUid());
-		
+
+			$month = intval($requestArguments['month']);
+			$year = intval($requestArguments['year']);
+	
+			$bookingDate = $requestArguments['date'];
+
+			$offset = date('z', time());
+			$offset = 0;
+			$startOfWeek = strtotime($theYear . 'W' . str_pad($theWeek, 2, '0', STR_PAD_LEFT) . ' +' . $offset . 'days'); 
+			$endOfWeek = $startOfWeek + 6 * 86400 + 86399;
+
+			$dayTime = strtotime($day . '-' . $month . '-' . $year);
+			for ($wd = 0; $wd < 7; $wd++) {
+				$dayTime = $startOfWeek + $wd * 86400;
+				$theDays[] = date('d.m.Y', $dayTime);
+
+				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
+				$operating[$bookobjectUid] = 33;
+			}
+
 		}
 
         $lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
@@ -688,7 +701,6 @@ print_r($requestArguments);
 		
 		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
-
 		
 		$view = $this->getView('week');
 		$view->assign('out', $out);
@@ -702,16 +714,14 @@ print_r($requestArguments);
 		
 		$view->assign('days', $theDays);
 		
-		
 		$view->assign('dayTime', $dayTime);
 		$view->assign('bookobject', $bookobject);
 		$view->assign('bookings', $bookings);
 		$view->assign('hours', [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
-		$view->assign('hours', [10,11,12,13]);
+//		$view->assign('hours', [10,11,12,13]);
 		$view->assign('disabledHours', $disabledHours);
 
 		$view->assign('now', time());
-
 		print_r($view->render());
 		exit;		
 		
@@ -790,53 +800,6 @@ print_r($requestArguments);
 			else $disabledHours[] = 0;
 		}
 
-/*
-		$out .= $this->deletedData['error'];
-		$out .= '<div class="bookingForm">';
-		$out .= '<div class="bookobjectTitle">' . $bookobject->getName() . '</div>';
-		$out .= '<div class="Date">' . $day . '.' . $month . '.' . $year . '</div>';
-
-		$out .= '<table class="bookingTable"><tr>
-			<th>Uhrzeit</th><th>Name</th><th>Memo</th><th>Buchen</th><th>Löschen</th></tr>';
-
-		for ($h = 0; $h < count($hours); $h++) {			
-			
-			$out .= '<tr><td>' . $hours[$h] . ':00 - ' . ($hours[$h] + 1) . ':00'  . '</td>';
-
-			$booked = 0;
-			for ($i = 0; $i < count($bookings); $i++) {
-//			$out .= '<tr><td>' . date('H:i', $bookings[$i]['startdate']) . '</td><td>';
-				if ( date('H', $bookings[$i]['startdate']) == $hours[$h]) {
-					$booked = 1;
-					if ($GLOBALS['TSFE']->fe_user->user['uid'] == $bookings[$i]['feuseruid']) {
-						$out .= '<td class="username">' . $bookings[$i]['username'] . '</td>' .
-//								'<td class="firstname">' . $bookings[$i]['first_name'] . '</td>
-//								'<td class="lastname">' . $bookings[$i]['lastname'] . '</td>
-								'<td><textarea disabled="disabled">' . $bookings[$i]['memo'] . '</textarea></td>
-								<td></td><td><img class="deleteBooking" src="typo3conf/ext/booking/Resources/Public/Icons/actions-delete.svg" bookUid="' . $bookings[$i]['uid'] . '" /></td></tr>';
-					} else {
-						$out .= '<td class="username">' . $bookings[$i]['username'] . '</td></td><td><textarea disabled="disabled">' . $bookings[$i]['memo'] . '</textarea></td>
-								<td></td><td></td></tr>';
-						
-					}
-
-				}
-			}
-			if (!$booked) {
-					$out .= '<td></td><td><textarea></textarea></td><td>
-					<img src="typo3conf/ext/booking/Resources/Public/Icons/actions-save.svg"/></td><td></td></tr>';
-			}
-		}
-
-		$out .= '</table>';			
-
-		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
-		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
-
-		$out .= '</div>';
-*/		
-/////////////////////////////////////////////////////////
-
 		$view = $this->getView('bookingForm');
 		$view->assign('out', $out);
 		
@@ -852,14 +815,6 @@ print_r($requestArguments);
 
 		print_r($view->render());
 		exit;		
-
-
-
-//		return $out;
-
-//		$view = $this->getView();
-//		print_r($view-render());
-		
     }
 
     /**
@@ -871,7 +826,7 @@ print_r($requestArguments);
     {
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 
-print_r($requestArguments);
+//print_r($requestArguments);
 
 		$startdate = intval($requestArguments['dayTime']);
 		$hour = intval($requestArguments['hour']);

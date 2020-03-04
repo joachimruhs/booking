@@ -10,7 +10,7 @@
 				<target>Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember</target>
 			</trans-unit>
 			<trans-unit id="calendarWeek">
-				<target>Kalendarwoche</target>
+				<target>Kalenderwoche</target>
 			</trans-unit>
 
 
