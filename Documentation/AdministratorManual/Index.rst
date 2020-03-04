@@ -18,13 +18,10 @@ Create some pages as shown below.
 	:width: 200px
 	:alt: Pages for booking
 
-On the pages MonthMultiRow, List and Details insert the corresponding plugins.
-On page MultiRowCalendar insert the plugin MultiRowCalendar and List. 
-On the page Details insert the plugin Myseminars (Details). On the page RequestForm insert the plugin Myseminars (RequestForm).
-
+On the page Booking insert the plugin Booking (Reservation).
 
 On page 'Booking' or on your root page insert 'Typoscript Include static' (from extension) Booking (booking).
-With the constant editor insert the desired settings of the extension like storage Pid, default calendar, jQuery options, path to templates etc.
+With the constant editor insert the desired settings of the extension like storage Pid, default calendar [week|month], jQuery options, path to templates etc.
 
 .. image:: ../Images/AdministratorManual/IncludeStatic.png
 	:width: 400px

@@ -1,59 +1,58 @@
-﻿.. include:: ../Includes.txt
-
-
-.. _introduction:
-
+﻿
 ============
 Introduction
 ============
 
+.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
 
-.. tip::
+.. include:: ../Includes.txt
 
-   New to reStructuredText and Sphinx?
 
-   Get an introduction:
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/Index.html
+.. _introduction:
 
-   Use this cheat sheet as reference:
-   https://docs.typo3.org/m/typo3/docs-how-to-document/master/en-us/WritingReST/CheatSheet.html
-
-.. _what-it-does:
 
 What does it do?
 ================
 
-The aim of this chapter is to provide a general overview of your extension.
-
-* What does it do?
-* What problems does it solve?
-* Who is the target audience?
-
-This chapter should provide information that will help inform
-potential users and assist them in deciding if they should
-install and use this extension.
-
-.. important::
-
-   Don't forget to repeat your extension's version number in the
-   :file:`Settings.cfg` file, in the :code:`release` property. It will be
-   automatically picked up on the cover page by the :code:`|release|`
-   substitution.
+The extension enables logged in FE Users to request an object for booking on a hourly base like rooms or similar. 
 
 
-.. _screenshots:
+There are a month calendar views and a week calendar. With a click on a selected date in the calendar of the object, a booking form is shown.
+In the booking form, you can book/request the desired hour if a booking icon is shown.
+In this form you can delete your own request if a delete icon is shown.
+
+The extension is configured with the constant editor of TYPO3. 
+
+
+What's new?
+^^^^^^^^^^^
+
+Completly rewritten with Extbase/Fluid and PSR-15 (Middlewar). Therefor no update from earlier extension booking possible.
+
 
 Screenshots
-===========
+^^^^^^^^^^^
 
-This chapter should help people understand how the extension works. Remove it
-if it is not relevant.
+**Month calendar** 
 
-.. figure:: ../Images/IntroductionPackage.png
-   :class: with-shadow
-   :alt: Introduction Package
-   :width: 300px
+.. image:: ../Images/Introduction/MonthCalendar.png
+	:width: 600px
+	:alt: Month Calendar
 
-   Introduction Package just after installation (caption of the image)
+**Week calendar** 
 
-How the Frontend of the Introduction Package looks like just after installation (legend of the image)
+.. image:: ../Images/Introduction/WeekCalendar.png
+	:width: 600px
+	:alt: Week Calendar
+
+**Booking form** 
+
+.. image:: ../Images/Introduction/BookingForm.png
+	:width: 600px
+	:alt: Booking form
+
+
+
