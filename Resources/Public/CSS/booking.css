@@ -18,7 +18,9 @@
 .tx-booking .hidden {
 		display: none;
 }
-
+.tx-booking .clearer {
+	clear: both;
+}
 .tx-booking .basket ul {
 		padding-left: 0;
 }

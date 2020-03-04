@@ -113,7 +113,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * action edit
      * 
      * @param \WSR\Booking\Domain\Model\Bookobject $bookobject
-     * @ignorevalidation $bookobject
      * @return void
      */
     public function editAction(\WSR\Booking\Domain\Model\Bookobject $bookobject)
@@ -905,7 +904,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$rootLine = $rootlineUtility->get();
 
 		// initialize template service and generate typoscript configuration
-		$templateService->init();
 		$templateService->runThroughTemplates($rootLine);
 		$templateService->generateConfig();
 	
