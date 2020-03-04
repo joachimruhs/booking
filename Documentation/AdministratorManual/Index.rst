@@ -28,6 +28,15 @@ With the constant editor insert the desired settings of the extension like stora
 	:alt: Include Static
 
 
+On the page (storagePid) insert at least one Booking object.
+Insert a name and the operation hours of the object like "10,11,12,13,14,15,16".
+The operation hours should be shown in green in the weekCalendar.
+
+.. image:: ../Images/AdministratorManual/BookObject.png
+	:width: 400px
+	:alt: Book object
+
+
 To use your own templates, copy the directory folder /typo3conf/ext/booking/Resources/ with
 subdirectories to your own template folder (for example fileadmin/includes/ext/booking/Resources/).
 Then change the templateRootPath in the constant editor to the new value of the template directory.
