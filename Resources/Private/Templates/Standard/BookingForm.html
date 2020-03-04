@@ -8,7 +8,6 @@
 <f:debug>{_all}</f:debug>
 		<f:flashMessages />
 </f:comment>
-<f:debug>{_all}</f:debug>
 
 
 		<script>
@@ -56,22 +55,13 @@
 		</table>
 		</div>
 
-		<div id="year"><f:format.date format="Y">{dayTime}</f:format.date></div>
-		<div id="month"><f:format.date format="m">{dayTime}</f:format.date></div>
-		<div id="bookingDate">{dayTime}</div>
-		<div id="bookingDatexxx"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
-		<div id="bookobjectUid">{bookobject.uid}</div>
+		<div class="hidden" id="year"><f:format.date format="Y">{dayTime}</f:format.date></div>
+		<div class="hidden" id="month"><f:format.date format="m">{dayTime}</f:format.date></div>
+		<div class="hidden" id="bookingDate">{dayTime}</div>
+		<div class="hidden" id="bookobjectUid">{bookobject.uid}</div>
 
 		<button class="showWeekView">WeekView</button>
 		<button class="showMonthView">MonthView</button>
-
-
-<f:comment>
-	<f:format.raw>{out}</f:format.raw>
-</f:comment>
-
-
-
 
 
 	</f:section>

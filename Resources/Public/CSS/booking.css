@@ -15,6 +15,9 @@
 	font-weight: bold;
 	
 }
+.tx-booking .hidden {
+		display: none;
+}
 
 .tx-booking .basket ul {
 		padding-left: 0;
