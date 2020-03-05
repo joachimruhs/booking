@@ -33,7 +33,7 @@
 .tx-booking div.multiRow {
 }
 
-/* multiRowCalendar legend*/
+/* legend*/
 .tx-booking .legend {
 	margin: 20px 0px;
 	
@@ -68,7 +68,6 @@
 .tx-booking .legend  div.vacantDay  {
 	background-color: #FFF;
 }
-
 
 
 .tx-booking table.monthMultiRow td div {
@@ -121,10 +120,7 @@
 
 
 .tx-booking .tableMultiRow td.vacantDay,
-.tx-booking .tableMultiRow td.bookedDay,
-.tx-booking .tableMultiRow td.bookingEnd,
-.tx-booking .tableMultiRow td.bookingStartAndEnd,
-.tx-booking .tableMultiRow td.bookedWeekend {
+.tx-booking .tableMultiRow td.bookedDay {
 	text-align: center;
 	background-color: #fff;
 }
@@ -136,11 +132,6 @@
 .tx-booking .tableMultiRow td.bookedWeekend {
 	background-color: #FF9933;
 }
-.tx-booking .tableMultiRow td.bookingStart,
-.tx-booking .tableMultiRow td.bookingEnd {
-	background-color: #00e000;
-}
-
 
 
 /* partial booking */
@@ -154,17 +145,6 @@
 .tx-booking .tableMultiRow td.bookedDay {
 	background-color: #FF9933;
 }
-
-
-
-.tx-booking .tableMultiRow td.bookingEnd {
-	background-color: #fff;
-	background-image:url("/typo3conf/ext/booking/Resources/Public/Icons/bookingEndRed.gif");
-}	
-.tx-booking .tableMultiRow td.bookingStartAndEnd {
-	background-color: #fff;
-	background-image:url("/typo3conf/ext/booking/Resources/Public/Icons/bookerChangedDayRed.gif");
-}	
 
 /********** booking form **********/
 
