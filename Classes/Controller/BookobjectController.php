@@ -769,7 +769,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			if ($month > 12 || $month < 1) $error = 1;
 			if ($year > 2030 || $year < 2020) $error = 1;
 			if ($error) {
-				echo '<div class="typo3-messages error">Fehler in Datumseingabe!</div>';
+				echo '<div class="typo3-messages error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('dateInputError', 'booking') . '</div>';
 				exit;
 			}
 			

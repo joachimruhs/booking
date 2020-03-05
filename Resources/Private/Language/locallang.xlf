@@ -42,6 +42,9 @@
 			</trans-unit>
 
 			<!-- messages -->
+			<trans-unit id="dateInputError">
+				<source>Date input error!</source>
+			</trans-unit>
 			<trans-unit id="insertPastBooking">
 				<source>Past bookings can not be inserted!</source>
 			</trans-unit>

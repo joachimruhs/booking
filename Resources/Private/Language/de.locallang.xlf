@@ -16,6 +16,9 @@
 
 
 			<!-- messages -->
+			<trans-unit id="dateInputError">
+				<target>Fehler in der Datumseingabe oder Datum außerhalb des gültigen Bereiches!</target>
+			</trans-unit>
 			<trans-unit id="insertPastBooking">
 				<target>Vergangene Buchungen können nicht angelegt werden!</target>
 			</trans-unit>
