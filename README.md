@@ -8,7 +8,7 @@
 What does it do
 ---------------
 
-The extension shows calendars of booking objects.  FE users can book / reservate the object on an hourly base.
+The extension shows calendars of booking objects.  FE users can book / make a reservation for an object on an hourly base.
 
 #### Month calendar of booking objects
 ![Calendar](Documentation/Images/Introduction/MonthCalendar.png "Calendar of month")
