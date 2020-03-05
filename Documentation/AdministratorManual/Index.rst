@@ -18,7 +18,7 @@ Create some pages as shown below.
 	:width: 200px
 	:alt: Pages for booking
 
-On the page Booking insert the plugin Booking (Reservation).
+On the page Booking insert the plugin Booking (Reservation) and limit the access to the plugin for logged in FE users.
 
 On page 'Booking' or on your root page insert 'Typoscript Include static' (from extension) Booking (booking).
 With the constant editor insert the desired settings of the extension like storage Pid, default calendar [week|month], jQuery options, path to templates etc.
@@ -28,9 +28,9 @@ With the constant editor insert the desired settings of the extension like stora
 	:alt: Include Static
 
 
-On the page (storagePid) insert at least one Booking object.
+On the page 'Data' (storagePid) insert at least one Booking object.
 Insert a name and the operation hours of the object like "10,11,12,13,14,15,16".
-The operation hours should be shown in green in the weekCalendar.
+The operation hours should be shown in green in the  Week Calendar.
 
 .. image:: ../Images/AdministratorManual/BookObject.png
 	:width: 400px
