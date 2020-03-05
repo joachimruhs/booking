@@ -20,6 +20,16 @@
 				<target>Monatsansicht</target>
 			</trans-unit>
 
+			<trans-unit id="partialBooked">
+				<target>Teilweise gebucht</target>
+			</trans-unit>
+			<trans-unit id="notAvailable">
+				<target>Nicht verfügbar</target>
+			</trans-unit>
+			<trans-unit id="available">
+				<target>Verfügbar</target>
+			</trans-unit>
+
 			<trans-unit id="time">
 				<target>Uhrzeit</target>
 			</trans-unit>

@@ -42,6 +42,16 @@
 			</trans-unit>
 
 		
+			<trans-unit id="partialBooked">
+				<source>Partial booked</source>
+			</trans-unit>
+			<trans-unit id="Not availabe">
+				<source>Not available</source>
+			</trans-unit>
+			<trans-unit id="available">
+				<source>Available</source>
+			</trans-unit>
+
 			<trans-unit id="time">
 				<source>Time</source>
 			</trans-unit>
