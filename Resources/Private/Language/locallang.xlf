@@ -41,6 +41,31 @@
 				<source>Calendarweek</source>
 			</trans-unit>
 
+		
+			<trans-unit id="time">
+				<source>Time</source>
+			</trans-unit>
+			<trans-unit id="name">
+				<source>Name</source>
+			</trans-unit>
+			<trans-unit id="Memo">
+				<source>Memo</source>
+			</trans-unit>
+			<trans-unit id="weekView">
+				<source>Book</source>
+			</trans-unit>
+			<trans-unit id="weekView">
+				<source>Delete</source>
+			</trans-unit>
+
+			<trans-unit id="weekView">
+				<source>Week calendar</source>
+			</trans-unit>
+			<trans-unit id="monthView">
+				<source>Month calendar</source>
+			</trans-unit>
+
+
 			<!-- messages -->
 			<trans-unit id="dateInputError">
 				<source>Date input error!</source>

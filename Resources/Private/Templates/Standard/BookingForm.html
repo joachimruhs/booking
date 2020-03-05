@@ -22,7 +22,7 @@
 		<div class="Date"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
 		
 		<table class="bookingTable">
-			<tr></tr><th>Uhrzeit</th><th>Name</th><th>Memo</th><th>Buchen</th><th>Löschen</th></tr>
+			<tr></tr><th><f:translate key="time" /></th><th><f:translate key="name" /></th><th><f:translate key="memo" /></th><th><f:translate key="book" /></th><th><f:translate key="delete" /></th></tr>
 			
 		<f:for each="{hours}" as="hour" iteration="iter">
 				<f:variable name="hourBooked" value="0" />
@@ -60,8 +60,8 @@
 		<div class="hidden" id="bookingDate">{dayTime}</div>
 		<div class="hidden" id="bookobjectUid">{bookobject.uid}</div>
 
-		<button class="showWeekView">WeekView</button>
-		<button class="showMonthView">MonthView</button>
+		<button class="showWeekView"><f:translate key="weekView" /></button>
+		<button class="showMonthView"><f:translate key="monthView" /></button>
 
 
 	</f:section>

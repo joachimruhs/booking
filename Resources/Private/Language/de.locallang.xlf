@@ -13,7 +13,28 @@
 				<target>Kalenderwoche</target>
 			</trans-unit>
 
+			<trans-unit id="weekView">
+				<target>Wochenansicht</target>
+			</trans-unit>
+			<trans-unit id="monthView">
+				<target>Monatsansicht</target>
+			</trans-unit>
 
+			<trans-unit id="time">
+				<target>Uhrzeit</target>
+			</trans-unit>
+			<trans-unit id="name">
+				<target>Name</target>
+			</trans-unit>
+			<trans-unit id="memo">
+				<target>Memo</target>
+			</trans-unit>
+			<trans-unit id="book">
+				<target>Buchen</target>
+			</trans-unit>
+			<trans-unit id="delete">
+				<target>Löschen</target>
+			</trans-unit>
 
 			<!-- messages -->
 			<trans-unit id="dateInputError">
