@@ -20,7 +20,7 @@ The extension shows calendars of booking objects.  FE users can book / make a re
 ![Calendar](Documentation/Images/Introduction/BookingForm.png "Booking form")
 
 
-For  details see [Introduction](https://github.com/joachimruhs/booking/blob/master/Documentation/Introduction/Index.rst "Introduction")
+For details see [Introduction](https://github.com/joachimruhs/booking/blob/master/Documentation/Introduction/Index.rst "Introduction")
 
 For configuration and installation in detail, see the [Administrator Manual](https://github.com/joachimruhs/booking/blob/master/Documentation/AdministratorManual/Index.rst "Administrator Manual")
 
