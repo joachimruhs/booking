@@ -46,6 +46,30 @@
 				<target>Löschen</target>
 			</trans-unit>
 
+			<trans-unit id="Mon">
+				<target>Mo</target>
+			</trans-unit>
+			<trans-unit id="Tue">
+				<target>Di</target>
+			</trans-unit>
+			<trans-unit id="Wed">
+				<target>Mi</target>
+			</trans-unit>
+			<trans-unit id="Thu">
+				<target>Do</target>
+			</trans-unit>
+			<trans-unit id="Fri">
+				<target>Fr</target>
+			</trans-unit>
+			<trans-unit id="Sat">
+				<target>Sa</target>
+			</trans-unit>
+			<trans-unit id="Sun">
+				<target>So</target>
+			</trans-unit>
+
+
+
 			<!-- messages -->
 			<trans-unit id="dateInputError">
 				<target>Fehler in der Datumseingabe oder Datum außerhalb des gültigen Bereiches!</target>

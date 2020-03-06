@@ -13,7 +13,6 @@
 			$('.tx-booking .legend').css('display', 'none');
 		</script>
 
-
 		<f:format.raw>{message}</f:format.raw>
 
 		<div class="weekView">
@@ -35,12 +34,19 @@
 							<f:variable name="weekDate" value='{day}' />
 						</f:if>		
 					</f:for>
-					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">{weekDate}</td></tr>
+					
+					<f:for each="{dayTimes}" as="dayTime" iteration="iterDayTime">
+						<f:if condition="{iterWeekday.index} == {iterDayTime.index}">
+							<f:variable name="dayDate" value='{dayTime}' />
+						</f:if>		
+					</f:for>
+
+					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">
+						<f:translate key='<f:format.date format="D">{dayDate}</f:format.date>' /> - <f:format.date format="d.m.Y">{dayDate}</f:format.date></td></tr>
 					<tr><td>
 
 					<f:for each="{hours}" as="hour">
 						<div class="object{bookobject.uid}-{hour}" hours="{bookobject.hours}">{hour}:00
-						
 			
 					<script>
 					var hours = $(".object{bookobject.uid}-{hour}").attr('hours');

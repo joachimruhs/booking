@@ -75,6 +75,29 @@
 				<source>Month calendar</source>
 			</trans-unit>
 
+			<trans-unit id="Mon">
+				<source>Mon</source>
+			</trans-unit>
+			<trans-unit id="Tue">
+				<source>Tue</source>
+			</trans-unit>
+			<trans-unit id="Wed">
+				<source>Wed</source>
+			</trans-unit>
+			<trans-unit id="Thu">
+				<source>Thu</source>
+			</trans-unit>
+			<trans-unit id="Fri">
+				<source>Fri</source>
+			</trans-unit>
+			<trans-unit id="Sat">
+				<source>Sat</source>
+			</trans-unit>
+			<trans-unit id="Sun">
+				<source>Sun</source>
+			</trans-unit>
+
+
 
 			<!-- messages -->
 			<trans-unit id="dateInputError">

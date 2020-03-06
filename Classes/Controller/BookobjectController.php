@@ -646,6 +646,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 				$dayTime = $startOfWeek + $wd * 86400;
 				$theDays[] = date('d.m.Y', $dayTime);
+				$dayTimes[] = $dayTime;
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
 				$operating[$bookobjectUid] = 33;
@@ -672,6 +673,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			for ($wd = 0; $wd < 7; $wd++) {
 				$dayTime = $startOfWeek + $wd * 86400;
 				$theDays[] = date('d.m.Y', $dayTime);
+				$dayTimes[] = $dayTime;
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
 				$operating[$bookobjectUid] = 33;
@@ -713,6 +715,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('days', $theDays);
 		
 		$view->assign('dayTime', $dayTime);
+		$view->assign('dayTimes', $dayTimes);
 		$view->assign('bookobject', $bookobject);
 		$view->assign('bookings', $bookings);
 		$view->assign('hours', [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
