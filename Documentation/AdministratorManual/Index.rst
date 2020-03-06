@@ -46,3 +46,130 @@ Then change the templateRootPath in the constant editor to the new value of the 
 .. Hint:: Make sure, you have inserted the correct page id for "Default storage PID"!
 
 
+Reference
+^^^^^^^^^
+
+.. _plugin-tx-booking:
+
+
+plugin.tx\_booking.view
+^^^^^^^^^^^^^^^^^^^^^^^
+
+
+templateRootPath
+""""""""""""""""
+
+.. container:: table-row
+
+   Property
+         templateRootPath
+
+   Data type
+         string
+
+   Description
+         path to templates
+
+   Default
+         EXT:booking/Resources/Private/Templates/
+
+partialRootPath
+""""""""""""""""
+
+.. container:: table-row
+
+   Property
+         partialRootPath
+
+   Data type
+         string
+
+   Description
+         path to partials
+
+   Default
+         EXT:booking/Resources/Private/Partials/
+     
+layoutRootPath
+""""""""""""""
+
+.. container:: table-row
+
+   Property
+         layoutRootPath
+
+   Data type
+         string
+
+   Description
+         path to layouts
+
+   Default
+         EXT:booking/Resources/Private/Layouts/
+
+     
+plugin.tx\_booking.ersistance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+
+storagePid
+""""""""""
+
+.. container:: table-row
+
+   Property
+         storage page id
+
+   Data type
+         int
+
+   Description
+         page id of storage
+
+   Default
+         -
+
+
+
+
+plugin.tx\_booking.settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _defaultCalendar:
+
+defaultCalendar
+"""""""""""""""
+
+.. container:: table-row
+
+   Property
+         The default calendar
+
+   Data type
+         string
+
+   Description
+         The default calendar when the plugin is shown [month|week]
+
+   Default
+         month
+
+hoursToDisplay
+""""""""""""""
+
+.. container:: table-row
+
+   Property
+         The hours which are shown in calendar week
+
+   Data type
+         string
+
+   Description
+         The hours which are shown in week view
+
+   Default
+         7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+
+		 
+

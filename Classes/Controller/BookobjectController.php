@@ -651,6 +651,13 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$dayTimes[] = $dayTime;
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
+
+
+//				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
+//				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
+
+
+
 			}
 
 		} else { ///////////////////  we have $data form bookingForm ////////////////////
