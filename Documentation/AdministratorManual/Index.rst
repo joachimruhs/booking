@@ -108,8 +108,8 @@ layoutRootPath
          EXT:booking/Resources/Private/Layouts/
 
      
-plugin.tx\_booking.ersistance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+plugin.tx\_booking.persistance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 
 
 storagePid
