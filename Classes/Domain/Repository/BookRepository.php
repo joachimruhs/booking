@@ -66,6 +66,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	 *
 	 *	@param int $pid
 	 *	@param int $day
+	 *	@param int $bookobjectUid | null
 	 *
 	 *	@return array
 	 */	
@@ -115,14 +116,102 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
 		}
 
-
 		$result = $queryBuilder->execute()->fetchAll();
-//print_r($result);		
 		return $result;
 
 	}
 
-	
+
+	/*
+	 *	get bookings for a date AM
+	 *	
+	 *  not used yet
+	 *  
+	 *	@param int $pid
+	 *	@param int $day
+	 *
+	 *	@return array
+	 */	
+	function getBookingsOfDateAM($pid, $day) {
+		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+		$queryBuilder->from('tx_booking_domain_model_book', 'a');
+		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
+
+		$queryBuilder->join(
+			'a',
+			'fe_users',
+			'users',
+			 $queryBuilder->expr()->eq('users.uid', $queryBuilder->quoteIdentifier('a.feuseruid'))
+		)
+		->where(
+			$queryBuilder->expr()->eq(
+				'a.pid',
+				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+			)
+		);
+		$queryBuilder->andWhere($queryBuilder->expr()->andX(
+			$queryBuilder->expr()->gte(
+					'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
+				),
+
+				$queryBuilder->expr()->lte(
+					'enddate', $queryBuilder->createNamedParameter($day + 43200, \PDO::PARAM_INT)
+				)
+				
+			)
+		);
+		$result = $queryBuilder->execute()->fetchAll();
+		return $result;
+	}
+
+
+	/*
+	 *	get bookings for a date PM
+	 *	
+	 *  not used yet
+	 *  
+	 *	@param int $pid
+	 *	@param int $day
+	 *
+	 *	@return array
+	 */	
+	function getBookingsOfDatePM($pid, $day) {
+		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+		$queryBuilder->from('tx_booking_domain_model_book', 'a');
+		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
+
+		$queryBuilder->join(
+			'a',
+			'fe_users',
+			'users',
+			 $queryBuilder->expr()->eq('users.uid', $queryBuilder->quoteIdentifier('a.feuseruid'))
+		)
+		->where(
+			$queryBuilder->expr()->eq(
+				'a.pid',
+				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+			)
+		);
+		$queryBuilder->andWhere($queryBuilder->expr()->andX(
+			$queryBuilder->expr()->gte(
+					'startdate', $queryBuilder->createNamedParameter($day + 43200, \PDO::PARAM_INT)
+				),
+				$queryBuilder->expr()->lte(
+					'enddate', $queryBuilder->createNamedParameter(($day + 86400), \PDO::PARAM_INT)
+				)
+				
+			)
+		);
+		$result = $queryBuilder->execute()->fetchAll();
+		return $result;
+	}
+
+
+
+
+
 	/*
 	 *	insert a booking
 	 *

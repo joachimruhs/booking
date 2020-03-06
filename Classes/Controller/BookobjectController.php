@@ -595,7 +595,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 //print_r($requestArguments);
 
-
 		$year = intval($requestArguments['year']);
 		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
 		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
@@ -613,21 +612,25 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$bookobjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
 		if (!$this->deletedData['bookingDate']) { //showWeek called not from bookingForm
-
+			if (!$requestArguments['bookingDate']) {
+				$requestArguments['bookingDate'] = time();
+			}
+			
 			$month = intval($requestArguments['month']);
 			$year = intval($requestArguments['year']);
 	
 			$bookingDate = $requestArguments['date'];
 
 			$dayOfWeek = date('N', $requestArguments['date']);
+
+			$requestArguments['date'] = strtotime(date('d-m-Y', $requestArguments['date']));
+
 			$startOfWeek = $requestArguments['date'] - ($dayOfWeek - 1) * 86400;
 			$endOfWeek = $startOfWeek + 6 * 86400 + 86399;
 
 			$theWeek = date("W", $startOfWeek);
 			$theYear = date("Y", $startOfWeek);
 
-			if (!$requestArguments['bookingDate'])
-			$requestArguments['bookingDate'] = time();
 
 			list($day, $month, $year) = GeneralUtility::intExplode('.', date('d.m.Y', $requestArguments['bookingDate']));
 			
@@ -639,7 +642,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				exit;
 			}
 			
-	//		$bookingobjectUid = intval($requestArguments['bookingobjectUid']);
 			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid']));
 			// get bookings of the day
 			for ($wd = 0; $wd < 7; $wd++) {
@@ -649,7 +651,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$dayTimes[] = $dayTime;
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
-				$operating[$bookobjectUid] = 33;
 			}
 
 		} else { ///////////////////  we have $data form bookingForm ////////////////////
@@ -718,10 +719,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('dayTimes', $dayTimes);
 		$view->assign('bookobject', $bookobject);
 		$view->assign('bookings', $bookings);
-		$view->assign('hours', [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
-//		$view->assign('hours', [10,11,12,13]);
-		$view->assign('disabledHours', $disabledHours);
-
+		$view->assign('hours', GeneralUtility::intExplode(',', $this->settings['hoursToDisplay']));
+	
 		$view->assign('now', time());
 		print_r($view->render());
 		exit;		

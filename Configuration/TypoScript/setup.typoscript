@@ -25,6 +25,7 @@ plugin.tx_booking {
 
 	settings {
 		defaultCalendar = {$plugin.tx_booking.settings.defaultCalendar}
+		hoursToDisplay = {$plugin.tx_booking.settings.hoursToDisplay}
 	}	
 }
 
