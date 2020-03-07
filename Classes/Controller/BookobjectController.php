@@ -650,11 +650,12 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$theDays[] = date('d.m.Y', $dayTime);
 				$dayTimes[] = $dayTime;
 
+			if ($this->settings['useNewWeekTemplate']) {
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
-
+			} else {
 				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
 				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
-
+			}
 
 			}
 
