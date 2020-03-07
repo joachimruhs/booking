@@ -673,7 +673,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 			$offset = date('z', time());
 			$offset = 0;
-			$startOfWeek = strtotime($theYear . 'W' . str_pad($theWeek, 2, '0', STR_PAD_LEFT) . ' +' . $offset . 'days'); 
+
+			$dayOfWeek = date('N', $dayTime);
+			$startOfWeek = $requestArguments['date'] - ($dayOfWeek - 1) * 86400;
 			$endOfWeek = $startOfWeek + 6 * 86400 + 86399;
 
 			$dayTime = strtotime($day . '-' . $month . '-' . $year);
@@ -715,7 +717,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 		
 		if ($this->settings['useNewWeekTemplate']) {
-			$view = $this->getView('newweek');
+			$view = $this->getView('newWeek');
 			$view->assign('hours', GeneralUtility::intExplode(',', $this->settings['hoursToDisplay']));
 		} else {
 			$view = $this->getView('week');
