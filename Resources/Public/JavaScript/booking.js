@@ -10,3 +10,5 @@ jQuery.fn.center = function () {
   return this;
 }
 
+// call
+// $('.error').center();
