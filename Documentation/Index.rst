@@ -56,7 +56,7 @@ Booking
 :License:
    This extension documentation is published under the `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/>`__ (Creative Commons) license
 
-Booking extension for FE users
+Booking extension for FE users for objects on a hourly base
 
 **TYPO3**
 
