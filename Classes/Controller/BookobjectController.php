@@ -652,10 +652,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
 
-
-//				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
-//				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
-
+				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
+				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
 
 
 			}
@@ -684,7 +682,12 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$dayTimes[] = $dayTime;
 
 				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
-				$operating[$bookobjectUid] = 33;
+
+				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
+				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
+
+
+//				$operating[$bookobjectUid] = 33;
 			}
 
 		}
@@ -710,7 +713,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 		
-		$view = $this->getView('week');
+		if ($this->settings['useNewWeekTemplate']) {
+			$view = $this->getView('newweek');
+			$view->assign('hours', GeneralUtility::intExplode(',', $this->settings['hoursToDisplay']));
+		} else {
+			$view = $this->getView('week');
+			$view->assign('hours', [0,1,2,3,4,5,6,7,8,9,10,11]);
+		}
+
 		$view->assign('out', $out);
 		
 		$view->assign('message', $this->deletedData['error']);
@@ -726,8 +736,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('dayTimes', $dayTimes);
 		$view->assign('bookobject', $bookobject);
 		$view->assign('bookings', $bookings);
-		$view->assign('hours', GeneralUtility::intExplode(',', $this->settings['hoursToDisplay']));
 	
+		$view->assign('bookingsAM', $bookingsAM);
+		$view->assign('bookingsPM', $bookingsPM);
+
+
 		$view->assign('now', time());
 		print_r($view->render());
 		exit;		

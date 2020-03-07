@@ -47,7 +47,7 @@
 					<tr><td>
 
 					<f:for each="{hours}" as="hour">
-						<div class="object{bookobject.uid}-{hour} am-pm" hours="{bookobject.hours}">{hour}:00
+						<div class="object{bookobject.uid}-{hour}" hours="{bookobject.hours}">{hour}:00
 			
 					<script>
 					var hours = $(".object{bookobject.uid}-{hour}").attr('hours');
@@ -59,14 +59,14 @@
 					}
 					</script>
 
-						<f:for each="{bookingsAM}" as="booking" iteration="iterBooking">
+						<f:for each="{bookings}" as="booking" iteration="iterBooking">
 								<f:for each="{booking}" as="book" iteration="iterBook">
 										<f:variable name="theHour" value='<f:format.date format="H">{book.startdate}</f:format.date>' />
 										<f:variable name="theDate" value='<f:format.date format="d.m.Y">{book.startdate}</f:format.date>' />
 
 										<f:if condition="{hour} == {theHour} && {theDate} == {weekDate} && {bookobject.uid} == {book.objectuid}">
 											<f:then>
-												<span class="booked"></span>
+												<span class="booked"></span> <f:format.crop maxCharacters="1" append="">{book.first_name}</f:format.crop><f:format.crop maxCharacters="1" append="">{book.last_name}</f:format.crop>
 											</f:then>
 											<f:else>
 											</f:else>
@@ -76,53 +76,7 @@
 						</f:for>
 						</div>
 
-					<div class="object{bookobject.uid}-{hour + 12} am-pm" hours="{bookobject.hours}">{hour + 12}:00
-					<script>
-					var hours = $(".object{bookobject.uid}-{hour + 12}").attr('hours');
-					var hourArr = hours.split(',');
-					pos = ($.inArray('{hour + 12}', hourArr)); 
-					if (pos >= 0) {
-//						console.log({hour} + ' ' + pos);
-						$(".tx-booking .object{bookobject.uid}-{hour + 12}").addClass("operating");
-					}
-					</script>
-
-
-						<f:for each="{bookingsPM}" as="booking" iteration="iterBooking">
-								<f:for each="{booking}" as="book" iteration="iterBook">
-										<f:variable name="theHour" value='<f:format.date format="H">{book.startdate}</f:format.date>' />
-										<f:variable name="theDate" value='<f:format.date format="d.m.Y">{book.startdate}</f:format.date>' />
-
-										<f:if condition="{hour + 12} == {theHour} && {theDate} == {weekDate} && {bookobject.uid} == {book.objectuid}">
-											<f:then>
-												<span class="booked"></span>
-											</f:then>
-											<f:else>
-											</f:else>
-										</f:if>
-								</f:for>
-
-						</f:for>
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
 					</f:for>					
-
 				</td></tr>
 				</table>
 			</f:for>

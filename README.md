@@ -16,6 +16,9 @@ The extension shows calendars of booking objects.  FE users can book / make a re
 #### Week view
 ![Calendar](Documentation/Images/Introduction/WeekCalendar.png "Calendar of week")
 
+#### New Week view
+![Calendar](Documentation/Images/Introduction/NewWeekCalendar.png "New Calendar of week")
+
 #### Booking form
 ![Calendar](Documentation/Images/Introduction/BookingForm.png "Booking form")
 

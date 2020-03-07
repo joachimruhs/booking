@@ -48,6 +48,10 @@ Screenshots
 	:width: 600px
 	:alt: Week Calendar
 
+.. image:: ../Images/Introduction/NewWeekCalendar.png
+	:width: 600px
+	:alt: New Week Calendar
+
 **Booking form** 
 
 .. image:: ../Images/Introduction/BookingForm.png

@@ -218,8 +218,22 @@
 .tx-booking .weekView .bookobjectTitle {
 		margin-top: 30px;
 		font-size: 25px;
+		font-weight: bold;
 }
 /* Links for previos week */
 .tx-booking .previousWeek, .tx-booking .nextWeek  {
 		width: 20px;
 }
+
+.tx-booking .weekdayTable {
+		width: 110px;
+}
+.tx-booking .am-pm {
+		float: left;
+		width: 50%;
+}
+.tx-booking .weekSelector {
+		font-weight: bold;
+		font-size: 20px;
+}
+
