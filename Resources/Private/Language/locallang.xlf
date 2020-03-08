@@ -115,6 +115,9 @@
 			<trans-unit id="insertBookingRequireFeUser">
 				<source>To insert booking a logged in FE user is required!</source>
 			</trans-unit>
+			<trans-unit id="objectAlreadyBooked">
+				<source>The object is already booked at this time!</source>
+			</trans-unit>
 			
 		</body>
 	</file>

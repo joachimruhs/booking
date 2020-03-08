@@ -125,7 +125,6 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	/*
 	 *	get bookings for a date AM
 	 *	
-	 *  not used yet
 	 *  
 	 *	@param int $pid
 	 *	@param int $day
@@ -169,7 +168,6 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	/*
 	 *	get bookings for a date PM
 	 *	
-	 *  not used yet
 	 *  
 	 *	@param int $pid
 	 *	@param int $day
@@ -207,6 +205,41 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$result = $queryBuilder->execute()->fetchAll();
 		return $result;
 	}
+
+
+
+	/*
+	 *	get booking for a startdate and bookobjectUid
+	 *	
+	 *  
+	 *	@param int $pid
+	 *	@param int $bookobjectUid
+	 *	@param int $startdate
+	 *  
+	 *	@return array
+	 */	
+	function getBookingOfDateAndBookobject($pid, $bookobjectUid, $startdate) {
+		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
+			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+		$queryBuilder->from('tx_booking_domain_model_book', 'a');
+		$queryBuilder->select('a.*')
+
+		->where(
+			$queryBuilder->expr()->eq(
+				'a.pid',
+				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+			)
+		);
+		$queryBuilder->andWhere($queryBuilder->expr()->andX(
+			$queryBuilder->expr()->eq(
+					'startdate', $queryBuilder->createNamedParameter($startdate, \PDO::PARAM_INT)
+				)
+			)
+		);
+		$result = $queryBuilder->execute()->fetchAll();
+		return $result;
+	}
+
 
 
 

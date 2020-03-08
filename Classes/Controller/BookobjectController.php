@@ -869,6 +869,12 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertPastBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 		
+		$booking = $this->bookRepository->getBookingOfDateAndBookobject($this->conf['storagePid'], $bookobjectUid, $startdate);
+echo 9999;
+print_r($booking);		
+		if ($booking) {
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('objectAlreadyBooked', 'booking') . '</div><script>$(".error").center();</script>';
+		}
 
 		// if no errors, insert booking now
 		if (!$error)

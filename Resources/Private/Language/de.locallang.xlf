@@ -86,6 +86,9 @@
 			<trans-unit id="insertBookingRequireFeUser">
 				<target>Buchungen können nur von eingeloggten FE Usern durchgeführt werden!</target>
 			</trans-unit>
+			<trans-unit id="objectAlreadyBooked">
+				<target>Das Objekt ist zu dieser Zeit schon gebucht!</target>
+			</trans-unit>
 
 		</body>
 	</file>
