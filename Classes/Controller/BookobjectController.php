@@ -858,7 +858,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
 		if (!$feUserUid) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div>';
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 		
 		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
@@ -866,11 +866,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$startdate = $startdate + $hour * 3600;
 		$enddate = $startdate + 3600;
 		if ($startdate < time()) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertPastBooking', 'booking') . '</div>';
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertPastBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 		
 
-
+		// if no errors, insert booking now
 		if (!$error)
 			$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
 			
@@ -896,15 +896,13 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$startdate = $this->bookRepository->findByUid($bookUid)->getStartdate();
 
 		if ($startdate < time()) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deletePastBooking', 'booking') . '</div>';
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deletePastBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
 		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
-//		$feUserUid++; //for tests
-
 
 		if ($this->bookRepository->findByUid($bookUid)->getFeuseruid() != $feUserUid) {
-			$error = '<div class="error">You are not allowed to delete this booking!</div>';
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('notAllowedToDeleteBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
 		if (!$error)

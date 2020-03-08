@@ -13,6 +13,7 @@
 	padding: 20px;
 	background-color: orange;
 	font-weight: bold;
+	z-index: 100000;
 }
 
 
@@ -166,6 +167,13 @@
 .tx-booking .bookingTable tr:nth-child(2n) {
 	background-color: #e0e0e0;
 }
+
+.tx-booking .bookingTable img {
+	width: 50px;
+}
+
+
+
 
 /* scrollable table */
 .table-scrollable {

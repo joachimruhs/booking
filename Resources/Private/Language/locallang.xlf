@@ -109,6 +109,9 @@
 			<trans-unit id="deletePastBooking">
 				<source>Past bookings can not be deleted!</source>
 			</trans-unit>
+			<trans-unit id="notAllowedToDeleteBooking">
+				<source>You are not allowed to delete this booking!</source>
+			</trans-unit>
 			<trans-unit id="insertBookingRequireFeUser">
 				<source>To insert booking a logged in FE user is required!</source>
 			</trans-unit>

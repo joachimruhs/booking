@@ -80,6 +80,9 @@
 			<trans-unit id="deletePastBooking">
 				<target>Vergangene Buchungen können nicht gelöscht werden!</target>
 			</trans-unit>
+			<trans-unit id="notAllowedToDeleteBooking">
+				<target>Sie sind nicht berechtigt diese Buchung zu löschen!</target>
+			</trans-unit>
 			<trans-unit id="insertBookingRequireFeUser">
 				<target>Buchungen können nur von eingeloggten FE Usern durchgeführt werden!</target>
 			</trans-unit>
