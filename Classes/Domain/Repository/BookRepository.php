@@ -233,7 +233,11 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$queryBuilder->andWhere($queryBuilder->expr()->andX(
 			$queryBuilder->expr()->eq(
 					'startdate', $queryBuilder->createNamedParameter($startdate, \PDO::PARAM_INT)
+				),
+			$queryBuilder->expr()->eq(
+					'objectuid', $queryBuilder->createNamedParameter($bookobjectUid, \PDO::PARAM_INT)
 				)
+			
 			)
 		);
 		$result = $queryBuilder->execute()->fetchAll();
