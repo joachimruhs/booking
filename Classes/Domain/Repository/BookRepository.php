@@ -8,6 +8,8 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+
 /***
  *
  * This file is part of the "Booking" Extension for TYPO3 CMS.
@@ -73,6 +75,11 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	function getBookingsOfDate($pid, $day, $bookobjectUid) {
 		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
 			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+
+ 		$queryBuilder->getRestrictions()
+		->removeAll()
+		->add(GeneralUtility::makeInstance(DeletedRestriction::class));		
+
 		$queryBuilder->from('tx_booking_domain_model_book', 'a');
 		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
 
