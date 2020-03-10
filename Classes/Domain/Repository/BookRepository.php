@@ -8,6 +8,8 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+
 /***
  *
  * This file is part of the "Booking" Extension for TYPO3 CMS.
@@ -74,6 +76,9 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
 			->getQueryBuilderForTable('tx_boooking_domain_model_book');
 
+		$queryBuilder->getRestrictions()
+		->removeByType(HiddenRestriction::class);
+			
 		$queryBuilder->from('tx_booking_domain_model_book', 'a');
 		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
 
@@ -135,6 +140,10 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	function getBookingsOfDateAM($pid, $day) {
 		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
 			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+
+		$queryBuilder->getRestrictions()
+		->removeByType(HiddenRestriction::class);
+
 		$queryBuilder->from('tx_booking_domain_model_book', 'a');
 		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
 
@@ -178,6 +187,10 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	function getBookingsOfDatePM($pid, $day) {
 		$queryBuilder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Database\ConnectionPool::class)
 			->getQueryBuilderForTable('tx_boooking_domain_model_book');
+
+		$queryBuilder->getRestrictions()
+		->removeByType(HiddenRestriction::class);
+
 		$queryBuilder->from('tx_booking_domain_model_book', 'a');
 		$queryBuilder->select('a.*', 'users.username', 'first_name', 'last_name');
 
@@ -305,7 +318,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				)
 			)
 		)
-		->set('hidden', 1)
+		->set('deleted', 1)
 		->execute();
 	}
 	
