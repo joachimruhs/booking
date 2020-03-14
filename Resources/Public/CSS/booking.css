@@ -107,6 +107,7 @@
 .tx-booking table.monthMultiRow .monthNameMultiRow {
 	font-weight: bold;
 	vertical-align: middle;
+	text-align: center;
 }
 .tx-booking .bookObjectName {
 	font-weight: normal !important;
