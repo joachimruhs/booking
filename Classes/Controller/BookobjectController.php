@@ -850,7 +850,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 
 //print_r($requestArguments);
-print_r($this->settings);
 
 		$startdate = intval($requestArguments['dayTime']);
 		$hour = intval($requestArguments['hour']);
@@ -896,8 +895,9 @@ print_r($this->settings);
 					'memo' => $memo
 			];
 
-
-			$this->sendTemplateEmail($recipient, $sender, $this->settings['mailSubject'], $templateName, $variables);
+			if ($this->settings['activateFeUserMail'] && $feUser->getEmail()) {
+				$this->sendTemplateEmail($recipient, $sender, $this->settings['mailSubject'], $templateName, $variables);
+			}
 		}
 			
 		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
