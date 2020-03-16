@@ -889,9 +889,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 					'firstname' =>  $feUser->getFirstName(),
 					'lastname' =>  $feUser->getLastName(),
 					'bookobject' =>  $bookobject,
-					'date' => date('d.m.Y', $startdate),
-					'starttime' =>  date('H:i', $startdate),
-					'endtime' =>  date('H:i', $enddate),
+					'startdate' => $startdate,
 					'memo' => $memo
 			];
 
