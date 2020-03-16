@@ -172,4 +172,87 @@ hoursToDisplay
          7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
 
 		 
+activateFeUserMail
+""""""""""""""""""
 
+.. container:: table-row
+
+   Property
+         Activation of FE user mail
+
+   Data type
+         boolean
+
+   Description
+         If activated, a mail is send to the FE user when a booking is done
+
+   Default
+         0
+
+mailSubject
+"""""""""""
+
+.. container:: table-row
+
+   Property
+         Mail subject
+
+   Data type
+         string
+
+   Description
+         Mail subject
+
+   Default
+         -
+
+mailFromName
+""""""""""""
+
+.. container:: table-row
+
+   Property
+         Mail from name
+
+   Data type
+         string
+
+   Description
+         Mail from name
+
+   Default
+         -
+
+mailFromAddress
+"""""""""""""""
+
+.. container:: table-row
+
+   Property
+         Mail from address
+
+   Data type
+         string
+
+   Description
+         Mail from address
+
+   Default
+         -
+
+mailAttachment
+""""""""""""""
+
+.. container:: table-row
+
+   Property
+         Mail attachment
+
+   Data type
+         string
+
+   Description
+         Mail atttachment, f.e fileadmin/booking/mailattachment.txt
+
+   Default
+         -
