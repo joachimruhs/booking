@@ -949,9 +949,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		//	$message->attach(\Swift_Attachment::fromPath($attachment));
 		//}
 
-		$attachment = $this->settings['mailAttachment'];
-		$message->attach(\Swift_Attachment::fromPath(Environment::getPublicPath() . '/' . $attachment));	
-
+		if ($this->settings['mailAttachment']) {
+			$attachment = $this->settings['mailAttachment'];
+			$message->attach(\Swift_Attachment::fromPath(Environment::getPublicPath() . '/' . $attachment));	
+		}
 		// Plain text example
 //		$message->setBody($emailBody, 'text/plain');
 	
