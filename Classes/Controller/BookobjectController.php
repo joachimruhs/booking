@@ -892,7 +892,8 @@ print_r($this->settings);
 					'bookobject' =>  $bookobject,
 					'date' => date('d.m.Y', $startdate),
 					'starttime' =>  date('H:i', $startdate),
-					'endtime' =>  date('H:i', $enddate)
+					'endtime' =>  date('H:i', $enddate),
+					'memo' => $memo
 			];
 
 
@@ -949,7 +950,10 @@ print_r($this->settings);
 		//foreach ($attachments as $attachment) {
 		//	$message->attach(\Swift_Attachment::fromPath($attachment));
 		//}
-	
+
+		$attachment = $this->settings['mailAttachment'];
+		$message->attach(\Swift_Attachment::fromPath(Environment::getPublicPath() . '/' . $attachment));	
+
 		// Plain text example
 //		$message->setBody($emailBody, 'text/plain');
 	

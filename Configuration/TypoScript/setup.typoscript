@@ -33,10 +33,10 @@ plugin.tx_booking {
 		mailSubject = {$plugin.tx_booking.settings.mailSubject}
 		mailFromName = {$plugin.tx_booking.settings.mailFromName}
 		mailFromAddress = {$plugin.tx_booking.settings.mailFromAddress}
-		mailAttachement = {$plugin.tx_booking.settings.mailAttachement}
+		mailAttachment = {$plugin.tx_booking.settings.mailAttachment}
 
-		offDutyBegin = {$plugin.tx_booking.settings.offDutyBegin}
-		offDutyEnd = {$plugin.tx_booking.settings.offDutyEnd}
+//		offDutyBegin = {$plugin.tx_booking.settings.offDutyBegin}
+//		offDutyEnd = {$plugin.tx_booking.settings.offDutyEnd}
 	}	
 }
 

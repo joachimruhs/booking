@@ -51,13 +51,13 @@ plugin.tx_booking {
 		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail from address: The mail from address
 		mailFromAddress = admin@bookingsystem.de
 		
-		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail attachement: The attachement of the mail
-		mailAttachement = 
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail attachment: The attachment of the mail, f.e. fileadmin/includes/ext/booking/mailattachment.txt 
+		mailAttachment = 
 		
-		# cat=plugin.tx_booking/generalOptions; type=string; label=Off duty begin: Off duty begin
-		offDutyBegin = 
+//		# cat=plugin.tx_booking/generalOptions; type=string; label=Off duty begin: Off duty begin
+//		offDutyBegin = 
 		
-		# cat=plugin.tx_booking/generalOptions; type=string; label=Off duty end: Off duty end
-		offDutyEnd = 
+//		# cat=plugin.tx_booking/generalOptions; type=string; label=Off duty end: Off duty end
+//		offDutyEnd = 
 	}
 }
