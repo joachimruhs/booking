@@ -1,7 +1,8 @@
 
 plugin.tx_booking {
     view {
-        templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
+ //       templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
+        templateRootPaths.0 = EXT:booking/Resources/Private/Templates/
         templateRootPaths.1 = {$plugin.tx_booking.view.templateRootPath}
         partialRootPaths.0 = EXT:booking/Resources/Private/Partials/
         partialRootPaths.1 = {$plugin.tx_booking.view.partialRootPath}
@@ -27,6 +28,15 @@ plugin.tx_booking {
 		defaultCalendar = {$plugin.tx_booking.settings.defaultCalendar}
 		hoursToDisplay = {$plugin.tx_booking.settings.hoursToDisplay}
 		useNewWeekTemplate = {$plugin.tx_booking.settings.useNewWeekTemplate}
+		
+		activateFeUserMail = {$plugin.tx_booking.settings.activateFeUserMail}
+		mailSubject = {$plugin.tx_booking.settings.mailSubject}
+		mailFromName = {$plugin.tx_booking.settings.mailFromName}
+		mailFromAddress = {$plugin.tx_booking.settings.mailFromAddress}
+		mailAttachement = {$plugin.tx_booking.settings.mailAttachement}
+
+		offDutyBegin = {$plugin.tx_booking.settings.offDutyBegin}
+		offDutyEnd = {$plugin.tx_booking.settings.offDutyEnd}
 	}	
 }
 

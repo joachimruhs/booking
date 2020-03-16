@@ -38,5 +38,26 @@ plugin.tx_booking {
 
 		# cat=plugin.tx_booking/generalOptions; type=string; label=Hours: Hours for calendar week 
 		hoursToDisplay = 7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+		
+		# cat=plugin.tx_booking/generalOptions; type=boolean; label=Activate FE User mail: Send mail to FE User 
+		activateFeUserMail = 0
+		
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail subject: The subject of the mail
+		mailSubject = Bookingsystem Information
+
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail from name: Mail from name
+		mailFromName = TYPO3 Bookingsystem
+		
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail from address: The mail from address
+		mailFromAddress = admin@bookingsystem.de
+		
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Mail attachement: The attachement of the mail
+		mailAttachement = 
+		
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Off duty begin: Off duty begin
+		offDutyBegin = 
+		
+		# cat=plugin.tx_booking/generalOptions; type=string; label=Off duty end: Off duty end
+		offDutyEnd = 
 	}
 }

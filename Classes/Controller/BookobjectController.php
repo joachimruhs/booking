@@ -850,6 +850,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 
 //print_r($requestArguments);
+print_r($this->settings);
 
 		$startdate = intval($requestArguments['dayTime']);
 		$hour = intval($requestArguments['hour']);
@@ -875,13 +876,92 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		// if no errors, insert booking now
-		if (!$error)
+		if (!$error) {
 			$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
+			$feUser = $this->feUsersRepository->findByUid($feUserUid);
+			$bookobject = $this->bookobjectRepository->findByUid($bookobjectUid);
+
+			$recipient = [$feUser->getEmail() => $feUser->getFirstName() . ' ' . $feUser->getLastName()];
+			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
+			$templateName = 'CustomerMail';
+			$variables = [
+					'fromName' =>  $this->settings['mailFromName'],
+					'fromEmail' =>  $this->settings['mailFromEmail'],
+					'firstname' =>  $feUser->getFirstName(),
+					'lastname' =>  $feUser->getLastName(),
+					'bookobject' =>  $bookobject,
+					'date' => date('d.m.Y', $startdate),
+					'starttime' =>  date('H:i', $startdate),
+					'endtime' =>  date('H:i', $enddate)
+			];
+
+
+			$this->sendTemplateEmail($recipient, $sender, $this->settings['mailSubject'], $templateName, $variables);
+		}
 			
 		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
 
 		return $this->showBookingForm();
 	}	
+
+	/**
+	* @param array $recipient recipient of the email in the format array('recipient@domain.tld' => 'Recipient Name')
+	* @param array $sender sender of the email in the format array('sender@domain.tld' => 'Sender Name')
+	* @param string $subject subject of the email
+	* @param string $templateName template name (UpperCamelCase)
+	* @param array $variables variables to be passed to the Fluid view
+	* @return boolean TRUE on success, otherwise false
+	*/
+	protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName, array $variables = array()) {
+		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
+		$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+	
+		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+										'booking');
+
+		$templateRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPaths']['1']);
+
+		$templatePathAndFilename = $templateRootPath . 'Email/' . $templateName . '.html';
+	
+		if (!is_file($templatePathAndFilename)) {
+				$templateRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPaths']['0']);
+				$templatePathAndFilename = $templateRootPath . 'Email/' . $templateName . '.html';
+		}	
+
+
+		$layoutRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['layoutRootPaths'][1]) . 'Email/';
+		$partialRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['partialRootPaths'][1]) . 'Email/';
+		$emailView->setLayoutRootPaths(array($layoutRootPath));
+		$emailView->setPartialRootPaths(array($partialRootPath));
+
+		$emailView->setTemplatePathAndFilename($templatePathAndFilename);
+		$emailView->assignMultiple($variables);
+
+		$emailBody = $emailView->render();
+	
+		/** @var $message \TYPO3\CMS\Core\Mail\MailMessage */
+		$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+		$message->setTo($recipient)
+			  ->setFrom($sender)
+			  ->setSubject($subject);
+	
+		// Possible attachments here
+		//foreach ($attachments as $attachment) {
+		//	$message->attach(\Swift_Attachment::fromPath($attachment));
+		//}
+	
+		// Plain text example
+//		$message->setBody($emailBody, 'text/plain');
+	
+	
+		// HTML Email
+		$message->setBody($emailBody, 'text/html');
+	
+		$message->send();
+		return $message->isSent();
+	}
+
+
 	
 	
     /**
