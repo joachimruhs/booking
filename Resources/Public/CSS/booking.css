@@ -93,10 +93,12 @@
 	vertical-align: middle;
 	line-height: 25px;
 	font-size: 25px;
+	cursor: pointer;
 }
 .tx-booking table.monthMultiRow .prevMonth {
 	line-height: 25px;
 	font-size: 25px;
+	cursor: pointer;
 }
 
 
@@ -231,10 +233,12 @@
 /* Links for previos week */
 .tx-booking .previousWeek, .tx-booking .nextWeek  {
 		width: 20px;
+		cursor: pointer;
 }
 
 .tx-booking .weekdayTable {
 		width: 110px;
+		cursor: pointer;
 }
 .tx-booking .am-pm {
 		float: left;
