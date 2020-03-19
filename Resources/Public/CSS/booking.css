@@ -120,6 +120,7 @@
 .tx-booking .tableMultiRow td.vacantWeekend {
 	text-align: center;
 	background-color: #8080ff;
+	cursor: pointer;
 }
 
 
@@ -127,6 +128,7 @@
 .tx-booking .tableMultiRow td.bookedDay {
 	text-align: center;
 	background-color: #fff;
+	cursor: pointer;
 }
 
 
@@ -143,10 +145,12 @@
 	background-image: url('../Icons/partialBooked.png');
 	background-size: 32px 40px;
 	text-align: center;
+	cursor: pointer;
 }
 /* booked day booking */
 .tx-booking .tableMultiRow td.bookedDay {
 	background-color: #FF9933;
+	cursor: pointer;
 }
 
 /********** booking form **********/
