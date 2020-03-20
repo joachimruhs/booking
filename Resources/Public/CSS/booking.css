@@ -176,6 +176,9 @@
 .tx-booking .bookingTable img {
 	width: 50px;
 }
+.tx-booking .bookingTable img.insertBooking, .tx-booking .bookingTable img.deleteBooking {
+	cursor: pointer;
+}
 
 
 
