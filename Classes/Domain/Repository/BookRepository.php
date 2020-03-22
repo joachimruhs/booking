@@ -30,7 +30,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 	 *
 	 *	@param int $pid
 	 *	@param int $objectUid
-	 *	@param int $date
+	 *	@param int $day
 	 *
 	 *	@return int
 	 */	
@@ -54,7 +54,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 					$queryBuilder->expr()->gte('startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT))
 				),
 				$queryBuilder->expr()->andX(
-					$queryBuilder->expr()->lte('enddate', $queryBuilder->createNamedParameter(($day + 3600 * 23), \PDO::PARAM_INT))
+					$queryBuilder->expr()->lte('enddate', $queryBuilder->createNamedParameter(($day + 3600 * 24), \PDO::PARAM_INT))
 				)
 			)
 		);
