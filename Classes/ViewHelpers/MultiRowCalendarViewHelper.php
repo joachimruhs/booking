@@ -33,7 +33,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 
 
-class MultiRowCalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class MultiRowCalendarViewHelper extends AbstractViewHelper {
 	/**
 	* Arguments Initialization
 	*/
@@ -61,9 +61,6 @@ class MultiRowCalendarViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstra
 		
 		$theYear = $year;
 
-//print_r($arguments);
-//echo '*****' . $arguments['bookObject']->getName();
-//exit;
 
 		$configurationManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Configuration\ConfigurationManager');
 		$configuration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
