@@ -958,8 +958,15 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	
 	
 		// HTML Email
-		$message->setBody($emailBody, 'text/html');
-	
+		$version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version ();
+		$versionArr = explode('.', $version);
+		$majorVersionNumber = $versionArr[0];
+		if ($majorVersionNumber == '9') {
+			$message->setBody($emailBody, 'text/html');
+		} else if ($majorVersionNumber == '10') {
+			$message->setBody()->html($emailBody);
+		}
+		
 		$message->send();
 		return $message->isSent();
 	}
