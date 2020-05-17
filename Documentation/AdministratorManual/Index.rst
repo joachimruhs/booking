@@ -10,7 +10,7 @@ Installation
 
 Target group: **Administrators**
 
-Import the extension from a local source or the TER like any other extension
+Import the extension from a local source or the TER like any other extension.
 
 Create some pages as shown below.
 
