@@ -97,6 +97,12 @@
 				<source>Sun</source>
 			</trans-unit>
 
+			<trans-unit id="bookDay">
+				<source>Book day</source>
+			</trans-unit>
+			<trans-unit id="deleteDay">
+				<source>Delete day</source>
+			</trans-unit>
 
 
 			<!-- messages -->

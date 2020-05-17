@@ -68,6 +68,12 @@
 				<target>So</target>
 			</trans-unit>
 
+			<trans-unit id="bookDay">
+				<target>Tag buchen</target>
+			</trans-unit>
+			<trans-unit id="deleteDay">
+				<target>Tag löschen</target>
+			</trans-unit>
 
 
 			<!-- messages -->
