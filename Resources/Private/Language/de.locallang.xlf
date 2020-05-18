@@ -95,6 +95,9 @@
 			<trans-unit id="objectAlreadyBooked">
 				<target>Das Objekt ist zu dieser Zeit schon gebucht!</target>
 			</trans-unit>
+			<trans-unit id="foreignBookingsFound">
+				<target>Es existieren Buchungen von anderen Frontend Usern oder nicht alle Stunden sind von Ihnen gebucht - das Löschen ist nicht möglich!</target>
+			</trans-unit>
 
 		</body>
 	</file>

@@ -30,7 +30,7 @@ The extension is configured with the constant editor of TYPO3.
 What's new?
 ^^^^^^^^^^^
 
-Completly rewritten with Extbase/Fluid and PSR-15 (Middleware). Therefor no update from earlier extension booking possible.
+Complete day bookings and day deletion implemented. 
 
 
 Screenshots

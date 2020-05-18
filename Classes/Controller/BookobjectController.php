@@ -235,6 +235,16 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$out = $this->insertBooking();
 		}
 
+		if ($requestArguments['calendar'] === 'insertDayBooking') {	
+			$out = $this->insertDayBooking();
+		}
+
+		if ($requestArguments['calendar'] === 'deleteDayBooking') {	
+			$out = $this->deleteDayBooking();
+		}
+		
+		
+		
 		echo $out;
 		return $response;
 
@@ -758,14 +768,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showBookingForm()
     {
-
-	
-	
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
 		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
-
-		if (!$this->deletedData['bookingDate']) { //showBoojingForm called not from deleteBooking
+		
+		if (!$this->deletedData['bookingDate']) { //showBookingForm called not from deleteBooking
 			$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 	
 			$year = intval($requestArguments['year']);
@@ -850,7 +857,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 
 //print_r($requestArguments);
-
 		$startdate = intval($requestArguments['dayTime']);
 		$hour = intval($requestArguments['hour']);
 		$bookobjectUid = intval($requestArguments['bookobjectUid']);
@@ -1006,6 +1012,87 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
 		return $this->showBookingForm();
 	}
+
+
+    /**
+     * delete all bookings of a day
+     *  
+     * @return string bookingForm
+     */
+    public function deleteDayBooking()
+    {
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+
+		$startdate = $requestArguments['dayTime'];
+		$bookobjectUid = $requestArguments['bookobjectUid'];
+
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+
+		$bookings = $this->bookRepository->getBookingsOfDateAndFeUser($this->conf['storagePid'], $startdate, $requestArguments['bookobjectUid'], $feUserUid);
+
+		$bookobject	= $this->bookobjectRepository->findByUid(intval($bookobjectUid));
+		$hours = $bookobject->getHours();			
+		$hours = GeneralUtility::intExplode(',', $hours);
+
+		if (count($bookings) != count($hours)) {
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
+		}
+		
+//		if ($this->bookRepository->findByUid($bookUid)->getFeuseruid() != $feUserUid) {
+//			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('notAllowedToDeleteBooking', 'booking') . '</div><script>$(".error").center();</script>';
+//		}
+
+		if (!$error) {
+			for ($i = 0; $i < count($bookings); $i++) {
+				$result = $this->bookRepository->deleteBooking($bookings[$i]['uid'], $feUserUid);
+			}
+		}
+		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+		return $this->showBookingForm();
+	}
+
+
+    /**
+     * insert day bookings
+     *  
+     * @return string bookingForm
+     */
+    public function insertDayBooking()
+    {
+		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+
+		$startdate = $requestArguments['dayTime'];
+		$bookobjectUid = $requestArguments['bookobjectUid'];
+
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+
+		$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $startdate, $requestArguments['bookobjectUid']);
+
+		$bookobject	= $this->bookobjectRepository->findByUid(intval($bookobjectUid));
+		$hours = $bookobject->getHours();			
+		$hours = GeneralUtility::intExplode(',', $hours);
+
+		if (count($bookings) > 0) {
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
+		}
+
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+		if (!$feUserUid) {
+			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
+		}
+
+		if (!$error) {
+			for ($i = 0; $i < count($hours); $i++) {
+				$startdate = $requestArguments['dayTime'] + $hours[$i] * 3600;  
+				$enddate = $startdate + 3600;
+				$memo = $requestArguments['memo'][$i];
+				$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
+			}
+		}
+		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+		return $this->showBookingForm();
+	}
+
 
 
 

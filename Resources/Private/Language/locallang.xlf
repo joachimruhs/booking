@@ -124,6 +124,9 @@
 			<trans-unit id="objectAlreadyBooked">
 				<source>The object is already booked at this time!</source>
 			</trans-unit>
+			<trans-unit id="foreignBookingsFound">
+				<source>There exist foreign bookings or not all hours are booked from you!</source>
+			</trans-unit>
 			
 		</body>
 	</file>

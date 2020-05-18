@@ -71,8 +71,6 @@
 				var bookobjectUid = $(this).children().attr('objectUid');
 				$('.tx-booking .legend').css('display', 'none');
 				getCalendar(month, year, 'form', bookingDate, bookobjectUid);
-				
-				
 			});
 
 			$('.tx-booking table img.insertBooking').click(function() {
@@ -150,6 +148,25 @@
 				getCalendar(month, year, 'week', bookingDate, bookobjectUid)
 			});
 
+
+			// allDay booking
+			$('.tx-booking .bookingForm #allDay').click(function() {
+				var dayTime = $(this).attr('date');
+				var hour = $(this).attr('hour');
+				var bookobjectUid = $(this).attr('bookobjectUid');
+				var memo = [];
+				$( "textarea" ).each(function( index ) {
+					memo[index] = $(this).val();
+				});
+				insertDayBooking(bookobjectUid, dayTime, '', memo);
+			});		
+			// delete allDay booking
+			$('.tx-booking .bookingForm button#noneDay').click(function() {
+				var dayTime = $(this).attr('date');
+				var bookobjectUid = $(this).attr('bookobjectUid');
+				deleteDayBooking(bookobjectUid, dayTime, '', '');
+			});		
+
 		});
 	}
 
@@ -187,7 +204,27 @@
 				}
 			};
 
-//console.log(requestParameter);			
+		$.post(ajaxRequestUrl, requestParameter, function (data) {
+			$('#ajaxResult').html(data);
+			$("table.bookingTable").wrap('<div class="table-scrollable"></div>');
+			eventFunctions();
+		});
+	}
+
+
+	function insertDayBooking(bookobjectUid, dayTime, hour, memo) {
+		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+			requestParameter = {
+				tx_booking_ajax : {
+					controller : 'BookObject',
+					action : 'ajaxPsr',
+					calendar: 'insertDayBooking',
+					dayTime: dayTime,
+					hour: hour,
+					bookobjectUid: bookobjectUid,
+					memo: memo
+				}
+			};
 
 		$.post(ajaxRequestUrl, requestParameter, function (data) {
 			$('#ajaxResult').html(data);
@@ -195,6 +232,32 @@
 			eventFunctions();
 		});
 	}
+
+
+
+	function deleteDayBooking(bookobjectUid, dayTime, hour, memo) {
+		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+			requestParameter = {
+				tx_booking_ajax : {
+					controller : 'BookObject',
+					action : 'ajaxPsr',
+					calendar: 'deleteDayBooking',
+					dayTime: dayTime,
+					hour: hour,
+					bookobjectUid: bookobjectUid,
+					memo: memo
+				}
+			};
+
+
+		$.post(ajaxRequestUrl, requestParameter, function (data) {
+			$('#ajaxResult').html(data);
+			$("table.bookingTable").wrap('<div class="table-scrollable"></div>');
+			eventFunctions();
+		});
+	}
+
+
 	
 	function eventFunctions() {
 			$('.tx-booking table img.insertBooking').click(function() {
@@ -208,6 +271,26 @@
 				var bookUid = $(this).attr('bookuid');
 				deleteBooking(bookUid);
 			});		
+
+			
+			// allDay booking
+			$('.tx-booking .bookingForm #allDay').click(function() {
+				var dayTime = $(this).attr('date');
+				var hour = $(this).attr('hour');
+				var bookobjectUid = $(this).attr('bookobjectUid');
+				var memo = [];
+				$( "textarea" ).each(function( index ) {
+					memo[index] = $(this).val();
+				});
+				insertDayBooking(bookobjectUid, dayTime, '', memo);
+			});		
+			// delete allDay booking
+			$('.tx-booking .bookingForm button#noneDay').click(function() {
+				var dayTime = $(this).attr('date');
+				var bookobjectUid = $(this).attr('bookobjectUid');
+				deleteDayBooking(bookobjectUid, dayTime, '', '');
+			});		
+
 
 			// showMonthView button
 			console.log('eventFunction');

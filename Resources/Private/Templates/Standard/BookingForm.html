@@ -21,7 +21,8 @@
 		<div class="Date"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
 
 		<f:comment> Whole day booking / deleting</f:comment>
-		<button class="btn btn-primary mr-2" id="allDay"><f:translate key="bookDay" /></button> <button class="btn btn-warning" id="noneDay"><f:translate key="deleteDay" /></button>
+		<button class="btn btn-primary mr-2" id="allDay" bookobjectUid="{bookobject.uid}" date="{dayTime}"><f:translate key="bookDay" /></button>
+		<button class="btn btn-warning" id="noneDay" bookobjectUid="{bookobject.uid}" date="{dayTime}"><f:translate key="deleteDay" /></button>
 
 		
 		<table class="bookingTable">
@@ -76,14 +77,6 @@
 			if ($(".bkPlus").length != $(".bookingTable textarea").length){
 				$("#noneDay").addClass('d-none');
 			}
-
-
-			$("#allDay").click(function(){
-				$( "table.bookingTable .bkMinus" ).trigger( "click" );
-			});
-			$("#noneDay").click(function(){
-				$( "table.bookingTable .bkPlus" ).trigger( "click" );   
-			});
 		});
 		//</f:format.cdata>
 	</script>
