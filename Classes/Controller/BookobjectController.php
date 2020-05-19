@@ -1070,7 +1070,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		$bookobject	= $this->bookobjectRepository->findByUid(intval($bookobjectUid));
 		$hours = $bookobject->getHours();			
-		$hours = GeneralUtility::intExplode(',', $hours);
+		$hoursArray = GeneralUtility::intExplode(',', $hours);
 
 		if (count($bookings) > 0) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
@@ -1082,12 +1082,33 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		if (!$error) {
-			for ($i = 0; $i < count($hours); $i++) {
-				$startdate = $requestArguments['dayTime'] + $hours[$i] * 3600;  
+			$feUser = $this->feUsersRepository->findByUid($feUserUid);
+			for ($i = 0; $i < count($hoursArray); $i++) {
+				$startdate = $requestArguments['dayTime'] + $hoursArray[$i] * 3600;  
 				$enddate = $startdate + 3600;
 				$memo = $requestArguments['memo'][$i];
 				$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
 			}
+
+
+			if ($this->settings['activateFeUserMail'] && $feUser->getEmail()) {
+				$recipient = [$feUser->getEmail() => $feUser->getFirstName() . ' ' . $feUser->getLastName()];
+				$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
+				$templateName = 'CustomerMail';
+				$variables = [
+					'fromName' =>  $this->settings['mailFromName'],
+					'fromEmail' =>  $this->settings['mailFromEmail'],
+					'firstname' =>  $feUser->getFirstName(),
+					'lastname' =>  $feUser->getLastName(),
+					'bookobject' =>  $bookobject,
+					'startdate' => $startdate,
+					'hours' => $hours,
+					'memo' => $memo
+				];
+				$this->sendTemplateEmail($recipient, $sender, $this->settings['mailSubject'], $templateName, $variables);
+			}
+
+
 		}
 		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
 		return $this->showBookingForm();

@@ -37,7 +37,14 @@
 		Buchungsdaten:<br />
 		<f:format.date format="d.m.Y">{startdate}</f:format.date>
 		<br />
-		<f:format.date format="H:i">{startdate}</f:format.date> - <f:format.date format="H:i">{startdate + 3600}</f:format.date><br />
+		<f:if condition="{hours} > ''">
+			<f:then>
+				Stunden: {hours}<br />
+			</f:then>
+			<f:else>
+				<f:format.date format="H:i">{startdate}</f:format.date> - <f:format.date format="H:i">{startdate + 3600}</f:format.date><br />
+			</f:else>
+		</f:if>
 		{memo}
 		
 	</div>
