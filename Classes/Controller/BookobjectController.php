@@ -273,6 +273,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 
 	function showMonth() {
+		if (!$this->conf['storagePid']) {
+			$error = 'No storagePid or startingpoint given! <br />Please insert a storagePid in constant editor for the plugin or set the startingpoint of the plugin in flexform.';
+			echo '<div class="error">' . $error . '</div>';
+		}
+
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 
 		$year = intval($requestArguments['year']);
@@ -602,8 +607,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showWeek()
     {
+		if (!$this->conf['storagePid']) {
+			$error = 'No storagePid or startingpoint given! <br />Please insert a storagePid in constant editor for the plugin or set the startingpoint of the plugin in flexform.';
+			echo '<div class="error">' . $error . '</div>';
+		}
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-//print_r($requestArguments);
 
 		$year = intval($requestArguments['year']);
 		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
