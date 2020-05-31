@@ -156,9 +156,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
 		$bookObjects = $this->bookobjectRepository->findAll();
 
-//krexx ($GLOBALS['TSFE']->fe_user->user['uid']);
-//exit;
-
 		$this->view->assign('id', $GLOBALS['TSFE']->id);
 		$this->view->assign('settings', $this->settings);
 		$this->view->assign('month', date('m', time()));
@@ -213,9 +210,12 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($frontend->tmpl->setup['plugin.']['tx_booking.']);
 		$this->settings = $this->configuration['settings'];
 		$this->conf['storagePid'] = $this->configuration['persistence']['storagePid'];
-	
+
 		$this->request = $request;
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+
+		// is startingpoint used ?
+		if ($requestArguments['startingpoint']) $this->conf['storagePid'] = intval($requestArguments['startingpoint']);
 
 		if ($requestArguments['calendar'] === 'month') {	
 			$out = $this->showMonth();

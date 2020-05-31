@@ -44,6 +44,7 @@
 	var calendar = "<f:format.raw>{settings.defaultCalendar}</f:format.raw>";
 	var bookobjectUid = '';
 	var bookingDate = <f:format.raw>{bookingDate}</f:format.raw>;;
+	var startingpoint = '<f:format.raw>{settings.startingpoint}</f:format.raw>';
 	
 	////////// main ajax function //////////////
 	function getCalendar(m, y, calendar, bookingDate, bookobjectUid) {
@@ -56,6 +57,7 @@
 					month: m,
 					calendar: calendar,
 					date: bookingDate,
+					startingpoint: startingpoint,
 					bookobjectUid: bookobjectUid
 				}
 			};
@@ -179,7 +181,8 @@
 					calendar: 'deleteBooking',
 					date: bookingDate,
 					bookobjectUid: bookobjectUid,
-					bookUid: bookUid
+					bookUid: bookUid,
+					startingpoint: startingpoint
 				}
 			};
 
@@ -200,7 +203,8 @@
 					dayTime: dayTime,
 					hour: hour,
 					bookobjectUid: bookobjectUid,
-					memo: memo
+					memo: memo,
+					startingpoint: startingpoint
 				}
 			};
 
@@ -222,7 +226,8 @@
 					dayTime: dayTime,
 					hour: hour,
 					bookobjectUid: bookobjectUid,
-					memo: memo
+					memo: memo,
+					startingpoint: startingpoint
 				}
 			};
 
@@ -245,7 +250,8 @@
 					dayTime: dayTime,
 					hour: hour,
 					bookobjectUid: bookobjectUid,
-					memo: memo
+					memo: memo,
+					startingpoint: startingpoint
 				}
 			};
 

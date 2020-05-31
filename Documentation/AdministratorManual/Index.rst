@@ -256,3 +256,9 @@ mailAttachment
 
    Default
          -
+
+
+Known problems
+^^^^^^^^^^^^^^
+
+No images/icons are shown - if you use the fluid <f:image ...> tag in the templates, make sure you have set a one level Slug like '/snooker-tables'.

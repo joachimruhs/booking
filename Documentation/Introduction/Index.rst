@@ -30,7 +30,7 @@ The extension is configured with the constant editor of TYPO3.
 What's new?
 ^^^^^^^^^^^
 
-Complete day bookings and day deletion implemented. 
+Startingpoint implemented - you can use the startingpoint instead of the storagePid in extension constants.
 
 
 Screenshots

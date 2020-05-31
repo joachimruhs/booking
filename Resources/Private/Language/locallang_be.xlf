@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-06-02T11:47:18Z" product-name="booking">
+		<header/>
+		<body>
+			<trans-unit id="reservation_title" xml:space="preserve">
+				<source>Booking</source>
+			</trans-unit>
+			<trans-unit id="flexform_tab.settings" xml:space="preserve">
+				<source>Settings</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
