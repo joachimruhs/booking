@@ -128,8 +128,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function updateAction(\WSR\Booking\Domain\Model\Bookobject $bookobject)
     {
-        $this->addFlashMessage('The object was updated. Please be aware that this action is publicly accessible unless you implement an access check. See https://docs.typo3.org/typo3cms/extensions/extension_builder/User/Index.html', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
-        $this->bookobjectRepository->update($bookobject);
+        $this->addFlashMessage('This function is disabled!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+//        $this->bookobjectRepository->update($bookobject);
         $this->redirect('list');
     }
 
@@ -1159,27 +1159,4 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		return $fluidView;
 	}
 
-
-
-
-
-
-
-    /**
-     * action insertBooking
-     * 
-     * @return void
-     */
-    public function insertBookingAction()
-    {
-    }
-
-    /**
-     * action deleteBooking
-     * 
-     * @return void
-     */
-    public function deleteBookingAction()
-    {
-    }
 }
