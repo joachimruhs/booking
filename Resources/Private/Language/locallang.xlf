@@ -45,7 +45,7 @@
 			<trans-unit id="partialBooked">
 				<source>Partial booked</source>
 			</trans-unit>
-			<trans-unit id="Not availabe">
+			<trans-unit id="NotAvailabe">
 				<source>Not available</source>
 			</trans-unit>
 			<trans-unit id="available">
@@ -76,25 +76,25 @@
 			</trans-unit>
 
 			<trans-unit id="Mon">
-				<source>Mon</source>
+				<source>Mo</source>
 			</trans-unit>
 			<trans-unit id="Tue">
-				<source>Tue</source>
+				<source>Tu</source>
 			</trans-unit>
 			<trans-unit id="Wed">
-				<source>Wed</source>
+				<source>We</source>
 			</trans-unit>
 			<trans-unit id="Thu">
-				<source>Thu</source>
+				<source>Th</source>
 			</trans-unit>
 			<trans-unit id="Fri">
-				<source>Fri</source>
+				<source>Fr</source>
 			</trans-unit>
 			<trans-unit id="Sat">
-				<source>Sat</source>
+				<source>Sa</source>
 			</trans-unit>
 			<trans-unit id="Sun">
-				<source>Sun</source>
+				<source>Su</source>
 			</trans-unit>
 
 			<trans-unit id="bookDay">
