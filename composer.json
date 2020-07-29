@@ -10,7 +10,7 @@
     ],
 	"license": "MIT",	
     "require": {
-        "typo3/cms-core": "^9.5.17 || ^10.4.2"
+        "typo3/cms-core": "^9.5.20 || ^10.4.6"
     },
     "autoload": {
         "psr-4": {

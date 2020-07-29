@@ -45,7 +45,7 @@
 			<trans-unit id="partialBooked">
 				<source>Partial booked</source>
 			</trans-unit>
-			<trans-unit id="notAvailabe">
+			<trans-unit id="notAvailable">
 				<source>Not available</source>
 			</trans-unit>
 			<trans-unit id="available">
