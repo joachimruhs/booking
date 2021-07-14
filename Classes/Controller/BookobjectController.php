@@ -174,10 +174,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	{
 		switch ($request->getMethod()) {
 			case 'GET':
-				$this->processGetRequest($request, $response);
+				$response = $this->processGetRequest($request, $response);
 				break;
 			case 'POST':
-				$this->processPostRequest($request, $response);
+				$response = $this->processPostRequest($request, $response);
 				break;
 			default:
 				$response->withStatus(405, 'Method not allowed');
@@ -244,9 +244,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 		
 		
-		
-		echo $out;
-		return $response;
+		return $out;		
 
 		//    $response->getBody()->write(json_encode($queryParams));
 		//    $response->getBody()->write($out);
