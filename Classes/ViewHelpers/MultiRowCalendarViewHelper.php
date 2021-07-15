@@ -10,7 +10,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2020 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
+ *  (c) 2020 - 2021 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
  *  
  *  All rights reserved
  *

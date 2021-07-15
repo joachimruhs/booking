@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "booking".
  *
- * Auto generated 17-05-2020 22:30
+ * Auto generated 15-07-2021 14:02
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
