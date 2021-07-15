@@ -1,6 +1,15 @@
 <?php
 defined('TYPO3_MODE') or die();
 
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'WSR.Booking',
+    'Reservation',
+    'Booking (Reservation)'
+);
+
+
+
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['booking_reservation'] = 'recursive,select_key,pages';
 
 

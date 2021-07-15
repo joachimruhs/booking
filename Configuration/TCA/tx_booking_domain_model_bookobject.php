@@ -1,4 +1,5 @@
 <?php
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:booking/Resources/Private/Language/locallang_db.xlf:tx_booking_domain_model_bookobject',
