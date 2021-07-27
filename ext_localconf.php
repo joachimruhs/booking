@@ -6,14 +6,14 @@ call_user_func(
     {
 
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'WSR.Booking',
+            'Booking',
             'Reservation',
             [
-                'Bookobject' => 'calendarBase, showMonth, showWeek, showBookingForm, insertBooking, deleteBooking'
+				\WSR\Booking\Controller\BookobjectController::class => 'calendarBase, showMonth, showWeek, showBookingForm, insertBooking, deleteBooking'
             ],
             // non-cacheable actions
             [
-                'Bookobject' => 'calendarBase, showMonth, showWeek, showBookingForm, insertBooking, deleteBooking'
+				\WSR\Booking\Controller\BookobjectController::class => 'calendarBase, showMonth, showWeek, showBookingForm, insertBooking, deleteBooking'
             ]
         );
 
