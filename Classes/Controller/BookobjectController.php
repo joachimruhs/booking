@@ -774,9 +774,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showBookingForm()
     {
-		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
-		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
-		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
+//		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
+//		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
+		$bookobjectRepository = GeneralUtility::makeInstance('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
+//		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
+		$bookRepository = GeneralUtility::makeInstance('WSR\\Booking\\Domain\\Repository\\BookRepository');
 		
 		if (!$this->deletedData['bookingDate']) { //showBookingForm called not from deleteBooking
 			$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];

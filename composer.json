@@ -23,7 +23,6 @@
         }
     },
     "replace": {
-        "wsr/booking": "self.version",
         "typo3-ter/booking": "self.version"
     },
     "extra": {
