@@ -13,6 +13,7 @@ use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
+use TYPO3\CMS\Core\Http\Response;
 
 
 /***
@@ -168,9 +169,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 	/**
 	 * @param \Psr\Http\Message\ServerRequestInterface $request
-	 * @param \Psr\Http\Message\ResponseInterface      $response
+	 * @param TYPO3\CMS\Core\Http\Response      $response
 	 */
-	public function indexAction(ServerRequestInterface $request)
+	public function indexAction(ServerRequestInterface $request, Response $response)
 	{
 		switch ($request->getMethod()) {
 			case 'GET':
@@ -312,6 +313,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$settings['dayLabels'] = explode(',', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('dayNamesShortMultiRow', 'booking'));		
 
 		
+        $weekday = 0;
+        $out = '';
 		// loop over the bookingObjects
 		for ($o = 0; $o < count($bookObjects); $o++) {
 			$bookobjectUid = $bookObjects[$o]['uid'];
@@ -368,7 +371,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			// fetch the bookings for the object
 			$dayTime = strtotime($theYear."-".$mon."-".$d);			
 			$counts = $bookRepository->getBookingCounts($this->conf['storagePid'], $bookObjects[$o]['uid'], $dayTime);
-			
+                $title = '';
                 $wd = date('w', strtotime($theYear."-".$m."-". $d));
 
 				$weekNumber = strftime('%V', strtotime($theYear."-".$mon."-".$d));
@@ -617,18 +620,22 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$month = intval($requestArguments['month']);
 		$theYear = $year;
 
-		$week = intval($requestArguments['week']);
+		$requestArguments['week'] = $requestArguments['week'] ?? '';
+        $week = intval($requestArguments['week']);
 		if (!$week) $week = date('W', time());
 		$theWeek = $week;
 		
+        $bookingsAM = [];
+        $bookingsPM = [];
+
 		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
 		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
 		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
 		$bookobjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
-		if (!$this->deletedData['bookingDate']) { //showWeek called not from bookingForm
-			if (!$requestArguments['bookingDate']) {
+		if (!isset($this->deletedData['bookingDate'])) { //showWeek called not from bookingForm
+			if (!isset($requestArguments['bookingDate'])) {
 				$requestArguments['bookingDate'] = time();
 			}
 			
@@ -653,7 +660,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			if ($day > 31 || $day < 1) $error = 1;
 			if ($month > 12 || $month < 1) $error = 1;
 			if ($year > 2030 || $year < 2020) $error = 1;
-			if ($error) {
+			if (isset($error)) {
 				echo '<div class="typo3-messages error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('dateInputError', 'booking') . '</div>';
 				exit;
 			}
@@ -667,7 +674,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$dayTimes[] = $dayTime;
 
 			if ($this->settings['useNewWeekTemplate']) {
-				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid);
+				$bookings[$wd] = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $dayTime, $bookobjectUid ?? 0);
 			} else {
 				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
 				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
@@ -742,8 +749,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		$view->assign('out', $out);
 		
-		$view->assign('message', $this->deletedData['error']);
-		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid']);
+		$view->assign('message', $this->deletedData['error'] ?? '');
+		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0);
 		$view->assign('year', $theYear);
 		$view->assign('week', $theWeek);
 		$view->assign('bookobjects', $bookobjects);
@@ -780,15 +787,17 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 //		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 		$bookRepository = GeneralUtility::makeInstance('WSR\\Booking\\Domain\\Repository\\BookRepository');
 		
-		if (!$this->deletedData['bookingDate']) { //showBookingForm called not from deleteBooking
+		if (!isset($this->deletedData['bookingDate'])) { //showBookingForm called not from deleteBooking
 			$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 	
-			$year = intval($requestArguments['year']);
-			if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
-			if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
-			$month = intval($requestArguments['month']);
-			$theYear = $year;
-	
+			$requestArguments['year'] = $requestArguments['year'] ?? '';
+            if ($requestArguments['year']) {
+                $year = intval($requestArguments['year']);
+                if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
+                if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
+                $month = intval($requestArguments['month']);
+                $theYear = $year;
+            }
 			$lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 	
 			if (!$year)
@@ -808,7 +817,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			if ($day > 31 || $day < 1) $error = 1;
 			if ($month > 12 || $month < 1) $error = 1;
 			if ($year > 2030 || $year < 2020) $error = 1;
-			if ($error) {
+			if ($error ?? 0) {
 				echo '<div class="typo3-messages error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('dateInputError', 'booking') . '</div>';
 				exit;
 			}
@@ -839,10 +848,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		$view = $this->getView('bookingForm');
-		$view->assign('out', $out);
+		$view->assign('out', $out ?? '');
 		
-		$view->assign('message', $this->deletedData['error']);
-		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid']);
+		$view->assign('message', $this->deletedData['error'] ?? '');
+		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0);
 		$view->assign('dayTime', $dayTime);
 		$view->assign('bookobject', $bookobject);
 		$view->assign('bookings', $bookings);
@@ -870,7 +879,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$bookobjectUid = intval($requestArguments['bookobjectUid']);
 		$memo = $requestArguments['memo'];
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
 		if (!$feUserUid) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
 		}
