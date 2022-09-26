@@ -872,7 +872,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function insertBooking()
     {
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-
+        $error = '';
 //print_r($requestArguments);
 		$startdate = intval($requestArguments['dayTime']);
 		$hour = intval($requestArguments['hour']);
@@ -898,7 +898,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		// if no errors, insert booking now
-		if (!isset($error)) {
+		if ($error == '') {
 			$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
 			$feUser = $this->feUsersRepository->findByUid($feUserUid);
 			$bookobject = $this->bookobjectRepository->findByUid($bookobjectUid);
@@ -1007,7 +1007,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     {
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 		$bookUid = $requestArguments['bookUid'];
-		
+        $error = '';		
 		$bookobjectUid = $this->bookRepository->findByUid($bookUid)->getObjectuid();
 		$bookobject = $this->bookobjectRepository->findByUid($bookobjectUid);
 		
@@ -1023,7 +1023,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('notAllowedToDeleteBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
-		if (!isset($error))
+		if ($error == '')
 			$result = $this->bookRepository->deleteBooking($bookUid, $feUserUid);
 
 		$this->deletedData = ['error' => $error ?? '', 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
