@@ -884,7 +884,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 		
-		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+		$this->deletedData = ['error' => $error ?? '', 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
 
 		$startdate = $startdate + $hour * 3600;
 		$enddate = $startdate + 3600;
@@ -898,7 +898,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		// if no errors, insert booking now
-		if (!$error) {
+		if (!isset($error)) {
 			$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
 			$feUser = $this->feUsersRepository->findByUid($feUserUid);
 			$bookobject = $this->bookobjectRepository->findByUid($bookobjectUid);
@@ -907,8 +907,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
 			$templateName = 'CustomerMail';
 			$variables = [
-					'fromName' =>  $this->settings['mailFromName'],
-					'fromEmail' =>  $this->settings['mailFromEmail'],
+					'fromName' =>  $this->settings['mailFromName'] ?? '',
+					'fromEmail' =>  $this->settings['mailFromEmail'] ?? '',
 					'firstname' =>  $feUser->getFirstName(),
 					'lastname' =>  $feUser->getLastName(),
 					'bookobject' =>  $bookobject,
@@ -921,7 +921,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			}
 		}
 			
-		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+		$this->deletedData = ['error' => $error ?? '', 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
 
 		return $this->showBookingForm();
 	}	
@@ -1023,10 +1023,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('notAllowedToDeleteBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
-		if (!$error)
+		if (!isset($error))
 			$result = $this->bookRepository->deleteBooking($bookUid, $feUserUid);
 
-		$this->deletedData = ['error' => $error, 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
+		$this->deletedData = ['error' => $error ?? '', 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
 		return $this->showBookingForm();
 	}
 
