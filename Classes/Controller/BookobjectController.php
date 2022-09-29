@@ -614,10 +614,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
 
-		$year = intval($requestArguments['year']);
+		$year = intval($requestArguments['year'] ?? 0);
 		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
 		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
-		$month = intval($requestArguments['month']);
+		$month = intval($requestArguments['month'] ?? 1);
 		$theYear = $year;
 
 		$requestArguments['week'] = $requestArguments['week'] ?? '';
@@ -639,8 +639,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				$requestArguments['bookingDate'] = time();
 			}
 			
-			$month = intval($requestArguments['month']);
-			$year = intval($requestArguments['year']);
+			$month = intval($requestArguments['month'] ?? 1);
+			$year = intval($requestArguments['year'] ?? 1);
 	
 			$bookingDate = $requestArguments['date'];
 
@@ -665,7 +665,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 				exit;
 			}
 			
-			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid']));
+			$bookobject	= $this->bookobjectRepository->findByUid(intval($requestArguments['bookobjectUid'] ?? 0));
 			// get bookings of the day
 			for ($wd = 0; $wd < 7; $wd++) {
 
@@ -733,8 +733,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 //		echo 'in show week';
 		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
-		$month = intval($requestArguments['month']);
-		$year = intval($requestArguments['year']);
+		$month = intval($requestArguments['month'] ?? 1);
+		$year = intval($requestArguments['year'] ?? 0);
 		
 		$out = '<div onclick="getCalendar(' . $month . ',' . $year . ', \'month\', \'\');">Month</div> <br/>';
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
