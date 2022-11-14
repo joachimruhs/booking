@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="vi">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject">
+        <source>Bookobject</source>
+        <target state="needs-translation">Bookobject</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name">
+        <source>Name</source>
+        <target state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+        <source>Hours</source>
+        <target state="needs-translation">Hours</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book">
+        <source>Book</source>
+        <target state="needs-translation">Book</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid">
+        <source>Objectuid</source>
+        <target state="needs-translation">Objectuid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate">
+        <source>Startdate</source>
+        <target state="needs-translation">Startdate</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate">
+        <source>Enddate</source>
+        <target state="needs-translation">Enddate</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+        <source>Feuseruid</source>
+        <target state="needs-translation">Feuseruid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo">
+        <source>Memo</source>
+        <target state="needs-translation">Memo</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShortMultiRow">
+        <source>M,T,W,T,F,S,S</source>
+        <target state="needs-translation">M,T,W,T,F,S,S</target>
+      </trans-unit>
+      <trans-unit id="monthNamesShort">
+        <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
+        <target state="needs-translation">January,Februar,March,April,May,June,July,August,September,October,November,December</target>
+      </trans-unit>
+      <trans-unit id="calendarWeek">
+        <source>Calendarweek</source>
+        <target state="needs-translation">Calendarweek</target>
+      </trans-unit>
+      <trans-unit id="partialBooked">
+        <source>Partial booked</source>
+        <target state="needs-translation">Partial booked</target>
+      </trans-unit>
+      <trans-unit id="notAvailable">
+        <source>Not available</source>
+        <target state="needs-translation">Not available</target>
+      </trans-unit>
+      <trans-unit id="available">
+        <source>Available</source>
+        <target state="needs-translation">Available</target>
+      </trans-unit>
+      <trans-unit id="time">
+        <source>Time</source>
+        <target state="needs-translation">Time</target>
+      </trans-unit>
+      <trans-unit id="name">
+        <source>Name</source>
+        <target state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="Memo">
+        <source>Memo</source>
+        <target state="needs-translation">Memo</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Book</source>
+        <target state="needs-translation">Book</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Delete</source>
+        <target state="needs-translation">Book</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Week calendar</source>
+        <target state="needs-translation">Book</target>
+      </trans-unit>
+      <trans-unit id="monthView">
+        <source>Month calendar</source>
+        <target state="needs-translation">Month calendar</target>
+      </trans-unit>
+      <trans-unit id="Mon">
+        <source>Mo</source>
+        <target state="needs-translation">Mo</target>
+      </trans-unit>
+      <trans-unit id="Tue">
+        <source>Tu</source>
+        <target state="needs-translation">Tu</target>
+      </trans-unit>
+      <trans-unit id="Wed">
+        <source>We</source>
+        <target state="needs-translation">We</target>
+      </trans-unit>
+      <trans-unit id="Thu">
+        <source>Th</source>
+        <target state="needs-translation">Th</target>
+      </trans-unit>
+      <trans-unit id="Fri">
+        <source>Fr</source>
+        <target state="needs-translation">Fr</target>
+      </trans-unit>
+      <trans-unit id="Sat">
+        <source>Sa</source>
+        <target state="needs-translation">Sa</target>
+      </trans-unit>
+      <trans-unit id="Sun">
+        <source>Su</source>
+        <target state="needs-translation">Su</target>
+      </trans-unit>
+      <trans-unit id="bookDay">
+        <source>Book day</source>
+        <target state="needs-translation">Book day</target>
+      </trans-unit>
+      <trans-unit id="deleteDay">
+        <source>Delete day</source>
+        <target state="needs-translation">Delete day</target>
+      </trans-unit>
+      <!-- messages -->
+      <trans-unit id="dateInputError">
+        <source>Date input error!</source>
+        <target state="needs-translation">Date input error!</target>
+      </trans-unit>
+      <trans-unit id="insertPastBooking">
+        <source>Past bookings can not be inserted!</source>
+        <target state="needs-translation">Past bookings can not be inserted!</target>
+      </trans-unit>
+      <trans-unit id="deletePastBooking">
+        <source>Past bookings can not be deleted!</source>
+        <target state="needs-translation">Past bookings can not be deleted!</target>
+      </trans-unit>
+      <trans-unit id="notAllowedToDeleteBooking">
+        <source>You are not allowed to delete this booking!</source>
+        <target state="needs-translation">You are not allowed to delete this booking!</target>
+      </trans-unit>
+      <trans-unit id="insertBookingRequireFeUser">
+        <source>To insert booking a logged in FE user is required!</source>
+        <target state="needs-translation">To insert booking a logged in FE user is required!</target>
+      </trans-unit>
+      <trans-unit id="objectAlreadyBooked">
+        <source>The object is already booked at this time!</source>
+        <target state="needs-translation">The object is already booked at this time!</target>
+      </trans-unit>
+      <trans-unit id="foreignBookingsFound">
+        <source>There exist foreign bookings or not all hours are booked from you!</source>
+        <target state="needs-translation">There exist foreign bookings or not all hours are booked from you!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
