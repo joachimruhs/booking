@@ -1,0 +1,89 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:layout name="Default" />
+
+
+	<f:section name="content">
+
+<f:comment>
+<f:debug>{_all}</f:debug>
+		<f:flashMessages />
+</f:comment>
+
+		<script>
+			$('.tx-booking .legend').css('display', 'none');
+		</script>
+
+		<f:format.raw>{message}</f:format.raw>
+
+		<div class="weekView">
+
+		<div class="hidden" id="bookingDate">{dayTime}</div>
+		
+		<f:for each="{bookobjects}" as="bookobject">
+			<div class="bookobjectTitle">{bookobject.name}</div>
+			<div class="weekSelector">
+				<img class="previousWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-previous.svg"/>
+				<f:translate key="calendarWeek" extensionName="booking"/>
+				{week} - {year}
+				<img class="nextWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-next.svg"/>
+			</div>
+			<div class="bookobjectWeek">
+			<f:for each="{weekdays}" as="weekday" iteration="iterWeekday">
+				<table class="weekdayTable">
+					<f:for each="{days}" as="day" iteration="iterDay">
+						<f:if condition="{iterWeekday.index} == {iterDay.index}">
+							<f:variable name="weekDate" value='{day}' />
+						</f:if>		
+					</f:for>
+					
+					<f:for each="{dayTimes}" as="dayTime" iteration="iterDayTime">
+						<f:if condition="{iterWeekday.index} == {iterDayTime.index}">
+							<f:variable name="dayDate" value='{dayTime}' />
+						</f:if>		
+					</f:for>
+
+					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">
+						<f:translate extensionName="booking" key='<f:format.date format="D" >{dayDate}</f:format.date>' /> - <f:format.date format="d.m.Y">{dayDate}</f:format.date></td></tr>
+					<tr><td>
+
+					<f:for each="{hours}" as="hour">
+						<div class="object{bookobject.uid}-{hour}" hours="{bookobject.hours}">{hour}:00
+			
+					<script>
+					var hours = $(".object{bookobject.uid}-{hour}").attr('hours');
+					var hourArr = hours.split(',');
+					pos = ($.inArray('{hour}', hourArr)); 
+					if (pos >= 0) {
+//						console.log({hour} + ' ' + pos);
+						$(".tx-booking .object{bookobject.uid}-{hour}").addClass("operating");
+					}
+					</script>
+
+						<f:for each="{bookings}" as="booking" iteration="iterBooking">
+								<f:for each="{booking}" as="book" iteration="iterBook">
+										<f:variable name="theHour" value='<f:format.date format="H">{book.startdate}</f:format.date>' />
+										<f:variable name="theDate" value='<f:format.date format="d.m.Y">{book.startdate}</f:format.date>' />
+
+										<f:if condition="{hour} == {theHour} && {theDate} == {weekDate} && {bookobject.uid} == {book.objectuid}">
+											<f:then>
+												<span class="booked"></span> <f:format.crop maxCharacters="1" append="">{book.first_name}</f:format.crop><f:format.crop maxCharacters="1" append="">{book.last_name}</f:format.crop>
+											</f:then>
+											<f:else>
+											</f:else>
+										</f:if>
+								</f:for>
+
+						</f:for>
+						</div>
+
+					</f:for>					
+				</td></tr>
+				</table>
+			</f:for>
+		</div>
+		<div class="clearer"></div>			
+		</f:for> 		
+		</div>
+
+	</f:section>
+</html>

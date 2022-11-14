@@ -67,13 +67,30 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $this->bookRepository = $bookRepository;
     }
 
+	/**
+	 * userRepository
+	 * 
+     * @var \WSR\Booking\Domain\Repository\FeuserRepository
+ 	 */
+	protected $feuserRepository = NULL;
+
+    /**
+     * Inject a userRepository to enable DI
+     *
+     * @param  $feuserRepository
+     * @return void
+     */
+    public function injectFeuserRepository(\WSR\Booking\Domain\Repository\FeuserRepository $feuserRepository) {
+        $this->feuserRepository = $feuserRepository;
+    }
+
 
 	/**
 	 * usersRepository
 	 * 
 	 * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
  	 */
-	protected $feUsersRepository = NULL;
+//	protected $feUsersRepository = NULL;
 
     /**
      * Inject a userRepository to enable DI
@@ -81,9 +98,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @param \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUsersRepository
      * @return void
      */
-    public function injectFeUsersRepository(\TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUsersRepository) {
-        $this->feUsersRepository = $feUsersRepository;
-    }
+//    public function injectFeUsersRepository(\TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUsersRepository) {
+//        $this->feUsersRepository = $feUsersRepository;
+//    }
 
 
 
@@ -146,6 +163,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->view->assign('month', 2);
 		$this->view->assign('year', date('Y', time()));
 		$this->view->assign('bookObjects', $bookObjects);
+        return $this->responseFactory->createResponse()
+            ->withAddedHeader('Content-Type', 'text/html; charset=utf-8')
+            ->withBody($this->streamFactory->createStream($this->view->render()));        
     }
 
     /**
@@ -162,9 +182,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->view->assign('month', date('m', time()));
 		$this->view->assign('year', date('Y', time()));
 		$this->view->assign('bookingDate', time());
-//		$this->view->assign('bookObjects', $bookObjects);
-		return;
-    }
+        return $this->responseFactory->createResponse()
+            ->withAddedHeader('Content-Type', 'text/html; charset=utf-8')
+            ->withBody($this->streamFactory->createStream($this->view->render()));    }
 
 
 	/**
@@ -212,9 +232,21 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->settings = $this->configuration['settings'];
 		$this->conf['storagePid'] = $this->configuration['persistence']['storagePid'];
 
-		$this->request = $request;
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$this->request1 = $request;
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 
+        // fetching correct language for locallang labels
+ 		$languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
+		$sys_language_uid = $languageAspect->getId();
+
+        $siteConfiguration = $this->request1->getAttribute('site')->getConfiguration();
+        for ($i = 0; $i < count($siteConfiguration['languages']); $i++) {
+            if ($siteConfiguration['languages'][$i]['typo3Language'] == $sys_language_uid /*$requestArguments['language']*/) {
+                $this->language = $siteConfiguration['languages'][$i]['typo3Language'];
+            }
+        }
+        
+        
 		// is startingpoint used ?
 		if ($requestArguments['startingpoint']) $this->conf['storagePid'] = intval($requestArguments['startingpoint']);
 
@@ -271,13 +303,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	}
 
 
+
 	function showMonth() {
 		if (!$this->conf['storagePid']) {
 			$error = 'No storagePid or startingpoint given! <br />Please insert a storagePid in constant editor for the plugin or set the startingpoint of the plugin in flexform.';
 			echo '<div class="error">' . $error . '</div>';
 		}
 
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 
 		$year = intval($requestArguments['year']);
 		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
@@ -285,12 +318,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$month = intval($requestArguments['month']);
 		$theYear = $year;
 
-
-		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
-		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
-		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
-
-		$bookObjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
+		$bookObjects = $this->bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
         $lengthOfMonth = array (1 => 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
@@ -309,8 +337,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$conf['startOfWeek'] = 'monday';
 		$conf['markWeekends'] = 1; 
 
-		$settings['monthLabels'] = explode(',', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthNamesShort', 'booking'));
-		$settings['dayLabels'] = explode(',', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('dayNamesShortMultiRow', 'booking'));		
+		$settings['monthLabels'] = explode(',', $this->translate('monthNamesShort'));
+		$settings['dayLabels'] = explode(',', $this->translate('dayNamesShortMultiRow'));		
 
 		
         $weekday = 0;
@@ -370,7 +398,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 			// fetch the bookings for the object
 			$dayTime = strtotime($theYear."-".$mon."-".$d);			
-			$counts = $bookRepository->getBookingCounts($this->conf['storagePid'], $bookObjects[$o]['uid'], $dayTime);
+			$counts = $this->bookRepository->getBookingCounts($this->conf['storagePid'], $bookObjects[$o]['uid'], $dayTime);
                 $title = '';
                 $wd = date('w', strtotime($theYear."-".$m."-". $d));
 
@@ -612,7 +640,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error = 'No storagePid or startingpoint given! <br />Please insert a storagePid in constant editor for the plugin or set the startingpoint of the plugin in flexform.';
 			echo '<div class="error">' . $error . '</div>';
 		}
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 
 		$year = intval($requestArguments['year'] ?? 0);
 		if ($year < date('Y', time()) - 1) $year = date('Y', time()) - 1; 
@@ -628,11 +656,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $bookingsAM = [];
         $bookingsPM = [];
 
-		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
-		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
-		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
+//		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
+//		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
+//		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
 
-		$bookobjects = $bookobjectRepository->findAllNew($this->conf['storagePid']);			
+		$bookobjects = $this->bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
 		if (!isset($this->deletedData['bookingDate'])) { //showWeek called not from bookingForm
 			if (!isset($requestArguments['bookingDate'])) {
@@ -732,7 +760,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		
 
 //		echo 'in show week';
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 		$month = intval($requestArguments['month'] ?? 1);
 		$year = intval($requestArguments['year'] ?? 0);
 		
@@ -761,7 +789,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('dayTime', $dayTime);
 		$view->assign('dayTimes', $dayTimes);
 		$view->assign('bookobject', $bookobject);
-		$view->assign('bookings', $bookings);
+		$view->assign('bookings', $bookings = $bookings ?? []);
 	
 		$view->assign('bookingsAM', $bookingsAM);
 		$view->assign('bookingsPM', $bookingsPM);
@@ -770,7 +798,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('now', time());
 		print_r($view->render());
 		exit;		
-		
+//        return $this->responseFactory->createResponse()
+//            ->withAddedHeader('Content-Type', 'text/html; charset=utf-8')
+//            ->withBody($this->streamFactory->createStream($this->view->render()));		
 		
     }
 
@@ -781,14 +811,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function showBookingForm()
     {
-//		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
-//		$bookobjectRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
-		$bookobjectRepository = GeneralUtility::makeInstance('WSR\\Booking\\Domain\\Repository\\BookobjectRepository');
-//		$bookRepository = $objectManager->get('WSR\\Booking\\Domain\\Repository\\BookRepository');
-		$bookRepository = GeneralUtility::makeInstance('WSR\\Booking\\Domain\\Repository\\BookRepository');
-		
 		if (!isset($this->deletedData['bookingDate'])) { //showBookingForm called not from deleteBooking
-			$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+			$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 	
 			$requestArguments['year'] = $requestArguments['year'] ?? '';
             if ($requestArguments['year']) {
@@ -860,8 +884,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		$view->assign('now', time());
 
+		$view->assign('bookDayLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('bookDay', 'booking'));
+		$view->assign('deleteDayLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deleteDay', 'booking'));
+		$view->assign('weekViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('weekView', 'booking'));
+		$view->assign('monthViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthView', 'booking'));
+        
+        
 		print_r($view->render());
-		exit;		
+		exit;
     }
 
     /**
@@ -871,7 +901,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function insertBooking()
     {
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
         $error = '';
 //print_r($requestArguments);
 		$startdate = intval($requestArguments['dayTime']);
@@ -900,23 +930,26 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		// if no errors, insert booking now
 		if ($error == '') {
 			$result = $this->bookRepository->insertBooking($this->conf['storagePid'], $bookobjectUid, $startdate, $enddate, $feUserUid, $memo);
-			$feUser = $this->feUsersRepository->findByUid($feUserUid);
+			$feUser = $this->feuserRepository->findByUidOverride($feUserUid);
 			$bookobject = $this->bookobjectRepository->findByUid($bookobjectUid);
 
-			$recipient = [$feUser->getEmail() => $feUser->getFirstName() . ' ' . $feUser->getLastName()];
+//			$recipient = [$feUser->getEmailOverride() => $feUser->getFirstNameOverride() . ' ' . $feUser->getLastNameOverride()];
+//			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
+
+			$recipient = [$feUser['email'] => $feUser['firstname'] . ' ' . $feUser['lastname']];
 			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
+
 			$templateName = 'CustomerMail';
 			$variables = [
 					'fromName' =>  $this->settings['mailFromName'] ?? '',
 					'fromEmail' =>  $this->settings['mailFromEmail'] ?? '',
-					'firstname' =>  $feUser->getFirstName(),
-					'lastname' =>  $feUser->getLastName(),
+					'firstname' =>  $feUser['firstname'],
+					'lastname' =>  $feUser['lastname'],
 					'bookobject' =>  $bookobject,
 					'startdate' => $startdate,
 					'memo' => $memo
 			];
-
-			if ($this->settings['activateFeUserMail'] && $feUser->getEmail()) {
+			if ($this->settings['activateFeUserMail'] && $feUser['email']) {
 				$this->sendTemplateEmail($recipient, $sender, $this->settings['mailSubject'], $templateName, $variables);
 			}
 		}
@@ -987,7 +1020,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		
 		if ($versionMain == '9') {
 			$message->setBody($emailBody, 'text/html');
-		} else if ($versionMain == '10') {
+		} else if ($versionMain == '11' || $versionMain == '12') {
 			$message->setBody()->html($emailBody);
 		}
 		
@@ -1005,7 +1038,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function deleteBooking()
     {
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 		$bookUid = $requestArguments['bookUid'];
         $error = '';		
 		$bookobjectUid = $this->bookRepository->findByUid($bookUid)->getObjectuid();
@@ -1038,7 +1071,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function deleteDayBooking()
     {
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 
 		$startdate = $requestArguments['dayTime'];
 		$bookobjectUid = $requestArguments['bookobjectUid'];
@@ -1076,7 +1109,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function insertDayBooking()
     {
-		$requestArguments = $this->request->getParsedBody()['tx_booking_ajax'];
+		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 
 		$startdate = $requestArguments['dayTime'];
 		$bookobjectUid = $requestArguments['bookobjectUid'];
@@ -1099,7 +1132,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		if (!$error) {
-			$feUser = $this->feUsersRepository->findByUid($feUserUid);
+			$feUser = $this->feusersRepository->findByUid($feUserUid);
 			for ($i = 0; $i < count($hoursArray); $i++) {
 				$startdate = $requestArguments['dayTime'] + $hoursArray[$i] * 3600;  
 				$enddate = $startdate + 3600;
@@ -1160,7 +1193,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$fluidView->setLayoutRootPaths($this->configuration['view']['layoutRootPaths']);
 		$fluidView->setTemplateRootPaths($this->configuration['view']['templateRootPaths']);
 		$fluidView->setPartialRootPaths($this->configuration['view']['partialRootPaths']);
-		$fluidView->getRequest()->setControllerExtensionName('Booking');
+//		$fluidView->getRequest()->setControllerExtensionName('Booking');
 //		$fluidView->setTemplate('index');
 		$fluidView->setTemplate($template);
 
@@ -1168,4 +1201,16 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		return $fluidView;
 	}
 
+    
+	/**
+	 * Returns the translation of $key
+	 *
+	 * @param string $key
+	 * @return string
+	 */
+	protected function translate($key)
+	{
+        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'booking', []);
+	}
+    
 }

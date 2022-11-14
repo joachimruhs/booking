@@ -21,12 +21,12 @@
 		<div class="Date"><f:format.date format="d.m.Y">{dayTime}</f:format.date></div>
 
 		<f:comment> Whole day booking / deleting</f:comment>
-		<button class="btn btn-primary mr-2" id="allDay" bookobjectUid="{bookobject.uid}" date="{dayTime}"><f:translate key="bookDay" extensionName="booking"/></button>
-		<button class="btn btn-warning" id="noneDay" bookobjectUid="{bookobject.uid}" date="{dayTime}"><f:translate key="deleteDay" extensionName="booking"/></button>
+		<button class="btn btn-primary mr-2" id="allDay" bookobjectUid="{bookobject.uid}" date="{dayTime}">{bookDayLabel}</button>
+		<button class="btn btn-warning" id="noneDay" bookobjectUid="{bookobject.uid}" date="{dayTime}">{deleteDayLabel}</button>
 
 		
 		<table class="bookingTable">
-			<tr></tr><th><f:translate extensionName="booking" key="time" /></th><th><f:translate extensionName="booking" key="name" /></th><th><f:translate extensionName="booking" key="memo" /></th><th><f:translate extensionName="booking" key="book" /></th><th><f:translate extensionName="booking" key="delete" /></th></tr>
+			<tr></tr><th><f:translate key="time" extensionName="booking"/></th><th><f:translate key="name" extensionName="booking"/></th><th><f:translate key="memo" extensionName="booking"/></th><th><f:translate key="book" extensionName="booking"/></th><th><f:translate key="delete" extensionName="booking"/></th></tr>
 			
 		<f:for each="{hours}" as="hour" iteration="iter">
 				<f:variable name="hourBooked" value="0" />

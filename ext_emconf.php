@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "booking".
  *
- * Auto generated 15-07-2021 14:02
+ * Auto generated 11-11-2022 10:06
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -14,18 +14,18 @@ $EM_CONF[$_EXTKEY] = array (
   'title' => 'Booking',
   'description' => 'Booking extension for FE users',
   'category' => 'plugin',
-  'author' => 'Joachim Ruhs',
-  'author_email' => 'postmaster@joachim-ruhs.de',
+  'version' => '2.0.4',
   'state' => 'beta',
   'uploadfolder' => false,
-  'createDirs' => '',
-  'clearCacheOnLoad' => 0,
-  'version' => '1.8.3',
+  'clearcacheonload' => false,
+  'author' => 'Joachim Ruhs',
+  'author_email' => 'postmaster@joachim-ruhs.de',
+  'author_company' => NULL,
   'constraints' => 
   array (
     'depends' => 
     array (
-      'typo3' => '10.4.0-11.5.99',
+      'typo3' => '11.5.0-12.5.99',
     ),
     'conflicts' => 
     array (
@@ -34,7 +34,5 @@ $EM_CONF[$_EXTKEY] = array (
     array (
     ),
   ),
-  'clearcacheonload' => false,
-  'author_company' => NULL,
 );
 
