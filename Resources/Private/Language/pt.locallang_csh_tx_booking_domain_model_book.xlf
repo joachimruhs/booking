@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="pt-PT">
+    <header/>
+    <body>
+      <trans-unit id="objectuid.description">
+        <source>objectuid</source>
+        <target state="needs-translation">objectuid</target>
+      </trans-unit>
+      <trans-unit id="startdate.description">
+        <source>startdate</source>
+        <target state="needs-translation">startdate</target>
+      </trans-unit>
+      <trans-unit id="enddate.description">
+        <source>enddate</source>
+        <target state="needs-translation">enddate</target>
+      </trans-unit>
+      <trans-unit id="feuseruid.description">
+        <source>feuseruid</source>
+        <target state="needs-translation">feuseruid</target>
+      </trans-unit>
+      <trans-unit id="memo.description">
+        <source>memo</source>
+        <target state="needs-translation">memo</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
