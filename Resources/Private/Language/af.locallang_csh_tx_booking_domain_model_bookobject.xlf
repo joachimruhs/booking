@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="af">
+    <header/>
+    <body>
+      <trans-unit id="name.description">
+        <source>name</source>
+        <target state="needs-translation">name</target>
+      </trans-unit>
+      <trans-unit id="hours.description">
+        <source>hours</source>
+        <target state="needs-translation">hours</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
