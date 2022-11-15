@@ -80,16 +80,12 @@
         <target state="needs-translation">Memo</target>
       </trans-unit>
       <trans-unit id="weekView">
-        <source>Book</source>
-        <target state="needs-translation">Book</target>
-      </trans-unit>
-      <trans-unit id="weekView">
         <source>Delete</source>
-        <target state="needs-translation">Book</target>
+        <target state="needs-translation">Delete</target>
       </trans-unit>
       <trans-unit id="weekView">
         <source>Week calendar</source>
-        <target state="needs-translation">Book</target>
+        <target state="needs-translation">Delete</target>
       </trans-unit>
       <trans-unit id="monthView">
         <source>Month calendar</source>
