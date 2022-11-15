@@ -34,6 +34,9 @@
 			<trans-unit id="dayNamesShortMultiRow">
 				<source>M,T,W,T,F,S,S</source>
 			</trans-unit>
+			<trans-unit id="dayNamesShort2">
+				<source>Mo,Tu,We,Th,Fr,Sa,Su</source>
+			</trans-unit>
 			<trans-unit id="monthNamesShort">
 				<source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
 			</trans-unit>

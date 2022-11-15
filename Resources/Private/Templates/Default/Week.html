@@ -43,7 +43,12 @@
 					</f:for>
 
 					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">
-						<f:translate extensionName="booking" key='<f:format.date format="D">{dayDate}</f:format.date>' /> - <f:format.date format="d.m.Y">{dayDate}</f:format.date></td></tr>
+                        <f:for each="{dayLabels}" as="dayLabel" iteration="iterDayLabel">
+                            <f:if condition="{iterWeekday.index} == {iterDayLabel.index}">
+                                    {dayLabel}
+                            </f:if>
+                        </f:for>
+    					 - <f:format.date format="d.m.Y">{dayDate}</f:format.date></td></tr>
 					<tr><td>
 
 					<f:for each="{hours}" as="hour">

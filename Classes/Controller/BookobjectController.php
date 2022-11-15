@@ -794,6 +794,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('bookingsAM', $bookingsAM);
 		$view->assign('bookingsPM', $bookingsPM);
 
+		$settings['dayLabels'] = explode(',', $this->translate('dayNamesShort2'));		
+		$view->assign('dayLabels', $settings['dayLabels']);
+
 
 		$view->assign('now', time());
 		print_r($view->render());
