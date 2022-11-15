@@ -16,8 +16,8 @@
         <target state="needs-translation">Hours</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book">
-        <source>Book</source>
-        <target state="needs-translation">Book</target>
+        <source>Booking</source>
+        <target state="needs-translation">Booking</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book.objectuid">
         <source>Objectuid</source>
