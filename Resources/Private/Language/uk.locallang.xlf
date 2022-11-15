@@ -79,13 +79,13 @@
         <source>Memo</source>
         <target state="needs-translation">Memo</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="delete">
         <source>Delete</source>
         <target state="needs-translation">Delete</target>
       </trans-unit>
       <trans-unit id="weekView">
         <source>Week calendar</source>
-        <target state="needs-translation">Delete</target>
+        <target state="needs-translation">Week calendar</target>
       </trans-unit>
       <trans-unit id="monthView">
         <source>Month calendar</source>
@@ -155,6 +155,10 @@
       <trans-unit id="foreignBookingsFound">
         <source>There exist foreign bookings or not all hours are booked from you!</source>
         <target state="needs-translation">There exist foreign bookings or not all hours are booked from you!</target>
+      </trans-unit>
+      <trans-unit id="book">
+        <source>Book</source>
+        <target state="needs-translation">Book</target>
       </trans-unit>
     </body>
   </file>
