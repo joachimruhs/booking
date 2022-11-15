@@ -80,16 +80,12 @@
         <target state="final">Memo</target>
       </trans-unit>
       <trans-unit id="weekView" approved="yes">
-        <source>Book</source>
-        <target state="final">Wochenansicht</target>
-      </trans-unit>
-      <trans-unit id="weekView" approved="yes">
         <source>Delete</source>
-        <target state="final">Wochenansicht</target>
+        <target state="final">Löschen</target>
       </trans-unit>
       <trans-unit id="weekView" approved="yes">
         <source>Week calendar</source>
-        <target state="final">Wochenansicht</target>
+        <target state="final">Löschen</target>
       </trans-unit>
       <trans-unit id="monthView" approved="yes">
         <source>Month calendar</source>
