@@ -797,6 +797,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$settings['dayLabels'] = explode(',', $this->translate('dayNamesShort2'));		
 		$view->assign('dayLabels', $settings['dayLabels']);
 
+		$view->assign('calendarWeekLabel', $this->translate('calendarWeek'));
 
 		$view->assign('now', time());
 		print_r($view->render());
@@ -892,6 +893,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('weekViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('weekView', 'booking'));
 		$view->assign('monthViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthView', 'booking'));
         
+		$view->assign('timeLabel', $this->translate('time'));
+		$view->assign('bookLabel', $this->translate('book'));
+		$view->assign('deleteLabel', $this->translate('delete'));
         
 		print_r($view->render());
 		exit;

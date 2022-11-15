@@ -26,7 +26,7 @@
 
 		
 		<table class="bookingTable">
-			<tr></tr><th><f:translate key="time" extensionName="booking"/></th><th><f:translate key="name" extensionName="booking"/></th><th><f:translate key="memo" extensionName="booking"/></th><th><f:translate key="book" extensionName="booking"/></th><th><f:translate key="delete" extensionName="booking"/></th></tr>
+			<tr></tr><th>{timeLabel}</th><th><f:translate key="name" extensionName="booking" /></th><th><f:translate key="Memo" extensionName="booking"/></th><th>{bookLabel}</th><th>{deleteLabel}</th></tr>
 			
 		<f:for each="{hours}" as="hour" iteration="iter">
 				<f:variable name="hourBooked" value="0" />

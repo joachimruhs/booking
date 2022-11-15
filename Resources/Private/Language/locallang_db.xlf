@@ -13,7 +13,7 @@
 				<source>Hours</source>
 			</trans-unit>
 			<trans-unit id="tx_booking_domain_model_book">
-				<source>Book</source>
+				<source>Booking</source>
 			</trans-unit>
 			<trans-unit id="tx_booking_domain_model_book.objectuid">
 				<source>Objectuid</source>
