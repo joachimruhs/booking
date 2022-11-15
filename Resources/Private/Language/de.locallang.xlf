@@ -1,104 +1,165 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xliff version="1.0">
-	<file source-language="en" target="de" datatype="plaintext" original="messages" date="2020-01-15T19:43:59Z" product-name="booking">
-		<header/>
-		<body>
-			<trans-unit id="dayNamesShortMultiRow">
-				<target>Mo,Di,Mi,Do,Fr,Sa,So</target>
-			</trans-unit>
-			<trans-unit id="monthNamesShort">
-				<target>Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember</target>
-			</trans-unit>
-			<trans-unit id="calendarWeek">
-				<target>Kalenderwoche</target>
-			</trans-unit>
-
-			<trans-unit id="weekView">
-				<target>Wochenansicht</target>
-			</trans-unit>
-			<trans-unit id="monthView">
-				<target>Monatsansicht</target>
-			</trans-unit>
-
-			<trans-unit id="partialBooked">
-				<target>Teilweise gebucht</target>
-			</trans-unit>
-			<trans-unit id="notAvailable">
-				<target>Nicht verfügbar</target>
-			</trans-unit>
-			<trans-unit id="available">
-				<target>Verfügbar</target>
-			</trans-unit>
-
-			<trans-unit id="time">
-				<target>Uhrzeit</target>
-			</trans-unit>
-			<trans-unit id="name">
-				<target>Name</target>
-			</trans-unit>
-			<trans-unit id="memo">
-				<target>Memo</target>
-			</trans-unit>
-			<trans-unit id="book">
-				<target>Buchen</target>
-			</trans-unit>
-			<trans-unit id="delete">
-				<target>Löschen</target>
-			</trans-unit>
-
-			<trans-unit id="Mon">
-				<target>Mo</target>
-			</trans-unit>
-			<trans-unit id="Tue">
-				<target>Di</target>
-			</trans-unit>
-			<trans-unit id="Wed">
-				<target>Mi</target>
-			</trans-unit>
-			<trans-unit id="Thu">
-				<target>Do</target>
-			</trans-unit>
-			<trans-unit id="Fri">
-				<target>Fr</target>
-			</trans-unit>
-			<trans-unit id="Sat">
-				<target>Sa</target>
-			</trans-unit>
-			<trans-unit id="Sun">
-				<target>So</target>
-			</trans-unit>
-
-			<trans-unit id="bookDay">
-				<target>Tag buchen</target>
-			</trans-unit>
-			<trans-unit id="deleteDay">
-				<target>Tag löschen</target>
-			</trans-unit>
-
-
-			<!-- messages -->
-			<trans-unit id="dateInputError">
-				<target>Fehler in der Datumseingabe oder Datum außerhalb des gültigen Bereiches!</target>
-			</trans-unit>
-			<trans-unit id="insertPastBooking">
-				<target>Vergangene Buchungen können nicht angelegt werden!</target>
-			</trans-unit>
-			<trans-unit id="deletePastBooking">
-				<target>Vergangene Buchungen können nicht gelöscht werden!</target>
-			</trans-unit>
-			<trans-unit id="notAllowedToDeleteBooking">
-				<target>Sie sind nicht berechtigt diese Buchung zu löschen!</target>
-			</trans-unit>
-			<trans-unit id="insertBookingRequireFeUser">
-				<target>Buchungen können nur von eingeloggten FE Usern durchgeführt werden!</target>
-			</trans-unit>
-			<trans-unit id="objectAlreadyBooked">
-				<target>Das Objekt ist zu dieser Zeit schon gebucht!</target>
-			</trans-unit>
-			<trans-unit id="foreignBookingsFound">
-				<target>Es existieren Buchungen von anderen Frontend Usern oder nicht alle Stunden sind von Ihnen gebucht - das Löschen ist nicht möglich!</target>
-			</trans-unit>
-
-		</body>
-	</file>
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
+        <source>Bookobject</source>
+        <target state="final">Bookobjekt</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
+        <source>Name</source>
+        <target state="final">Name</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours" approved="yes">
+        <source>Hours</source>
+        <target state="final">Öffnungsstunden</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book" approved="yes">
+        <source>Book</source>
+        <target state="final">Buchen</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid" approved="yes">
+        <source>Objectuid</source>
+        <target state="final">Objektuid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate" approved="yes">
+        <source>Startdate</source>
+        <target state="final">Anfangsdatum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate" approved="yes">
+        <source>Enddate</source>
+        <target state="final">Enddatum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid" approved="yes">
+        <source>Feuseruid</source>
+        <target state="final">FeUserUid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo" approved="yes">
+        <source>Memo</source>
+        <target state="final">Memo</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShortMultiRow" approved="yes">
+        <source>M,T,W,T,F,S,S</source>
+        <target state="final">M,D,M,D,F,S,S</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShort2">
+        <source>Mo,Tu,We,Th,Fr,Sa,Su</source>
+        <target state="needs-translation">Mo,Tu,We,Th,Fr,Sa,Su</target>
+      </trans-unit>
+      <trans-unit id="monthNamesShort" approved="yes">
+        <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
+        <target state="final">Januar,Februar,März,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember</target>
+      </trans-unit>
+      <trans-unit id="calendarWeek" approved="yes">
+        <source>Calendarweek</source>
+        <target state="final">Kalenderwoche</target>
+      </trans-unit>
+      <trans-unit id="partialBooked" approved="yes">
+        <source>Partial booked</source>
+        <target state="final">Teilweise gebucht</target>
+      </trans-unit>
+      <trans-unit id="notAvailable" approved="yes">
+        <source>Not available</source>
+        <target state="final">Nicht verfügbar</target>
+      </trans-unit>
+      <trans-unit id="available" approved="yes">
+        <source>Available</source>
+        <target state="final">Verfügbar</target>
+      </trans-unit>
+      <trans-unit id="time" approved="yes">
+        <source>Time</source>
+        <target state="final">Zeit</target>
+      </trans-unit>
+      <trans-unit id="name" approved="yes">
+        <source>Name</source>
+        <target state="final">Name</target>
+      </trans-unit>
+      <trans-unit id="Memo" approved="yes">
+        <source>Memo</source>
+        <target state="final">Memo</target>
+      </trans-unit>
+      <trans-unit id="weekView" approved="yes">
+        <source>Book</source>
+        <target state="final">Wochenansicht</target>
+      </trans-unit>
+      <trans-unit id="weekView" approved="yes">
+        <source>Delete</source>
+        <target state="final">Wochenansicht</target>
+      </trans-unit>
+      <trans-unit id="weekView" approved="yes">
+        <source>Week calendar</source>
+        <target state="final">Wochenansicht</target>
+      </trans-unit>
+      <trans-unit id="monthView" approved="yes">
+        <source>Month calendar</source>
+        <target state="final">Monatsansicht</target>
+      </trans-unit>
+      <trans-unit id="Mon" approved="yes">
+        <source>Mo</source>
+        <target state="final">Mo</target>
+      </trans-unit>
+      <trans-unit id="Tue" approved="yes">
+        <source>Tu</source>
+        <target state="final">Di</target>
+      </trans-unit>
+      <trans-unit id="Wed" approved="yes">
+        <source>We</source>
+        <target state="final">Mi</target>
+      </trans-unit>
+      <trans-unit id="Thu" approved="yes">
+        <source>Th</source>
+        <target state="final">Do</target>
+      </trans-unit>
+      <trans-unit id="Fri" approved="yes">
+        <source>Fr</source>
+        <target state="final">Fr</target>
+      </trans-unit>
+      <trans-unit id="Sat" approved="yes">
+        <source>Sa</source>
+        <target state="final">Sa</target>
+      </trans-unit>
+      <trans-unit id="Sun" approved="yes">
+        <source>Su</source>
+        <target state="final">So</target>
+      </trans-unit>
+      <trans-unit id="bookDay" approved="yes">
+        <source>Book day</source>
+        <target state="final">Tag buchen</target>
+      </trans-unit>
+      <trans-unit id="deleteDay" approved="yes">
+        <source>Delete day</source>
+        <target state="final">Tag löschen</target>
+      </trans-unit>
+      <!-- messages -->
+      <trans-unit id="dateInputError" approved="yes">
+        <source>Date input error!</source>
+        <target state="final">Datum Eingabefehler</target>
+      </trans-unit>
+      <trans-unit id="insertPastBooking" approved="yes">
+        <source>Past bookings can not be inserted!</source>
+        <target state="final">Vergangene Termine können nicht eingegeben werden!</target>
+      </trans-unit>
+      <trans-unit id="deletePastBooking" approved="yes">
+        <source>Past bookings can not be deleted!</source>
+        <target state="final">Vergangene Termine können nicht gelöscht werden!</target>
+      </trans-unit>
+      <trans-unit id="notAllowedToDeleteBooking" approved="yes">
+        <source>You are not allowed to delete this booking!</source>
+        <target state="final">Sie können diese Buchung nicht löschen!</target>
+      </trans-unit>
+      <trans-unit id="insertBookingRequireFeUser" approved="yes">
+        <source>To insert booking a logged in FE user is required!</source>
+        <target state="final">Termine können nur von eingeloggten FE Usern gemacht werden!</target>
+      </trans-unit>
+      <trans-unit id="objectAlreadyBooked" approved="yes">
+        <source>The object is already booked at this time!</source>
+        <target state="final">Das Objekt ist zu dieser Zeit schon gebucht!</target>
+      </trans-unit>
+      <trans-unit id="foreignBookingsFound" approved="yes">
+        <source>There exist foreign bookings or not all hours are booked from you!</source>
+        <target state="final">Es existieren fremde Buchungen oder nicht alle gebuchten Stunden sind von Ihnen!</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
