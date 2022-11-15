@@ -43,9 +43,9 @@
         <source>M,T,W,T,F,S,S</source>
         <target state="final">M,D,M,D,F,S,S</target>
       </trans-unit>
-      <trans-unit id="dayNamesShort2">
+      <trans-unit id="dayNamesShort2" approved="yes">
         <source>Mo,Tu,We,Th,Fr,Sa,Su</source>
-        <target state="needs-translation">Mo,Tu,We,Th,Fr,Sa,Su</target>
+        <target state="final">Mo,Di,Mi,Do,Fr,Sa,So</target>
       </trans-unit>
       <trans-unit id="monthNamesShort" approved="yes">
         <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
