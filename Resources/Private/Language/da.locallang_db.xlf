@@ -3,45 +3,45 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="da">
     <header/>
     <body>
-      <trans-unit id="tx_booking_domain_model_bookobject">
+      <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
         <source>Bookobject</source>
-        <target state="needs-translation">Bookobject</target>
+        <target state="final">Book-objekt</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_bookobject.name">
+      <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="final">Navn</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+      <trans-unit id="tx_booking_domain_model_bookobject.hours" approved="yes">
         <source>Hours</source>
-        <target state="needs-translation">Hours</target>
+        <target state="final">Timer</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book">
+      <trans-unit id="tx_booking_domain_model_book" approved="yes">
         <source>Booking</source>
-        <target state="needs-translation">Booking</target>
+        <target state="final">Booking</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.objectuid">
+      <trans-unit id="tx_booking_domain_model_book.objectuid" approved="yes">
         <source>Objectuid</source>
-        <target state="needs-translation">Objectuid</target>
+        <target state="final">Objekt-uid</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.startdate">
+      <trans-unit id="tx_booking_domain_model_book.startdate" approved="yes">
         <source>Startdate</source>
-        <target state="needs-translation">Startdate</target>
+        <target state="final">Startdato</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.enddate">
+      <trans-unit id="tx_booking_domain_model_book.enddate" approved="yes">
         <source>Enddate</source>
-        <target state="needs-translation">Enddate</target>
+        <target state="final">Slutdato</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+      <trans-unit id="tx_booking_domain_model_book.feuseruid" approved="yes">
         <source>Feuseruid</source>
-        <target state="needs-translation">Feuseruid</target>
+        <target state="final">Feuseruid</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.memo">
+      <trans-unit id="tx_booking_domain_model_book.memo" approved="yes">
         <source>Memo</source>
-        <target state="needs-translation">Memo</target>
+        <target state="final">Notat</target>
       </trans-unit>
-      <trans-unit id="tx_booking_reservation.name">
+      <trans-unit id="tx_booking_reservation.name" approved="yes">
         <source>Reservation</source>
-        <target state="needs-translation">Reservation</target>
+        <target state="final">Reservation</target>
       </trans-unit>
       <trans-unit id="tx_booking_reservation.description">
         <source/>
