@@ -3,162 +3,162 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="da">
     <header/>
     <body>
-      <trans-unit id="tx_booking_domain_model_bookobject">
+      <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
         <source>Bookobject</source>
-        <target state="needs-translation">Bookobject</target>
+        <target state="final">Book-objekt</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_bookobject.name">
+      <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="final">Navn</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+      <trans-unit id="tx_booking_domain_model_bookobject.hours" approved="yes">
         <source>Hours</source>
-        <target state="needs-translation">Hours</target>
+        <target state="final">Timer</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book">
+      <trans-unit id="tx_booking_domain_model_book" approved="yes">
         <source>Book</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Book</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.objectuid">
+      <trans-unit id="tx_booking_domain_model_book.objectuid" approved="yes">
         <source>Objectuid</source>
-        <target state="needs-translation">Objectuid</target>
+        <target state="final">Objekt-uid</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.startdate">
+      <trans-unit id="tx_booking_domain_model_book.startdate" approved="yes">
         <source>Startdate</source>
-        <target state="needs-translation">Startdate</target>
+        <target state="final">Startdato</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.enddate">
+      <trans-unit id="tx_booking_domain_model_book.enddate" approved="yes">
         <source>Enddate</source>
-        <target state="needs-translation">Enddate</target>
+        <target state="final">Slutdato</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+      <trans-unit id="tx_booking_domain_model_book.feuseruid" approved="yes">
         <source>Feuseruid</source>
-        <target state="needs-translation">Feuseruid</target>
+        <target state="final">Feuseruid</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.memo">
+      <trans-unit id="tx_booking_domain_model_book.memo" approved="yes">
         <source>Memo</source>
-        <target state="needs-translation">Memo</target>
+        <target state="final">Notat</target>
       </trans-unit>
-      <trans-unit id="dayNamesShortMultiRow">
+      <trans-unit id="dayNamesShortMultiRow" approved="yes">
         <source>M,T,W,T,F,S,S</source>
-        <target state="needs-translation">M,T,W,T,F,S,S</target>
+        <target state="final">M,T,O,T,F,S,S</target>
       </trans-unit>
-      <trans-unit id="dayNamesShort2">
+      <trans-unit id="dayNamesShort2" approved="yes">
         <source>Mo,Tu,We,Th,Fr,Sa,Su</source>
-        <target state="needs-translation">Mo,Tu,We,Th,Fr,Sa,Su</target>
+        <target state="final">Ma,Ti,On,To,Fr,Lø,Sø</target>
       </trans-unit>
-      <trans-unit id="monthNamesShort">
+      <trans-unit id="monthNamesShort" approved="yes">
         <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
-        <target state="needs-translation">January,Februar,March,April,May,June,July,August,September,October,November,December</target>
+        <target state="final">Januar,Februar,Marts,April,Maj,Juni,Juli,August,September,Oktober,November,December</target>
       </trans-unit>
-      <trans-unit id="calendarWeek">
+      <trans-unit id="calendarWeek" approved="yes">
         <source>Calendarweek</source>
-        <target state="needs-translation">Calendarweek</target>
+        <target state="final">Kalenderuge</target>
       </trans-unit>
-      <trans-unit id="partialBooked">
+      <trans-unit id="partialBooked" approved="yes">
         <source>Partial booked</source>
-        <target state="needs-translation">Partial booked</target>
+        <target state="final">Delvis booket</target>
       </trans-unit>
-      <trans-unit id="notAvailable">
+      <trans-unit id="notAvailable" approved="yes">
         <source>Not available</source>
-        <target state="needs-translation">Not available</target>
+        <target state="final">Ikke tilgængelig</target>
       </trans-unit>
-      <trans-unit id="available">
+      <trans-unit id="available" approved="yes">
         <source>Available</source>
-        <target state="needs-translation">Available</target>
+        <target state="final">Tilgængelig</target>
       </trans-unit>
-      <trans-unit id="time">
+      <trans-unit id="time" approved="yes">
         <source>Time</source>
-        <target state="needs-translation">Time</target>
+        <target state="final">Tid</target>
       </trans-unit>
-      <trans-unit id="name">
+      <trans-unit id="name" approved="yes">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="final">Navn</target>
       </trans-unit>
-      <trans-unit id="Memo">
+      <trans-unit id="Memo" approved="yes">
         <source>Memo</source>
-        <target state="needs-translation">Memo</target>
+        <target state="final">Notat</target>
       </trans-unit>
-      <trans-unit id="delete">
+      <trans-unit id="delete" approved="yes">
         <source>Delete</source>
-        <target state="needs-translation">Delete</target>
+        <target state="final">Slet</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Week calendar</source>
-        <target state="needs-translation">Week calendar</target>
+        <target state="final">Uge kalender</target>
       </trans-unit>
-      <trans-unit id="monthView">
+      <trans-unit id="monthView" approved="yes">
         <source>Month calendar</source>
-        <target state="needs-translation">Month calendar</target>
+        <target state="final">Måneds kalender</target>
       </trans-unit>
-      <trans-unit id="Mon">
+      <trans-unit id="Mon" approved="yes">
         <source>Mo</source>
-        <target state="needs-translation">Mo</target>
+        <target state="final">Ma</target>
       </trans-unit>
-      <trans-unit id="Tue">
+      <trans-unit id="Tue" approved="yes">
         <source>Tu</source>
-        <target state="needs-translation">Tu</target>
+        <target state="final">Ti</target>
       </trans-unit>
-      <trans-unit id="Wed">
+      <trans-unit id="Wed" approved="yes">
         <source>We</source>
-        <target state="needs-translation">We</target>
+        <target state="final">On</target>
       </trans-unit>
-      <trans-unit id="Thu">
+      <trans-unit id="Thu" approved="yes">
         <source>Th</source>
-        <target state="needs-translation">Th</target>
+        <target state="final">To</target>
       </trans-unit>
-      <trans-unit id="Fri">
+      <trans-unit id="Fri" approved="yes">
         <source>Fr</source>
-        <target state="needs-translation">Fr</target>
+        <target state="final">Fr</target>
       </trans-unit>
-      <trans-unit id="Sat">
+      <trans-unit id="Sat" approved="yes">
         <source>Sa</source>
-        <target state="needs-translation">Sa</target>
+        <target state="final">Lø</target>
       </trans-unit>
-      <trans-unit id="Sun">
+      <trans-unit id="Sun" approved="yes">
         <source>Su</source>
-        <target state="needs-translation">Su</target>
+        <target state="final">Sø</target>
       </trans-unit>
-      <trans-unit id="bookDay">
+      <trans-unit id="bookDay" approved="yes">
         <source>Book day</source>
-        <target state="needs-translation">Book day</target>
+        <target state="final">Book dag</target>
       </trans-unit>
-      <trans-unit id="deleteDay">
+      <trans-unit id="deleteDay" approved="yes">
         <source>Delete day</source>
-        <target state="needs-translation">Delete day</target>
+        <target state="final">Slet dag</target>
       </trans-unit>
       <!-- messages -->
-      <trans-unit id="dateInputError">
+      <trans-unit id="dateInputError" approved="yes">
         <source>Date input error!</source>
-        <target state="needs-translation">Date input error!</target>
+        <target state="final">Dato indtastningsfejl!</target>
       </trans-unit>
-      <trans-unit id="insertPastBooking">
+      <trans-unit id="insertPastBooking" approved="yes">
         <source>Past bookings can not be inserted!</source>
-        <target state="needs-translation">Past bookings can not be inserted!</target>
+        <target state="final">Tidligere bookinger kan ikke indsættes!</target>
       </trans-unit>
-      <trans-unit id="deletePastBooking">
+      <trans-unit id="deletePastBooking" approved="yes">
         <source>Past bookings can not be deleted!</source>
-        <target state="needs-translation">Past bookings can not be deleted!</target>
+        <target state="final">Tidligere bookinger kan ikke slettes!</target>
       </trans-unit>
-      <trans-unit id="notAllowedToDeleteBooking">
+      <trans-unit id="notAllowedToDeleteBooking" approved="yes">
         <source>You are not allowed to delete this booking!</source>
-        <target state="needs-translation">You are not allowed to delete this booking!</target>
+        <target state="final">Du har ikke tilladelse til at slette denne booking!</target>
       </trans-unit>
-      <trans-unit id="insertBookingRequireFeUser">
+      <trans-unit id="insertBookingRequireFeUser" approved="yes">
         <source>To insert booking a logged in FE user is required!</source>
-        <target state="needs-translation">To insert booking a logged in FE user is required!</target>
+        <target state="final">For at indsætte en booking er indlogget FE-bruger påkrævet!</target>
       </trans-unit>
-      <trans-unit id="objectAlreadyBooked">
+      <trans-unit id="objectAlreadyBooked" approved="yes">
         <source>The object is already booked at this time!</source>
-        <target state="needs-translation">The object is already booked at this time!</target>
+        <target state="final">Objektet er allerede booket på dette tidspunkt!</target>
       </trans-unit>
-      <trans-unit id="foreignBookingsFound">
+      <trans-unit id="foreignBookingsFound" approved="yes">
         <source>There exist foreign bookings or not all hours are booked from you!</source>
-        <target state="needs-translation">There exist foreign bookings or not all hours are booked from you!</target>
+        <target state="final">Der findes fremmede bookinger eller ikke alle timer er booket fra dig!</target>
       </trans-unit>
-      <trans-unit id="book">
+      <trans-unit id="book" approved="yes">
         <source>Book</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Book</target>
       </trans-unit>
     </body>
   </file>
