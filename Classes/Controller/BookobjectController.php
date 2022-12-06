@@ -15,6 +15,7 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 use TYPO3\CMS\Core\Http\Response;
 
+use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /***
  *
@@ -893,9 +894,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('weekViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('weekView', 'booking'));
 		$view->assign('monthViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthView', 'booking'));
         
-		$view->assign('timeLabel', $this->translate('time'));
-		$view->assign('bookLabel', $this->translate('book'));
-		$view->assign('deleteLabel', $this->translate('delete'));
+		$view->assign('timeLabel', LocalizationUtility::translate('time', 'booking'));
+		$view->assign('bookLabel', LocalizationUtility::translate('book', 'booking'));
+		$view->assign('deleteLabel', LocalizationUtility::translate('delete', 'booking'));
         
 		print_r($view->render());
 		exit;
@@ -943,15 +944,15 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 //			$recipient = [$feUser->getEmailOverride() => $feUser->getFirstNameOverride() . ' ' . $feUser->getLastNameOverride()];
 //			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
 
-			$recipient = [$feUser['email'] => $feUser['firstname'] . ' ' . $feUser['lastname']];
+			$recipient = [$feUser['email'] => $feUser['first_name'] . ' ' . $feUser['last_name']];
 			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
 
 			$templateName = 'CustomerMail';
 			$variables = [
 					'fromName' =>  $this->settings['mailFromName'] ?? '',
 					'fromEmail' =>  $this->settings['mailFromEmail'] ?? '',
-					'firstname' =>  $feUser['firstname'],
-					'lastname' =>  $feUser['lastname'],
+					'firstname' =>  $feUser['first_name'],
+					'lastname' =>  $feUser['last_name'],
 					'bookobject' =>  $bookobject,
 					'startdate' => $startdate,
 					'memo' => $memo
@@ -976,7 +977,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	*/
 	protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName, array $variables = array()) {
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
-		$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+//		$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$emailView = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
 	
 		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
 										'booking');
@@ -1002,7 +1004,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$emailBody = $emailView->render();
 	
 		/** @var $message \TYPO3\CMS\Core\Mail\MailMessage */
-		$message = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+		$message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+
 		$message->setTo($recipient)
 			  ->setFrom($sender)
 			  ->setSubject($subject);
@@ -1091,7 +1094,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$hours = $bookobject->getHours();			
 		$hours = GeneralUtility::intExplode(',', $hours);
 
-		if (count($bookings) != count($hours)) {
+		$error = '';
+        if (count($bookings) != count($hours)) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 		
@@ -1129,6 +1133,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$hours = $bookobject->getHours();			
 		$hoursArray = GeneralUtility::intExplode(',', $hours);
 
+        $error = '';
 		if (count($bookings) > 0) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
 		}
@@ -1139,7 +1144,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		}
 
 		if (!$error) {
-			$feUser = $this->feusersRepository->findByUid($feUserUid);
+			$feUser = $this->feuserRepository->findByUidOverride($feUserUid);
 			for ($i = 0; $i < count($hoursArray); $i++) {
 				$startdate = $requestArguments['dayTime'] + $hoursArray[$i] * 3600;  
 				$enddate = $startdate + 3600;
@@ -1148,15 +1153,15 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			}
 
 
-			if ($this->settings['activateFeUserMail'] && $feUser->getEmail()) {
-				$recipient = [$feUser->getEmail() => $feUser->getFirstName() . ' ' . $feUser->getLastName()];
+			if ($this->settings['activateFeUserMail'] && $feUser['email']) {
+				$recipient = [$feUser['email'] => $feUser['first_name'] . ' ' . $feUser['last_name']];
 				$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
 				$templateName = 'CustomerMail';
 				$variables = [
 					'fromName' =>  $this->settings['mailFromName'],
-					'fromEmail' =>  $this->settings['mailFromEmail'],
-					'firstname' =>  $feUser->getFirstName(),
-					'lastname' =>  $feUser->getLastName(),
+					'fromEmail' =>  $this->settings['mailFromAddress'],
+					'firstname' =>  $feUser['first_name'],
+					'lastname' =>  $feUser['last_name'],
 					'bookobject' =>  $bookobject,
 					'startdate' => $startdate,
 					'hours' => $hours,
