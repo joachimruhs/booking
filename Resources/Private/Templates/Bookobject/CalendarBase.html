@@ -48,7 +48,7 @@
 	
 	////////// main ajax function //////////////
 	function getCalendar(m, y, calendar, bookingDate, bookobjectUid) {
-		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+		var ajaxRequestUrl = "index.php?id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
 					controller : 'BookObject',
@@ -173,7 +173,7 @@
 	}
 
 	function deleteBooking(bookUid, bookobjectUid, bookingDate) {
-		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+		var ajaxRequestUrl = "index.php?id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
 					controller : 'BookObject',
@@ -194,7 +194,7 @@
 	}
 
 	function insertBooking(bookobjectUid, dayTime, hour, memo) {
-		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+		var ajaxRequestUrl = "index.php?id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
 					controller : 'BookObject',
@@ -217,7 +217,7 @@
 
 
 	function insertDayBooking(bookobjectUid, dayTime, hour, memo) {
-		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+		var ajaxRequestUrl = "index.php?id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
 					controller : 'BookObject',
@@ -241,7 +241,7 @@
 
 
 	function deleteDayBooking(bookobjectUid, dayTime, hour, memo) {
-		var ajaxRequestUrl = "index.php?eIDx=booking&id=" + id,
+		var ajaxRequestUrl = "index.php?id=" + id,
 			requestParameter = {
 				tx_booking_ajax : {
 					controller : 'BookObject',
