@@ -801,12 +801,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('calendarWeekLabel', $this->translate('calendarWeek'));
 
 		$view->assign('now', time());
-		print_r($view->render());
-		exit;		
-//        return $this->responseFactory->createResponse()
-//            ->withAddedHeader('Content-Type', 'text/html; charset=utf-8')
-//            ->withBody($this->streamFactory->createStream($this->view->render()));		
-		
+		return $view->render();
     }
 
     /**
