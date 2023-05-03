@@ -23,7 +23,7 @@
 			<div class="bookobjectTitle">{bookobject.name}</div>
 			<div class="weekSelector">
 				<img class="previousWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-previous.svg"/>
-				<f:translate key="calendarWeek" />
+                {calendarWeekLabel} 
 				{week} - {year}
 				<img class="nextWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-next.svg"/>
 			</div>
@@ -42,8 +42,23 @@
 						</f:if>		
 					</f:for>
 
+
+
+
+
 					<tr><td class="weekdayTable" date="{weekDate}" bookobjectUid="{bookobject.uid}">
-						<f:translate key='<f:format.date format="D">{dayDate}</f:format.date>' /> - <f:format.date format="d.m.Y">{dayDate}</f:format.date></td></tr>
+
+                        <f:for each="{dayLabels}" as="dayLabel" iteration="iterDayLabel">
+                            <f:if condition="{iterWeekday.index} == {iterDayLabel.index}">
+                                    {dayLabel}
+                            </f:if>
+                        </f:for>
+
+
+						 - <f:format.date format="d.m.Y">{dayDate}</f:format.date></td></tr>
+
+
+
 					<tr><td>
 
 					<f:for each="{hours}" as="hour">

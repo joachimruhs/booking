@@ -242,7 +242,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
         $siteConfiguration = $this->request1->getAttribute('site')->getConfiguration();
         for ($i = 0; $i < count($siteConfiguration['languages']); $i++) {
-            if ($siteConfiguration['languages'][$i]['typo3Language'] == $sys_language_uid /*$requestArguments['language']*/) {
+//            if ($siteConfiguration['languages'][$i]['typo3Language'] == $sys_language_uid /*$requestArguments['language']*/) {
+            if ($siteConfiguration['languages'][$i]['languageId'] == $sys_language_uid /*$requestArguments['language']*/) {
                 $this->language = $siteConfiguration['languages'][$i]['typo3Language'];
             }
         }
