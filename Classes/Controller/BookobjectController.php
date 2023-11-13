@@ -240,14 +240,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
  		$languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
 		$sys_language_uid = $languageAspect->getId();
 
-        $siteConfiguration = $this->request1->getAttribute('site')->getConfiguration();
-        for ($i = 0; $i < count($siteConfiguration['languages']); $i++) {
-//            if ($siteConfiguration['languages'][$i]['typo3Language'] == $sys_language_uid /*$requestArguments['language']*/) {
-            if ($siteConfiguration['languages'][$i]['languageId'] == $sys_language_uid /*$requestArguments['language']*/) {
-                $this->language = $siteConfiguration['languages'][$i]['typo3Language'];
-            }
-        }
-        
+        $siteLanguage = $this->request1->getAttribute('language');
+        $this->language = $siteLanguage->getTypo3Language();        
         
 		// is startingpoint used ?
 		if ($requestArguments['startingpoint']) $this->conf['storagePid'] = intval($requestArguments['startingpoint']);
