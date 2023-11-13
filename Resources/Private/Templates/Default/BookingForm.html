@@ -51,7 +51,7 @@
 						<f:for each="{disabledHours}" as="disabledHour" iteration="iterdisabled">
 						<f:if condition="{iterdisabled} == {iter} && {disabledHour} == 0">
                             <f:variable name="uriImg"><f:uri.image src="EXT:booking/Resources/Public/Icons/actions-save.svg" /></f:variable>
-                            <img class="insertBooking bkPlus" src="/{uriImg}" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" />
+                            <img class="insertBooking bkMinus" src="/{uriImg}" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" />
 						</f:if>
 						</f:for>
 						</td><td></td>
