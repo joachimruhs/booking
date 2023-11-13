@@ -22,10 +22,12 @@
 		<f:for each="{bookobjects}" as="bookobject">
 			<div class="bookobjectTitle">{bookobject.name}</div>
 			<div class="weekSelector">
-				<img class="previousWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-previous.svg"/>
+                <f:variable name="uriImgPrev"><f:uri.image src="EXT:booking/Resources/Public/Icons/actions-view-paging-previous.svg" /></f:variable>
+				<img class="previousWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/{uriImgPrev}"/>
 				{calendarWeekLabel}
                 {week} - {year}
-				<img class="nextWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/typo3conf/ext/booking/Resources/Public/Icons/actions-view-paging-next.svg"/>
+                <f:variable name="uriImgNext"><f:uri.image src="EXT:booking/Resources/Public/Icons/actions-view-paging-next.svg" /></f:variable>
+				<img class="nextWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/{uriImgNext}"/>
 			</div>
 			<div class="bookobjectWeek">
 			<f:for each="{weekdays}" as="weekday" iteration="iterWeekday">
