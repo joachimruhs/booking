@@ -1115,20 +1115,18 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$startdate = $requestArguments['dayTime'];
 		$bookobjectUid = $requestArguments['bookobjectUid'];
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
-
+        $error = '';
 		$bookings = $this->bookRepository->getBookingsOfDate($this->conf['storagePid'], $startdate, $requestArguments['bookobjectUid']);
 
 		$bookobject	= $this->bookobjectRepository->findByUid(intval($bookobjectUid));
 		$hours = $bookobject->getHours();			
 		$hoursArray = GeneralUtility::intExplode(',', $hours);
 
-        $error = '';
 		if (count($bookings) > 0) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
+			$error .= '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
 		if (!$feUserUid) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
 		}
