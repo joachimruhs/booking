@@ -9,6 +9,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Database\Connection;
 
 /***
  *
@@ -17,7 +18,7 @@ use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 - 2022 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
+ *  (c) 2020 - 2024 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
  *
  ***/
 /**
@@ -41,10 +42,10 @@ class FeuserRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		->where(
 			$queryBuilder->expr()->eq(
 				'uid',
-				$queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+				$queryBuilder->createNamedParameter($uid, Connection::PARAM_INT)
 			)
 		);			
-		$result = $queryBuilder->execute()->fetchAll();
+		$result = $queryBuilder->executeQuery()->fetchAllAssociative();
     	return $result[0];		
 	}
 

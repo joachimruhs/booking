@@ -17,6 +17,12 @@ use TYPO3\CMS\Core\Http\Response;
 
 use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
+
+use Symfony\Component\Mime\Address;
+use TYPO3\CMS\Core\Mail\MailMessage;
+
 /***
  *
  * This file is part of the "Booking" Extension for TYPO3 CMS.
@@ -24,7 +30,7 @@ use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2020 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
+ *  (c) 2024 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
  *
  ***/
 /**
@@ -32,6 +38,22 @@ use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+
+    public function __construct(
+        private ViewFactoryInterface $viewFactory,
+    ) {}
+
+    /**
+     * Inject a ViewFactoryInterface
+     *
+     * @param \TYPO3\CMS\Core\View\ViewFactoryInterface
+     * @return void
+     */
+    public function injectViewFactoryInterface(\TYPO3\CMS\Core\View\ViewFactoryInterface $viewFactoryInterface) {
+        $this->viewFactory = $viewFactoryInterface;
+    }
+
+
 
     /**
      * bookobjectRepository
@@ -147,7 +169,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function updateAction(\WSR\Booking\Domain\Model\Bookobject $bookobject)
     {
-        $this->addFlashMessage('This function is disabled!', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+        $this->addFlashMessage('This function is disabled!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
 //        $this->bookobjectRepository->update($bookobject);
         $this->redirect('list');
     }
@@ -177,15 +199,20 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     public function calendarBaseAction()
     {
 		$bookObjects = $this->bookobjectRepository->findAll();
+//        $id = $GLOBALS['TSFE']->contentPid;
 
-		$this->view->assign('id', $GLOBALS['TSFE']->id);
+        $pageArguments = $this->request->getAttribute('routing');
+        $pageId = $pageArguments->getPageId();
+
+        $this->view->assign('id', (int) $pageId);
 		$this->view->assign('settings', $this->settings);
 		$this->view->assign('month', date('m', time()));
 		$this->view->assign('year', date('Y', time()));
 		$this->view->assign('bookingDate', time());
         return $this->responseFactory->createResponse()
             ->withAddedHeader('Content-Type', 'text/html; charset=utf-8')
-            ->withBody($this->streamFactory->createStream($this->view->render()));    }
+            ->withBody($this->streamFactory->createStream($this->view->render()));
+    }
 
 
 	/**
@@ -225,13 +252,12 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	{
 		$queryParams = $request->getQueryParams();
 	
-		$frontend = $GLOBALS['TSFE'];
+        $fullTypoScript = $request->getAttribute('frontend.typoscript')->getSetupArray()['plugin.']['tx_booking.'] ;
+	    $this->configuration = $request->getAttribute('frontend.typoscript')->getSetupArray()['plugin.']['tx_booking.'];
 
-		/** @var TypoScriptService $typoScriptService */
-		$typoScriptService = GeneralUtility::makeInstance('TYPO3\CMS\Core\TypoScript\TypoScriptService');
-		$this->configuration = $typoScriptService->convertTypoScriptArrayToPlainArray($frontend->tmpl->setup['plugin.']['tx_booking.']);
-		$this->settings = $this->configuration['settings'];
-		$this->conf['storagePid'] = $this->configuration['persistence']['storagePid'];
+
+		$this->settings = $this->configuration['settings.'];
+		$this->conf['storagePid'] = $this->configuration['persistence.']['storagePid'];
 
 		$this->request1 = $request;
 		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
@@ -764,17 +790,22 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$out .= '<div onclick="getCalendar(' . $month . ',' . $year . ', \'week\', \'\');">Week</div> <br/>';
 		
 		if ($this->settings['useNewWeekTemplate']) {
-			$view = $this->getView('newWeek');
+		    $template = 'NewWeek';
+			$view = $this->getView();
 			$view->assign('hours', GeneralUtility::intExplode(',', $this->settings['hoursToDisplay']));
 		} else {
-			$view = $this->getView('week');
-			$view->assign('hours', [0,1,2,3,4,5,6,7,8,9,10,11]);
+		    $template = 'Week';
+		    $view = $this->getView();
+		    $view->assign('hours', [0,1,2,3,4,5,6,7,8,9,10,11]);
 		}
+
+
+
 
 		$view->assign('out', $out);
 		
 		$view->assign('message', $this->deletedData['error'] ?? '');
-		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0);
+		$view->assign('feUserUid', $this->request1->getAttribute('frontend.user')->user['uid'] ?? 0);
 		$view->assign('year', $theYear);
 		$view->assign('week', $theWeek);
 		$view->assign('bookobjects', $bookobjects);
@@ -796,7 +827,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('calendarWeekLabel', $this->translate('calendarWeek'));
 
 		$view->assign('now', time());
-		return $view->render();
+		return $view->render($template);
     }
 
     /**
@@ -866,30 +897,31 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			else $disabledHours[] = 0;
 		}
 
-		$view = $this->getView('bookingForm');
-		$view->assign('out', $out ?? '');
-		
-		$view->assign('message', $this->deletedData['error'] ?? '');
-		$view->assign('feUserUid', $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0);
-		$view->assign('dayTime', $dayTime);
-		$view->assign('bookobject', $bookobject);
-		$view->assign('bookings', $bookings);
-		$view->assign('hours', $hours);
-		$view->assign('disabledHours', $disabledHours);
+        $assign = [
+            'out' => $out ?? '',
+            'message' => $this->deletedData['error'] ?? '',
+            'feUserUid' => $this->request1->getAttribute('frontend.user')->user['uid'] ?? 0,
+            'dayTime' => $dayTime,
+            'bookobject' => $bookobject,
+            'bookings' => $bookings,
+            'hours' => $hours,
+            'disabledHours' => $disabledHours,
+            'now' => time(),
+            'bookDayLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('bookDay', 'booking'),
+            'deleteDayLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deleteDay', 'booking'),
+            'weekViewLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('weekView', 'booking'),
+            'monthViewLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthView', 'booking'),
+            'timeLabel' => LocalizationUtility::translate('time', 'booking'),
+            'bookLabel' => LocalizationUtility::translate('book', 'booking'),
+            'deleteLabel' => LocalizationUtility::translate('delete', 'booking')
+            ];
 
-		$view->assign('now', time());
+        $template = 'BookingForm.html';
 
-		$view->assign('bookDayLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('bookDay', 'booking'));
-		$view->assign('deleteDayLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deleteDay', 'booking'));
-		$view->assign('weekViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('weekView', 'booking'));
-		$view->assign('monthViewLabel', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthView', 'booking'));
-        
-		$view->assign('timeLabel', LocalizationUtility::translate('time', 'booking'));
-		$view->assign('bookLabel', LocalizationUtility::translate('book', 'booking'));
-		$view->assign('deleteLabel', LocalizationUtility::translate('delete', 'booking'));
-        
-		print_r($view->render());
-		exit;
+		$view = $this->getView($template);
+		$view->assignMultiple($assign);
+
+		return $view->render('BookingForm');
     }
 
     /**
@@ -899,7 +931,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function insertBooking()
     {
-		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
+	$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
         $error = '';
 //print_r($requestArguments);
 		$startdate = intval($requestArguments['dayTime']);
@@ -907,7 +939,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$bookobjectUid = intval($requestArguments['bookobjectUid']);
 		$memo = $requestArguments['memo'];
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
+	    $feUseUid = $feUserUid = $this->request1->getAttribute('frontend.user')->user['uid'] ?? 0;
+
+		$feUserUid = $feUserUid ?? 0;
 		if (!$feUserUid) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
 		}
@@ -934,10 +968,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 //			$recipient = [$feUser->getEmailOverride() => $feUser->getFirstNameOverride() . ' ' . $feUser->getLastNameOverride()];
 //			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
 
-			$recipient = [$feUser['email'] => $feUser['first_name'] . ' ' . $feUser['last_name']];
-			$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
+			$recipient = [$feUser['email'], $feUser['first_name'] . ' ' . $feUser['last_name']];
+			$sender = [$this->settings['mailFromAddress'], $this->settings['mailFromName']];
 
-			$templateName = 'CustomerMail';
+			$templateName = '/Email/CustomerMail';
 			$variables = [
 					'fromName' =>  $this->settings['mailFromName'] ?? '',
 					'fromEmail' =>  $this->settings['mailFromEmail'] ?? '',
@@ -967,70 +1001,34 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	*/
 	protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName, array $variables = array()) {
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
-//		$emailView = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-		$emailView = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
-	
 		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
 										'booking');
 
-		$templateRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPaths']['1']);
-
-		$templatePathAndFilename = $templateRootPath . 'Email/' . $templateName . '.html';
-	
-		if (!is_file($templatePathAndFilename)) {
-				$templateRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['templateRootPaths']['0']);
-				$templatePathAndFilename = $templateRootPath . 'Email/' . $templateName . '.html';
-		}	
-
-
-		$layoutRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['layoutRootPaths'][1]) . 'Email/';
-		$partialRootPath = GeneralUtility::getFileAbsFileName($extbaseFrameworkConfiguration['view']['partialRootPaths'][1]) . 'Email/';
-		$emailView->setLayoutRootPaths(array($layoutRootPath));
-		$emailView->setPartialRootPaths(array($partialRootPath));
-
-		$emailView->setTemplatePathAndFilename($templatePathAndFilename);
+		$viewFactoryData = new ViewFactoryData(
+            templateRootPaths: $this->configuration['view.']['templateRootPaths.'],
+       	    partialRootPaths: ['EXT:booking/Resources/Private/Partials'],
+       	    layoutRootPaths: ['EXT:booking/Resources/Private/Layouts'],
+//        	    request: $this->request,
+        );
+        $emailView = $this->viewFactory->create($viewFactoryData);
 		$emailView->assignMultiple($variables);
+		$emailBody = $emailView->render($templateName);
 
-		$emailBody = $emailView->render();
-	
-		/** @var $message \TYPO3\CMS\Core\Mail\MailMessage */
-		$message = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+        $mail = new MailMessage();
+        $mail->from(new Address($sender[0], $sender[1]));
+        $mail->to(
+            new Address($recipient[0], $recipient[1])
+        );
+        $mail->subject($subject);
+        $mail->html($emailBody);
 
-		$message->setTo($recipient)
-			  ->setFrom($sender)
-			  ->setSubject($subject);
-	
-		// Possible attachments here
-		//foreach ($attachments as $attachment) {
-		//	$message->attach(\Swift_Attachment::fromPath($attachment));
-		//}
-
-		if ($this->settings['mailAttachment']) {
-			$attachment = $this->settings['mailAttachment'];
-			$message->attach(\Swift_Attachment::fromPath(Environment::getPublicPath() . '/' . $attachment));	
-		}
-		// Plain text example
-//		$message->setBody($emailBody, 'text/plain');
-	
-	
-		// HTML Email
-		$version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version ();
-		$versionArr = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray($version);
-		$versionMain = $versionArr['version_main'];
-		
-		if ($versionMain == '9') {
-			$message->setBody($emailBody, 'text/html');
-		} else if ($versionMain == '11' || $versionMain == '12') {
-			$message->setBody()->html($emailBody);
-		}
-		
-		$message->send();
-		return $message->isSent();
+        if ($this->settings['mailAttachment']) {
+            $attachment = $this->settings['mailAttachment'];
+            $mail->attachFromPath($attachment);
+        }
+        $mail->send();
 	}
 
-
-	
-	
     /**
      * delete booking
      *  
@@ -1050,7 +1048,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deletePastBooking', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
+		$feUserUid = $this->request1->getAttribute('frontend.user')->user['uid']; 
 
 		if ($this->bookRepository->findByUid($bookUid)->getFeuseruid() != $feUserUid) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('notAllowedToDeleteBooking', 'booking') . '</div><script>$(".error").center();</script>';
@@ -1076,8 +1074,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$startdate = $requestArguments['dayTime'];
 		$bookobjectUid = $requestArguments['bookobjectUid'];
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'];
-
+		$feUserUid = $this->request1->getAttribute('frontend.user')->user['uid'];
 		$bookings = $this->bookRepository->getBookingsOfDateAndFeUser($this->conf['storagePid'], $startdate, $requestArguments['bookobjectUid'], $feUserUid);
 
 		$bookobject	= $this->bookobjectRepository->findByUid(intval($bookobjectUid));
@@ -1126,7 +1123,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			$error .= '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
-		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
+//		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
+	        $feUserUid = $this->request1->getAttribute('frontend.user')->user['uid'];
+
 		if (!$feUserUid) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
 		}
@@ -1142,9 +1141,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 
 			if ($this->settings['activateFeUserMail'] && $feUser['email']) {
-				$recipient = [$feUser['email'] => $feUser['first_name'] . ' ' . $feUser['last_name']];
-				$sender = [$this->settings['mailFromAddress'] => $this->settings['mailFromName']];
-				$templateName = 'CustomerMail';
+				$recipient = [$feUser['email'], $feUser['first_name'] . ' ' . $feUser['last_name']];
+				$sender = [$this->settings['mailFromAddress'], $this->settings['mailFromName']];
+				$templateName = '/Email/CustomerMail';
 				$variables = [
 					'fromName' =>  $this->settings['mailFromName'],
 					'fromEmail' =>  $this->settings['mailFromAddress'],
@@ -1165,40 +1164,45 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	}
 
 
+	/**
+	 * Renders the fluid template
+	 * @param string $template
+	 * @param array $assign
+	 * @return string
+	 */
+/*
+	public function renderFluidTemplate($template, Array $assign = array()) {
+		$templateRootPath = $this->configuration['view']['templateRootPaths'][1];
+		
+		$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($templateRootPath . 'Default/' . $template);
+		$view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+		$view->setTemplatePathAndFilename($templatePath);
+		$view->assignMultiple($assign);
+        $view->getTemplatePaths()->fillDefaultsByPackageName('booking');
+
+        $view->setRequest($this->request1);
+
+		return $view->render();
+	}
+*/
 
 
 	/**
 	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
 	 */
-	protected function getView($template) {
-	//    $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-		$templateService = GeneralUtility::makeInstance(TemplateService::class);
-		// get the rootline
-	//    $rootLine = $pageRepository->getRootLine($pageRepository->getDomainStartPage(GeneralUtility::getIndpEnv('TYPO3_HOST_ONLY')));
-		$rootlineUtility = GeneralUtility::makeInstance(RootlineUtility::class, 0);
-	
-		$rootLine = $rootlineUtility->get();
+	protected function getView() {
+            $viewFactoryData = new ViewFactoryData(
+        	templateRootPaths: $this->configuration['view.']['templateRootPaths.'],
+        	partialRootPaths: ['EXT:booking/Resources/Private/Partials'],
+        	layoutRootPaths: ['EXT:booking/Resources/Private/Layouts'],
+//            	request: $this->request,
+    	    );
+    	    $view = $this->viewFactory->create($viewFactoryData);
 
-		// initialize template service and generate typoscript configuration
-		$templateService->runThroughTemplates($rootLine);
-		$templateService->generateConfig();
-	
-		$fluidView = new StandaloneView();
-/*
-		$fluidView->setLayoutRootPaths($templateService->setup['plugin.']['tx_booking.']['view.']['layoutRootPaths.']);
-		$fluidView->setTemplateRootPaths($templateService->setup['plugin.']['tx_booking.']['view.']['templateRootPaths.']);
-		$fluidView->setPartialRootPaths($templateService->setup['plugin.']['tx_booking.']['view.']['partialRootPaths.']);
-*/
+//print_r($view);
+//exit;
 
-		$fluidView->setLayoutRootPaths($this->configuration['view']['layoutRootPaths']);
-		$fluidView->setTemplateRootPaths($this->configuration['view']['templateRootPaths']);
-		$fluidView->setPartialRootPaths($this->configuration['view']['partialRootPaths']);
-//		$fluidView->getRequest()->setControllerExtensionName('Booking');
-//		$fluidView->setTemplate('index');
-		$fluidView->setTemplate($template);
-
-//print_r($fluidView->render());
-		return $fluidView;
+	    return $view;
 	}
 
     

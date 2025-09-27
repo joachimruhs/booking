@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Core\Database\Connection;
 
 /***
  *
@@ -45,23 +46,23 @@ class BookobjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		$queryBuilder->where(
 			$queryBuilder->expr()->eq(
 				'a.pid',
-				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+				$queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)
 			)
 		);
 		
 		$queryBuilder->andWhere(
-			$queryBuilder->expr()->andX(
-				$queryBuilder->expr()->andX(
-					$queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
+			$queryBuilder->expr()->and(
+				$queryBuilder->expr()->and(
+					$queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
 				)
 			),
-			$queryBuilder->expr()->andX(
-				$queryBuilder->expr()->andX(
-					$queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
+			$queryBuilder->expr()->and(
+				$queryBuilder->expr()->and(
+					$queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
 				)
 			)
 		);
-		$result =  $queryBuilder->orderBy('sorting')->execute()->fetchAll();
+		$result =  $queryBuilder->orderBy('sorting')->executeQuery()->fetchAllAssociative();
 		return $result;		
 	}
 

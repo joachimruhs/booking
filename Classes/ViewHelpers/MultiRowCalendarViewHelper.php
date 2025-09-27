@@ -66,10 +66,10 @@ class MultiRowCalendarViewHelper extends AbstractViewHelper {
 		$configuration = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		$conf['storagePid'] = $configuration['persistence']['storagePid'];
 
-		$objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);	
 
 		// now fetch the bookings of the seminarUid and this year	
-		$bookRepository = $objectManager->get('WSR\\Myseminars\\Domain\\Repository\\BookRepository');
+		$bookRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('WSR\\Myseminars\\Domain\\Repository\\BookRepository');
+
 		$bookings = $bookRepository->getBookingsOfYear($year, $seminarUid, $conf['storagePid']);			
 
 

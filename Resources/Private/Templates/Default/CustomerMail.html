@@ -1,0 +1,57 @@
+
+<f:layout name="Default" />
+
+
+<f:section name="main">
+<h1>CustomerMail Template</h1>
+
+<style>
+    .bookingHeader {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;	
+    }
+    .bookingDates {
+	margin: 5px 0px;
+	color: green;
+    }
+    .mailTitle {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 5px 0px;
+    }
+    div.bookingDetails{
+	background-color: #d0d0d0;
+	padding: 5px 0px;
+    }
+</style>
+
+    Von {fromName} {fromEmail}
+    
+    <div class="mailTitle">Buchungsbestätigung</div>
+    
+    <div class="bookingHeader">Folgendes Objekt wurde von Ihnen {firstname} {lastname} gebucht:</div>
+    <div class="bookingHeader">{bookobject.name}</div>		
+
+    <div class="bookingDates">
+	Buchungsdaten:<br />
+	<f:format.date format="d.m.Y">{startdate}</f:format.date>
+	<br />
+	<f:if condition="{hours} > ''">
+	    <f:then>
+		Stunden: {hours}<br />
+	    </f:then>
+	    <f:else>
+		<f:format.date format="H:i">{startdate}</f:format.date> - <f:format.date format="H:i">{startdate + 3600}</f:format.date><br />
+	    </f:else>
+	</f:if>
+	{memo}
+	
+    </div>
+
+    <div class="bookingDetails">
+    </div>
+
+
+
+</f:section>
