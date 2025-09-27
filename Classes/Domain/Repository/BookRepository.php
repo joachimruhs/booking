@@ -46,14 +46,14 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
 			)
 		)			
-		->andWhere($queryBuilder->expr()->and(
-				$queryBuilder->expr()->and(
+		->andWhere($queryBuilder->expr()->andX(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('objectuid', $queryBuilder->createNamedParameter($objectUid, \PDO::PARAM_INT))
 				),
-				$queryBuilder->expr()->and(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->gte('startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT))
 				),
-				$queryBuilder->expr()->and(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->lte('enddate', $queryBuilder->createNamedParameter(($day + 3600 * 24), \PDO::PARAM_INT))
 				)
 			)
@@ -95,7 +95,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 			)
 		);
 		if ($bookobjectUid) {
-			$queryBuilder->andWhere($queryBuilder->expr()->and(
+			$queryBuilder->andWhere($queryBuilder->expr()->andX(
 				$queryBuilder->expr()->eq(
 					'objectuid', $queryBuilder->createNamedParameter($bookobjectUid, \PDO::PARAM_INT)
 				),
@@ -109,7 +109,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 			)
 			);
 		} else {
-			$queryBuilder->andWhere($queryBuilder->expr()->and(
+			$queryBuilder->andWhere($queryBuilder->expr()->andX(
 				$queryBuilder->expr()->gte(
 					'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
 				),
@@ -161,7 +161,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 			)
 		);
 		if ($bookobjectUid) {
-			$queryBuilder->andWhere($queryBuilder->expr()->and(
+			$queryBuilder->andWhere($queryBuilder->expr()->andX(
 				$queryBuilder->expr()->eq(
 					'feuseruid', $queryBuilder->createNamedParameter($feUserUid, \PDO::PARAM_INT)
 				),
@@ -178,7 +178,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 			)
 			);
 		} else {
-			$queryBuilder->andWhere($queryBuilder->expr()->and(
+			$queryBuilder->andWhere($queryBuilder->expr()->andX(
 				$queryBuilder->expr()->gte(
 					'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
 				),
@@ -230,7 +230,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
 			)
 		);
-		$queryBuilder->andWhere($queryBuilder->expr()->and(
+		$queryBuilder->andWhere($queryBuilder->expr()->andX(
 			$queryBuilder->expr()->gte(
 					'startdate', $queryBuilder->createNamedParameter($day, \PDO::PARAM_INT)
 				),
@@ -277,7 +277,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
 			)
 		);
-		$queryBuilder->andWhere($queryBuilder->expr()->and(
+		$queryBuilder->andWhere($queryBuilder->expr()->andX(
 			$queryBuilder->expr()->gte(
 					'startdate', $queryBuilder->createNamedParameter($day + 43200, \PDO::PARAM_INT)
 				),
@@ -315,7 +315,7 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 				$queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
 			)
 		);
-		$queryBuilder->andWhere($queryBuilder->expr()->and(
+		$queryBuilder->andWhere($queryBuilder->expr()->andX(
 			$queryBuilder->expr()->eq(
 					'startdate', $queryBuilder->createNamedParameter($startdate, \PDO::PARAM_INT)
 				),
@@ -380,11 +380,11 @@ class BookRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 			->getQueryBuilderForTable('tx_boooking_domain_model_book');
 //		$queryBuilder->from('tx_booking_domain_model_book');
 		$queryBuilder->update('tx_booking_domain_model_book')
-		->andWhere($queryBuilder->expr()->and(
-				$queryBuilder->expr()->and(
+		->andWhere($queryBuilder->expr()->andX(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($bookUid, \PDO::PARAM_INT))
 				),
-				$queryBuilder->expr()->and(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('feuseruid', $queryBuilder->createNamedParameter($feUserUid, \PDO::PARAM_INT))
 				)
 			)

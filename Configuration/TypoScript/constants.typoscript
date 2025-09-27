@@ -17,7 +17,7 @@ plugin.tx_booking {
 		cssFile = EXT:booking/Resources/Public/CSS/booking.css
 
 		# cat=plugin.tx_booking/javascript; type=string; label=jQuery library
-		jQueryFile = EXT:booking/Resources/Public/JavaScript/jquery-3.5.1.min.js
+		jQueryFile = EXT:booking/Resources/Public/JavaScript/jquery-3.3.1.min.js
 
 		# cat=plugin.tx_booking/javascript; type=string; label=Javascript file
 		javascriptFile = EXT:booking/Resources/Public/JavaScript/booking.js

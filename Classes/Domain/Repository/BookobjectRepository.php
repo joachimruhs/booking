@@ -50,13 +50,13 @@ class BookobjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 		);
 		
 		$queryBuilder->andWhere(
-			$queryBuilder->expr()->and(
-				$queryBuilder->expr()->and(
+			$queryBuilder->expr()->andX(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
 				)
 			),
-			$queryBuilder->expr()->and(
-				$queryBuilder->expr()->and(
+			$queryBuilder->expr()->andX(
+				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
 				)
 			)

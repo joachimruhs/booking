@@ -44,9 +44,9 @@ class BookobjectControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
         $bookobjectRepository->expects(self::once())->method('findAll')->will(self::returnValue($allBookobjects));
         $this->inject($this->subject, 'bookobjectRepository', $bookobjectRepository);
 
-//        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
-//        $view->expects(self::once())->method('assign')->with('bookobjects', $allBookobjects);
-//        $this->inject($this->subject, 'view', $view);
+        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
+        $view->expects(self::once())->method('assign')->with('bookobjects', $allBookobjects);
+        $this->inject($this->subject, 'view', $view);
 
         $this->subject->listAction();
     }
@@ -58,9 +58,9 @@ class BookobjectControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
     {
         $bookobject = new \WSR\Booking\Domain\Model\Bookobject();
 
-//        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
-//        $this->inject($this->subject, 'view', $view);
-//        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
+        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
+        $this->inject($this->subject, 'view', $view);
+        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
 
         $this->subject->showAction($bookobject);
     }
@@ -72,9 +72,9 @@ class BookobjectControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
     {
         $bookobject = new \WSR\Booking\Domain\Model\Bookobject();
 
-//        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
-//        $this->inject($this->subject, 'view', $view);
-//        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
+        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
+        $this->inject($this->subject, 'view', $view);
+        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
 
         $this->subject->editAction($bookobject);
     }
@@ -104,9 +104,9 @@ class BookobjectControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
     {
         $bookobject = new \WSR\Booking\Domain\Model\Bookobject();
 
-//        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
-//        $this->inject($this->subject, 'view', $view);
-//        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
+        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
+        $this->inject($this->subject, 'view', $view);
+        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
 
         $this->subject->showAction($bookobject);
     }
@@ -118,9 +118,9 @@ class BookobjectControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
     {
         $bookobject = new \WSR\Booking\Domain\Model\Bookobject();
 
-//        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
-//        $this->inject($this->subject, 'view', $view);
-//        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
+        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
+        $this->inject($this->subject, 'view', $view);
+        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
 
         $this->subject->showAction($bookobject);
     }
@@ -132,9 +132,9 @@ class BookobjectControllerTest extends \TYPO3\TestingFramework\Core\Unit\UnitTes
     {
         $bookobject = new \WSR\Booking\Domain\Model\Bookobject();
 
-//        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
-//        $this->inject($this->subject, 'view', $view);
-//        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
+        $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
+        $this->inject($this->subject, 'view', $view);
+        $view->expects(self::once())->method('assign')->with('bookobject', $bookobject);
 
         $this->subject->showAction($bookobject);
     }
