@@ -5,7 +5,7 @@
     <body>
       <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
         <source>Bookobject</source>
-        <target state="final">Bookobjekt</target>
+        <target state="final">Buchungsobjekt</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
         <source>Name</source>
@@ -79,17 +79,17 @@
         <source>Memo</source>
         <target state="final">Memo</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Book</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Wochenansicht</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Delete</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Wochenansicht</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Week calendar</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Wochenansicht</target>
       </trans-unit>
       <trans-unit id="monthView" approved="yes">
         <source>Month calendar</source>
