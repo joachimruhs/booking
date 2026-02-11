@@ -79,13 +79,17 @@
         <source>Memo</source>
         <target state="final">Notat</target>
       </trans-unit>
-      <trans-unit id="delete" approved="yes">
-        <source>Delete</source>
-        <target state="final">Slet</target>
+      <trans-unit id="weekView">
+        <source>Book</source>
+        <target state="needs-translation">Book</target>
       </trans-unit>
-      <trans-unit id="weekView" approved="yes">
+      <trans-unit id="weekView">
+        <source>Delete</source>
+        <target state="needs-translation">Book</target>
+      </trans-unit>
+      <trans-unit id="weekView">
         <source>Week calendar</source>
-        <target state="final">Uge kalender</target>
+        <target state="needs-translation">Book</target>
       </trans-unit>
       <trans-unit id="monthView" approved="yes">
         <source>Month calendar</source>
@@ -155,10 +159,6 @@
       <trans-unit id="foreignBookingsFound" approved="yes">
         <source>There exist foreign bookings or not all hours are booked from you!</source>
         <target state="final">Der findes fremmede bookinger eller ikke alle timer er booket fra dig!</target>
-      </trans-unit>
-      <trans-unit id="book" approved="yes">
-        <source>Book</source>
-        <target state="final">Book</target>
       </trans-unit>
     </body>
   </file>
