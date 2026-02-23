@@ -79,17 +79,17 @@
         <source>Memo</source>
         <target state="final">Notat</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Book</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Bestil</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Delete</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Bestil</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Week calendar</source>
-        <target state="needs-translation">Book</target>
+        <target state="final">Bestil</target>
       </trans-unit>
       <trans-unit id="monthView" approved="yes">
         <source>Month calendar</source>
