@@ -3,162 +3,162 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="lo">
     <header/>
     <body>
-      <trans-unit id="tx_booking_domain_model_bookobject">
+      <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
         <source>Bookobject</source>
-        <target state="translated">ວັດຖຸການຈອງ</target>
+        <target state="final">ວັດຖຸການຈອງ</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_bookobject.name">
+      <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
         <source>Name</source>
-        <target state="translated">ຊື່</target>
+        <target state="final">ຊື່</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+      <trans-unit id="tx_booking_domain_model_bookobject.hours" approved="yes">
         <source>Hours</source>
-        <target state="translated">ຊົ່ວໂມງ</target>
+        <target state="final">ຊົ່ວໂມງ</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book">
+      <trans-unit id="tx_booking_domain_model_book" approved="yes">
         <source>Book</source>
-        <target state="translated">ຈອງ</target>
+        <target state="final">ຈອງ</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.objectuid">
+      <trans-unit id="tx_booking_domain_model_book.objectuid" approved="yes">
         <source>Objectuid</source>
-        <target state="translated">UID ຂອງວັດຖຸ</target>
+        <target state="final">UID ຂອງວັດຖຸ</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.startdate">
+      <trans-unit id="tx_booking_domain_model_book.startdate" approved="yes">
         <source>Startdate</source>
-        <target state="translated">ວັນທີເລີ່ມຕົ້ນ</target>
+        <target state="final">ວັນທີເລີ່ມຕົ້ນ</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.enddate">
+      <trans-unit id="tx_booking_domain_model_book.enddate" approved="yes">
         <source>Enddate</source>
-        <target state="translated">ວັນທີສິ້ນສຸດ</target>
+        <target state="final">ວັນທີສິ້ນສຸດ</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+      <trans-unit id="tx_booking_domain_model_book.feuseruid" approved="yes">
         <source>Feuseruid</source>
-        <target state="translated">UID ຂອງຜູ້ໃຊ້ FE</target>
+        <target state="final">UID ຂອງຜູ້ໃຊ້ FE</target>
       </trans-unit>
-      <trans-unit id="tx_booking_domain_model_book.memo">
+      <trans-unit id="tx_booking_domain_model_book.memo" approved="yes">
         <source>Memo</source>
-        <target state="translated">ບັນທຶກຊ່ວຍຈຳ</target>
+        <target state="final">ບັນທຶກຊ່ວຍຈຳ</target>
       </trans-unit>
-      <trans-unit id="dayNamesShortMultiRow">
+      <trans-unit id="dayNamesShortMultiRow" approved="yes">
         <source>M,T,W,T,F,S,S</source>
-        <target state="translated">ຈ,ອ,ພ,ພຫ,ສຸ,ສ,ອ</target>
+        <target state="final">ຈ,ອ,ພ,ພຫ,ສຸ,ສ,ອ</target>
       </trans-unit>
-      <trans-unit id="dayNamesShort2">
+      <trans-unit id="dayNamesShort2" approved="yes">
         <source>Mo,Tu,We,Th,Fr,Sa,Su</source>
-        <target state="translated">ຈັນ,ອັງ,ພຸດ,ພຫ,ສຸ,ເສົາ,ອາ</target>
+        <target state="final">ຈັນ,ອັງ,ພຸດ,ພຫ,ສຸ,ເສົາ,ອາ</target>
       </trans-unit>
-      <trans-unit id="monthNamesShort">
+      <trans-unit id="monthNamesShort" approved="yes">
         <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
-        <target state="translated">ມັງກອນ,ກຸມພາ,ມີນາ,ເມສາ,ພຶດສະພາ,ມິຖຸນາ,ກໍລະກົດ,ສິງຫາ,ກັນຍາ,ຕຸລາ,ພະຈິກ,ທັນວາ</target>
+        <target state="final">ມັງກອນ,ກຸມພາ,ມີນາ,ເມສາ,ພຶດສະພາ,ມິຖຸນາ,ກໍລະກົດ,ສິງຫາ,ກັນຍາ,ຕຸລາ,ພະຈິກ,ທັນວາ</target>
       </trans-unit>
-      <trans-unit id="calendarWeek">
+      <trans-unit id="calendarWeek" approved="yes">
         <source>Calendarweek</source>
-        <target state="translated">ອາທິດຂອງປະຕິທິນ</target>
+        <target state="final">ອາທິດຂອງປະຕິທິນ</target>
       </trans-unit>
-      <trans-unit id="partialBooked">
+      <trans-unit id="partialBooked" approved="yes">
         <source>Partial booked</source>
-        <target state="translated">ຈອງແລ້ວບາງສ່ວນ</target>
+        <target state="final">ຈອງແລ້ວບາງສ່ວນ</target>
       </trans-unit>
-      <trans-unit id="notAvailable">
+      <trans-unit id="notAvailable" approved="yes">
         <source>Not available</source>
-        <target state="translated">ບໍ່ວ່າງ</target>
+        <target state="final">ບໍ່ວ່າງ</target>
       </trans-unit>
-      <trans-unit id="available">
+      <trans-unit id="available" approved="yes">
         <source>Available</source>
-        <target state="translated">ວ່າງ</target>
+        <target state="final">ວ່າງ</target>
       </trans-unit>
-      <trans-unit id="time">
+      <trans-unit id="time" approved="yes">
         <source>Time</source>
-        <target state="translated">ເວລາ</target>
+        <target state="final">ເວລາ</target>
       </trans-unit>
-      <trans-unit id="name">
+      <trans-unit id="name" approved="yes">
         <source>Name</source>
-        <target state="translated">ຊື່</target>
+        <target state="final">ຊື່</target>
       </trans-unit>
-      <trans-unit id="Memo">
+      <trans-unit id="Memo" approved="yes">
         <source>Memo</source>
-        <target state="translated">ບັນທຶກຊ່ວຍຈຳ</target>
+        <target state="final">ບັນທຶກຊ່ວຍຈຳ</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Book</source>
-        <target state="translated">ປື້ມ</target>
+        <target state="final">ປື້ມ</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Delete</source>
-        <target state="translated">ປື້ມ</target>
+        <target state="final">ປື້ມ</target>
       </trans-unit>
-      <trans-unit id="weekView">
+      <trans-unit id="weekView" approved="yes">
         <source>Week calendar</source>
-        <target state="translated">ປື້ມ</target>
+        <target state="final">ປື້ມ</target>
       </trans-unit>
-      <trans-unit id="monthView">
+      <trans-unit id="monthView" approved="yes">
         <source>Month calendar</source>
-        <target state="translated">ປະຕິທິນລາຍເດືອນ</target>
+        <target state="final">ປະຕິທິນລາຍເດືອນ</target>
       </trans-unit>
-      <trans-unit id="Mon">
+      <trans-unit id="Mon" approved="yes">
         <source>Mo</source>
-        <target state="translated">ຈັນ</target>
+        <target state="final">ຈັນ</target>
       </trans-unit>
-      <trans-unit id="Tue">
+      <trans-unit id="Tue" approved="yes">
         <source>Tu</source>
-        <target state="translated">ອັງ</target>
+        <target state="final">ອັງ</target>
       </trans-unit>
-      <trans-unit id="Wed">
+      <trans-unit id="Wed" approved="yes">
         <source>We</source>
-        <target state="translated">ພຸດ</target>
+        <target state="final">ພຸດ</target>
       </trans-unit>
-      <trans-unit id="Thu">
+      <trans-unit id="Thu" approved="yes">
         <source>Th</source>
-        <target state="translated">ພຫ</target>
+        <target state="final">ພຫ</target>
       </trans-unit>
-      <trans-unit id="Fri">
+      <trans-unit id="Fri" approved="yes">
         <source>Fr</source>
-        <target state="translated">ສຸ</target>
+        <target state="final">ສຸ</target>
       </trans-unit>
-      <trans-unit id="Sat">
+      <trans-unit id="Sat" approved="yes">
         <source>Sa</source>
-        <target state="translated">ເສົາ</target>
+        <target state="final">ເສົາ</target>
       </trans-unit>
-      <trans-unit id="Sun">
+      <trans-unit id="Sun" approved="yes">
         <source>Su</source>
-        <target state="translated">ອາ</target>
+        <target state="final">ອາ</target>
       </trans-unit>
-      <trans-unit id="bookDay">
+      <trans-unit id="bookDay" approved="yes">
         <source>Book day</source>
-        <target state="translated">ຈອງມື້ນີ້</target>
+        <target state="final">ຈອງມື້ນີ້</target>
       </trans-unit>
-      <trans-unit id="deleteDay">
+      <trans-unit id="deleteDay" approved="yes">
         <source>Delete day</source>
-        <target state="translated">ລຶບມື້ນີ້</target>
+        <target state="final">ລຶບມື້ນີ້</target>
       </trans-unit>
       <!-- messages -->
-      <trans-unit id="dateInputError">
+      <trans-unit id="dateInputError" approved="yes">
         <source>Date input error!</source>
-        <target state="translated">ຂໍ້ມູນວັນທີຜິດພາດ!</target>
+        <target state="final">ຂໍ້ມູນວັນທີຜິດພາດ!</target>
       </trans-unit>
-      <trans-unit id="insertPastBooking">
+      <trans-unit id="insertPastBooking" approved="yes">
         <source>Past bookings can not be inserted!</source>
-        <target state="translated">ບໍ່ສາມາດເພີ່ມການຈອງໃນອະດີດໄດ້!</target>
+        <target state="final">ບໍ່ສາມາດເພີ່ມການຈອງໃນອະດີດໄດ້!</target>
       </trans-unit>
-      <trans-unit id="deletePastBooking">
+      <trans-unit id="deletePastBooking" approved="yes">
         <source>Past bookings can not be deleted!</source>
-        <target state="translated">ບໍ່ສາມາດລຶບການຈອງໃນອະດີດໄດ້!</target>
+        <target state="final">ບໍ່ສາມາດລຶບການຈອງໃນອະດີດໄດ້!</target>
       </trans-unit>
-      <trans-unit id="notAllowedToDeleteBooking">
+      <trans-unit id="notAllowedToDeleteBooking" approved="yes">
         <source>You are not allowed to delete this booking!</source>
-        <target state="translated">ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລຶບການຈອງນີ້!</target>
+        <target state="final">ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລຶບການຈອງນີ້!</target>
       </trans-unit>
-      <trans-unit id="insertBookingRequireFeUser">
+      <trans-unit id="insertBookingRequireFeUser" approved="yes">
         <source>To insert booking a logged in FE user is required!</source>
-        <target state="translated">ຕ້ອງເຂົ້າສູ່ລະບົບຜູ້ໃຊ້ FE ເພື່ອເຮັດການຈອງ!</target>
+        <target state="final">ຕ້ອງເຂົ້າສູ່ລະບົບຜູ້ໃຊ້ FE ເພື່ອເຮັດການຈອງ!</target>
       </trans-unit>
-      <trans-unit id="objectAlreadyBooked">
+      <trans-unit id="objectAlreadyBooked" approved="yes">
         <source>The object is already booked at this time!</source>
-        <target state="translated">ວັດຖຸນີ້ຖືກຈອງແລ້ວໃນເວລານີ້!</target>
+        <target state="final">ວັດຖຸນີ້ຖືກຈອງແລ້ວໃນເວລານີ້!</target>
       </trans-unit>
-      <trans-unit id="foreignBookingsFound">
+      <trans-unit id="foreignBookingsFound" approved="yes">
         <source>There exist foreign bookings or not all hours are booked from you!</source>
-        <target state="translated">ມີການຈອງຈາກຜູ້ອື່ນ ຫຼື ທ່ານບໍ່ໄດ້ຈອງຄົບທຸກຊົ່ວໂມງ!</target>
+        <target state="final">ມີການຈອງຈາກຜູ້ອື່ນ ຫຼື ທ່ານບໍ່ໄດ້ຈອງຄົບທຸກຊົ່ວໂມງ!</target>
       </trans-unit>
     </body>
   </file>
