@@ -5,43 +5,43 @@
     <body>
       <trans-unit id="tx_booking_domain_model_bookobject">
         <source>Bookobject</source>
-        <target state="needs-translation">Bookobject</target>
+        <target state="translated">ວັດຖຸການຈອງ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_bookobject.name">
         <source>Name</source>
-        <target state="needs-translation">Name</target>
+        <target state="translated">ຊື່</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_bookobject.hours">
         <source>Hours</source>
-        <target state="needs-translation">Hours</target>
+        <target state="translated">ຊົ່ວໂມງ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book">
         <source>Booking</source>
-        <target state="needs-translation">Booking</target>
+        <target state="translated">ການຈອງ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book.objectuid">
         <source>Objectuid</source>
-        <target state="needs-translation">Objectuid</target>
+        <target state="translated">UID ວັດຖຸ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book.startdate">
         <source>Startdate</source>
-        <target state="needs-translation">Startdate</target>
+        <target state="translated">ວັນທີເລີ່ມຕົ້ນ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book.enddate">
         <source>Enddate</source>
-        <target state="needs-translation">Enddate</target>
+        <target state="translated">ວັນທີສິ້ນສຸດ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book.feuseruid">
         <source>Feuseruid</source>
-        <target state="needs-translation">Feuseruid</target>
+        <target state="translated">UID ຜູ້ໃຊ້ລະບົບສ່ວນໜ້າ</target>
       </trans-unit>
       <trans-unit id="tx_booking_domain_model_book.memo">
         <source>Memo</source>
-        <target state="needs-translation">Memo</target>
+        <target state="translated">ບັນທຶກ</target>
       </trans-unit>
       <trans-unit id="tx_booking_reservation.name">
         <source>Reservation</source>
-        <target state="needs-translation">Reservation</target>
+        <target state="translated">ການສຳຮອງ</target>
       </trans-unit>
       <trans-unit id="tx_booking_reservation.description">
         <source/>
