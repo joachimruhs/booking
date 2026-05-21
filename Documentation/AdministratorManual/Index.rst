@@ -36,7 +36,7 @@ The operation hours should be shown in green in the  Week Calendar.
 	:width: 400px
 	:alt: Book object
 
-When everything is  done, log in as FE user and test the extension...
+When everything is done, log in as FE user and test the extension...
 
 
 To use your own templates, copy the directory folder /typo3conf/ext/booking/Resources/ with
