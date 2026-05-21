@@ -23,6 +23,11 @@ use TYPO3\CMS\Core\View\ViewFactoryInterface;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Mail\MailMessage;
 
+use WSR\Booking\Domain\Repository\BookobjectRepository;
+use WSR\Booking\Domain\Repository\BookRepository;
+use WSR\Booking\Domain\Repository\FeuserRepository;
+
+
 /***
  *
  * This file is part of the "Booking" Extension for TYPO3 CMS.
@@ -40,8 +45,16 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 {
 
     public function __construct(
-        private ViewFactoryInterface $viewFactory,
-    ) {}
+//        private ViewFactoryInterface $viewFactory
+
+    ) {
+		$this->viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
+		$this->bookobjectRepository = GeneralUtility::makeInstance(BookobjectRepository::class);
+		$this->bookRepository = GeneralUtility::makeInstance(BookRepository::class);
+		$this->feuserRepository = GeneralUtility::makeInstance(FeuserRepository::class);
+
+		//		$this->feuserRepository = GeneralUtility::makeInstance(UsersRepository::class);
+		}
 
     /**
      * Inject a ViewFactoryInterface
@@ -50,8 +63,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @return void
      */
     public function injectViewFactoryInterface(\TYPO3\CMS\Core\View\ViewFactoryInterface $viewFactoryInterface) {
-        $this->viewFactory = $viewFactoryInterface;
+//        $this->viewFactory = $viewFactoryInterface;
     }
+
 
 
 
@@ -60,7 +74,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * 
      * @var \WSR\Booking\Domain\Repository\BookobjectRepository
      */
-    protected $bookobjectRepository = null;
+//    protected $bookobjectRepository = null;
 
     /**
      * Inject a BookobjectRepository to enable DI
@@ -68,11 +82,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @param \WSR\Booking\Domain\Repository\BookobjectRepository
      * @return void
      */
-    public function injectBookobjectRepository(\WSR\Booking\Domain\Repository\BookobjectRepository $bookobjectRepository) {
-        $this->bookobjectRepository = $bookobjectRepository;
-    }
+//    public function injectBookobjectRepository(\WSR\Booking\Domain\Repository\BookobjectRepository $bookobjectRepository): void {
+//        $this->bookobjectRepository = $bookobjectRepository;
+//    }
 
 
+
+
+	
     /**
      * bookRepository
      * 
@@ -86,9 +103,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      * @param \WSR\Booking\Domain\Repository\BookRepository
      * @return void
      */
-    public function injectBookRepository(\WSR\Booking\Domain\Repository\BookRepository $bookRepository) {
-        $this->bookRepository = $bookRepository;
-    }
+//    public function injectBookRepository(\WSR\Booking\Domain\Repository\BookRepository $bookRepository) {
+//        $this->bookRepository = $bookRepository;
+//    }
 
 	/**
 	 * userRepository
@@ -198,7 +215,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
      */
     public function calendarBaseAction()
     {
-		$bookObjects = $this->bookobjectRepository->findAll();
+//		$this->bookobjectRepository = GeneralUtility::makeInstance(BookobjectRepository::class);
+//		$this->bookobjectRepository = GeneralUtility::makeInstance(BookRepository::class);
+
+	$bookObjects = $this->bookobjectRepository->findAll();
 //        $id = $GLOBALS['TSFE']->contentPid;
 
         $pageArguments = $this->request->getAttribute('routing');
@@ -250,7 +270,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	 */
 	protected function processPostRequest(ServerRequestInterface $request, $response)
 	{
-		$queryParams = $request->getQueryParams();
+	$queryParams = $request->getQueryParams();
 	
         $fullTypoScript = $request->getAttribute('frontend.typoscript')->getSetupArray()['plugin.']['tx_booking.'] ;
 	    $this->configuration = $request->getAttribute('frontend.typoscript')->getSetupArray()['plugin.']['tx_booking.'];
@@ -339,6 +359,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
 		$month = intval($requestArguments['month']);
 		$theYear = $year;
+
+echo $this->conf['storagePid'];
+echo 1111;
 
 		$bookObjects = $this->bookobjectRepository->findAllNew($this->conf['storagePid']);			
 

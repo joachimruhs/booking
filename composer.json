@@ -7,10 +7,11 @@
             "name": "Joachim Ruhs",
             "role": "Developer"
         }
-    ],
+    ],  
 	"license": "MIT",	
     "require": {
-        "typo3/cms-core": "^13" 
+	"typo3/cms-core": "^13.4 || ^14",
+	"typo3/cms-frontend": "^13.4 || ^14"
     },
     "autoload": {
         "psr-4": {
@@ -27,7 +28,8 @@
     },
     "extra": {
       "typo3/cms": {
-         "extension-key": "booking"
+         "extension-key": "booking",
+        "version": "2.8.1"     
       }
    }	
 }
