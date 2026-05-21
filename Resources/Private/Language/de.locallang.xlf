@@ -61,7 +61,7 @@
       </trans-unit>
       <trans-unit id="notAvailable" approved="yes">
         <source>Not available</source>
-        <target state="final">Nicht verfügbar123</target>
+        <target state="final">Nicht verfügbar</target>
       </trans-unit>
       <trans-unit id="available" approved="yes">
         <source>Available</source>
