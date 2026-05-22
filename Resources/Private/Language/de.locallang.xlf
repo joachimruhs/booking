@@ -59,9 +59,9 @@
         <source>Partial booked</source>
         <target state="final">Teilweise gebucht</target>
       </trans-unit>
-      <trans-unit id="notAvailable">
+      <trans-unit id="notAvailable" approved="yes">
         <source>Not available</source>
-        <target state="translated">Nicht verfügbar</target>
+        <target state="final">Nicht verfügbar</target>
       </trans-unit>
       <trans-unit id="available" approved="yes">
         <source>Available</source>
