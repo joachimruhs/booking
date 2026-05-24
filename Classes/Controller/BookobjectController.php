@@ -16,12 +16,19 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Core\Http\Response;
 
 use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+
+use TYPO3\CMS\Core\Http\JsonResponse;
+use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+
+use TYPO3\CMS\Core\Context\Context;
 
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
 
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 
 use WSR\Booking\Domain\Repository\BookobjectRepository;
 use WSR\Booking\Domain\Repository\BookRepository;
@@ -35,7 +42,7 @@ use WSR\Booking\Domain\Repository\FeuserRepository;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  *
- *  (c) 2024 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
+ *  (c) 2024 - 2026 Joachim Ruhs <postmaster@joachim-ruhs.de>, Web Services Ruhs
  *
  ***/
 /**
@@ -44,19 +51,19 @@ use WSR\Booking\Domain\Repository\FeuserRepository;
 class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
-    public function __construct(
-//        private ViewFactoryInterface $viewFactory
 
+    public function __construct(
+// private LanguageService $languageService;
+// no DependencyInjection in Ajax
     ) {
 		$this->viewFactory = GeneralUtility::makeInstance(ViewFactoryInterface::class);
 		$this->bookobjectRepository = GeneralUtility::makeInstance(BookobjectRepository::class);
 		$this->bookRepository = GeneralUtility::makeInstance(BookRepository::class);
 		$this->feuserRepository = GeneralUtility::makeInstance(FeuserRepository::class);
+		$this->mailer = GeneralUtility::makeInstance(MailerInterface::class);
+	}
 
-		//		$this->feuserRepository = GeneralUtility::makeInstance(UsersRepository::class);
-		}
-
-    /**
+   /**
      * Inject a ViewFactoryInterface
      *
      * @param \TYPO3\CMS\Core\View\ViewFactoryInterface
@@ -270,6 +277,9 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	 */
 	protected function processPostRequest(ServerRequestInterface $request, $response)
 	{
+
+	$this->request1 = $request; 
+	
 	$queryParams = $request->getQueryParams();
 	
         $fullTypoScript = $request->getAttribute('frontend.typoscript')->getSetupArray()['plugin.']['tx_booking.'] ;
@@ -279,7 +289,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->settings = $this->configuration['settings.'];
 		$this->conf['storagePid'] = $this->configuration['persistence.']['storagePid'];
 
-		$this->request1 = $request;
 		$requestArguments = $this->request1->getParsedBody()['tx_booking_ajax'];
 
         // fetching correct language for locallang labels
@@ -347,7 +356,16 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 
 	function showMonth() {
-		if (!$this->conf['storagePid']) {
+ 		if (Environment::getPublicPath() != Environment::getProjectPath()) {
+            //  we are in composerMode
+//			$this->view->assign('composerMode', 1);
+//echo 'Composer';
+        } else {
+//			$this->view->assign('composerMode', 0);
+//echo 'nonComposer';
+			}
+
+	if (!$this->conf['storagePid']) {
 			$error = 'No storagePid or startingpoint given! <br />Please insert a storagePid in constant editor for the plugin or set the startingpoint of the plugin in flexform.';
 			echo '<div class="error">' . $error . '</div>';
 		}
@@ -359,9 +377,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		if ($year > date('Y', time()) + 1) $year = date('Y', time()) + 1; 
 		$month = intval($requestArguments['month']);
 		$theYear = $year;
-
-echo $this->conf['storagePid'];
-echo 1111;
 
 		$bookObjects = $this->bookobjectRepository->findAllNew($this->conf['storagePid']);			
 
@@ -382,10 +397,32 @@ echo 1111;
 		$conf['startOfWeek'] = 'monday';
 		$conf['markWeekends'] = 1; 
 
-		$settings['monthLabels'] = explode(',', $this->translate('monthNamesShort'));
+		$settings['monthLabels'] = explode(',', $this->translate('monthNamesShort', 'booking'));
 		$settings['dayLabels'] = explode(',', $this->translate('dayNamesShortMultiRow'));		
 
-		
+        $locale = $this->getLocale();
+
+        if ($locale == 'de-DE') {
+            $settings['monthLabels'] = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+            $settings['dayLabels'] = ['M', 'D', 'M', 'D', 'F', 'S', 'S'];
+        }
+        if ($locale == 'da-DK') {
+            $settings['monthLabels'] = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
+            $settings['dayLabels'] = ['M', 'D', 'M', 'D', 'F', 'S', 'S'];
+        }
+        if ($locale == 'lo-LA') {
+            $settings['monthLabels'] = ['ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ', 'ກໍລະກົດ', 'ສິງຫາ', 'ກັນຍາ', 'ຕຸລາ', 'ພະຈິກ', 'ທັນວາ'];
+            $settings['dayLabels'] = ['ຈ', 'ອ', 'ພ', 'ພຫ', 'ສຸ', 'ສ', 'ອ'];
+        }
+
+        // this did not work anymore in TYPO3 14
+//        $message = LocalizationUtility::translate(
+//            'monthLabels',
+//            'booking', []
+//            [$count, $tablename],
+//        );
+
+
         $weekday = 0;
         $out = '';
 		// loop over the bookingObjects
@@ -681,7 +718,10 @@ echo 1111;
      */
     public function showWeek()
     {
-		if (!$this->conf['storagePid']) {
+
+        $locale = $this->getLocale();
+
+        if (!$this->conf['storagePid']) {
 			$error = 'No storagePid or startingpoint given! <br />Please insert a storagePid in constant editor for the plugin or set the startingpoint of the plugin in flexform.';
 			echo '<div class="error">' . $error . '</div>';
 		}
@@ -785,8 +825,6 @@ echo 1111;
 				$bookingsAM[$wd] = $this->bookRepository->getBookingsOfDateAM($this->conf['storagePid'], $dayTime);
 				$bookingsPM[$wd] = $this->bookRepository->getBookingsOfDatePM($this->conf['storagePid'], $dayTime);
 
-
-//				$operating[$bookobjectUid] = 33;
 			}
 
 		}
@@ -845,11 +883,24 @@ echo 1111;
 		$view->assign('bookingsPM', $bookingsPM);
 
 		$settings['dayLabels'] = explode(',', $this->translate('dayNamesShort2'));		
-		$view->assign('dayLabels', $settings['dayLabels']);
+//		$view->assign('dayLabels', $settings['dayLabels']);
 
 		$view->assign('calendarWeekLabel', $this->translate('calendarWeek'));
 
 		$view->assign('now', time());
+        if ($locale == 'de-DE') {
+            $view->assign('dayLabels', ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']);
+            $view->assign('calendarWeekLabel', 'Kalenderwoche');
+        }
+        if ($locale == 'da-DK') {
+            $view->assign('dayLabels', ['Ma', 'Ti', 'On', 'To', 'Fr', 'Lø', 'Sø']);
+            $view->assign('calendarWeekLabel', 'Kalenderwoche');
+        }
+        if ($locale == 'lo-LA') {
+            $view->assign('dayLabels', ['ຈັນ', 'ອັງ', 'ພຸດ', 'ພຫ', 'ສຸ', 'ເສົາ', 'ອາ']);
+            $view->assign('calendarWeekLabel', 'Kalenderwoche');
+        }
+
 		return $view->render($template);
     }
 
@@ -938,8 +989,39 @@ echo 1111;
             'bookLabel' => LocalizationUtility::translate('book', 'booking'),
             'deleteLabel' => LocalizationUtility::translate('delete', 'booking')
             ];
+        $locale = $this->getLocale();
+        if ($locale == 'de-DE') {
+            $assign['weekViewLabel'] = 'Wochenansicht';
+            $assign['monthViewLabel'] = 'Monatsansicht';
+            $assign['timeLabel'] = 'Zeit';
+            $assign['bookLabel'] = 'Buchen';
+            $assign['deleteLabel'] = 'Löschen';
+            $assign['deleteDayLabel'] = 'Tag löschen';
+            $assign['bookDayLabel'] = 'Tag buchen';
+        }
+        if ($locale == 'da-DK') {
+            $assign['weekViewLabel'] = 'Uge kalender';
+            $assign['monthViewLabel'] = 'Måneds kalender';
+            $assign['timeLabel'] = 'Tid';
+            $assign['memoLabel'] = 'Notad';
+            $assign['bookLabel'] = 'Bestil';
+            $assign['deleteLabel'] = 'Slet';
+            $assign['deleteDayLabel'] = 'Selt dag';
+            $assign['bookDayLabel'] = 'Book dag';
+        }
+        if ($locale == 'lo-LA') {
+            $assign['weekViewLabel'] = 'ປື້ມ';
+            $assign['monthViewLabel'] = 'ປະຕິທິນລາຍເດືອນ';
+            $assign['timeLabel'] = 'ເວລາ';
+            $assign['memoLabel'] = 'ບັນທຶກຊ່ວຍຈຳ';
+            $assign['bookLabel'] = 'ປື້ມ';
+            $assign['deleteLabel'] = 'ປື້ມ';
+            $assign['deleteDayLabel'] = 'ລຶບມື້ນີ້';
+            $assign['bookDayLabel'] = 'ຈອງມື້ນີ້';
+        }
 
         $template = 'BookingForm.html';
+
 
 		$view = $this->getView($template);
 		$view->assignMultiple($assign);
@@ -1024,8 +1106,8 @@ echo 1111;
 	*/
 	protected function sendTemplateEmail(array $recipient, array $sender, $subject, $templateName, array $variables = array()) {
 		/** @var \TYPO3\CMS\Fluid\View\StandaloneView $emailView */
-		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
-										'booking');
+//		$extbaseFrameworkConfiguration = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK,
+//										'booking');
 
 		$viewFactoryData = new ViewFactoryData(
             templateRootPaths: $this->configuration['view.']['templateRootPaths.'],
@@ -1049,7 +1131,8 @@ echo 1111;
             $attachment = $this->settings['mailAttachment'];
             $mail->attachFromPath($attachment);
         }
-        $mail->send();
+		return $this->mailer->send($mail);
+//        $mail->send();
 	}
 
     /**
@@ -1146,8 +1229,8 @@ echo 1111;
 			$error .= '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('foreignBookingsFound', 'booking') . '</div><script>$(".error").center();</script>';
 		}
 
-//		$feUserUid = $GLOBALS['TSFE']->fe_user->user['uid'] ?? 0;
-	        $feUserUid = $this->request1->getAttribute('frontend.user')->user['uid'];
+        $context = GeneralUtility::makeInstance(Context::class);
+        $feUserUid = $context->getPropertyFromAspect('frontend.user', 'id'); // Gibt 0 zurück, falls kein User eingeloggt ist
 
 		if (!$feUserUid) {
 			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
@@ -1214,21 +1297,28 @@ echo 1111;
 	 * @return \TYPO3\CMS\Fluid\View\StandaloneView
 	 */
 	protected function getView() {
-            $viewFactoryData = new ViewFactoryData(
-        	templateRootPaths: $this->configuration['view.']['templateRootPaths.'],
-        	partialRootPaths: ['EXT:booking/Resources/Private/Partials'],
-        	layoutRootPaths: ['EXT:booking/Resources/Private/Layouts'],
+		$viewFactoryData = new ViewFactoryData(
+		templateRootPaths: $this->configuration['view.']['templateRootPaths.'],
+		partialRootPaths: ['EXT:booking/Resources/Private/Partials'],
+		layoutRootPaths: ['EXT:booking/Resources/Private/Layouts'],
 //            	request: $this->request,
-    	    );
-    	    $view = $this->viewFactory->create($viewFactoryData);
-
-//print_r($view);
-//exit;
+		);
+		$view = $this->viewFactory->create($viewFactoryData);
 
 	    return $view;
 	}
 
-    
+    function getLocale() {
+        $language = $this->request1->getAttribute('language');
+        if ($language instanceof SiteLanguage) {
+            $languageId = $language->getLanguageId(); // z.B. 0, 1, 2
+            $locale = $language->getLocale(); // z.B. de_DE
+        //    $isoCode = $language->getTwoLetterIsoCode(); // z.B. de, en
+        return $locale;
+        }
+        return '';
+    }        
+
 	/**
 	 * Returns the translation of $key
 	 *
@@ -1238,6 +1328,7 @@ echo 1111;
 	protected function translate($key)
 	{
         return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($key, 'booking', []);
+//        return \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate(key: $key, extensionName: 'booking');
 	}
     
 }

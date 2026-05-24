@@ -20,7 +20,7 @@
 		<div class="hidden" id="bookingDate">{dayTime}</div>
 		
 		<f:for each="{bookobjects}" as="bookobject">
-			<div class="bookobjectTitle">{bookobject.name}AA</div>
+			<div class="bookobjectTitle">{bookobject.name}</div>
 			<div class="weekSelector">
                 <f:variable name="uriImgPrev"><f:uri.image src="EXT:booking/Resources/Public/Icons/actions-view-paging-previous.svg" /></f:variable>
 				<img class="previousWeek" bookobjectUid="{bookobject.uid}" date="{dayTime}" hour="{hour}" src="/{uriImgPrev}"/>

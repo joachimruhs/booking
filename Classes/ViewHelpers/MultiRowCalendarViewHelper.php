@@ -116,8 +116,8 @@ class MultiRowCalendarViewHelper extends AbstractViewHelper {
 		$settings['monthLabels'] = explode(',', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthNamesShort', 'booking'));
 		$settings['dayLabels'] = explode(',', \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('dayNamesShortMultiRow', 'booking'));		
 
-
-//print_r($arguments);
+echo 77;
+print_r($settings['monthLabels']);
 
 			$m = $month;
 			$out .= '<table class="monthMultiRow">';

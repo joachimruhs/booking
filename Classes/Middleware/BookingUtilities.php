@@ -31,7 +31,7 @@ class BookingUtilities implements MiddlewareInterface {
 		// continue only if action is ajaxPsr of extension myleaflet
 		if (!isset($requestArguments['action']) || $requestArguments['action'] != 'ajaxPsr') return $handler->handle($request);
 
-		$this->viewFactory = GeneralUtility::makeInstance("TYPO3\CMS\Core\View\ViewFactoryInterface");
+//		$this->viewFactory = GeneralUtility::makeInstance("TYPO3\CMS\Core\View\ViewFactoryInterface");
 		$ajaxController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('WSR\Booking\Controller\BookobjectController', 11, $request);
 
 //echo 99999;

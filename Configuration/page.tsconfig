@@ -2,7 +2,7 @@ mod {
     wizards.newContentElement.wizardItems.plugins {
         elements {
             reservation {
-                iconIdentifier = booking-plugin-reservation
+                iconIdentifier = extension-booking-reservation
                 title = LLL:EXT:booking/Resources/Private/Language/locallang_db.xlf:tx_booking_reservation.name
                 description = LLL:EXT:booking/Resources/Private/Language/locallang_db.xlf:tx_booking_reservation.description
                 tt_content_defValues {
