@@ -61,7 +61,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->bookRepository = GeneralUtility::makeInstance(BookRepository::class);
 		$this->feuserRepository = GeneralUtility::makeInstance(FeuserRepository::class);
 		$this->mailer = GeneralUtility::makeInstance(MailerInterface::class);
-	}
+
+		$this->languageServiceFactory = GeneralUtility::makeInstance(LanguageServiceFactory::class);
+//        $this->LocalisationUtility = GeneralUtility::makeInstance(LocalizationUtility::class);
+        }
 
    /**
      * Inject a ViewFactoryInterface
@@ -397,31 +400,12 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$conf['startOfWeek'] = 'monday';
 		$conf['markWeekends'] = 1; 
 
-		$settings['monthLabels'] = explode(',', $this->translate('monthNamesShort', 'booking'));
-		$settings['dayLabels'] = explode(',', $this->translate('dayNamesShortMultiRow'));		
 
-        $locale = $this->getLocale();
+        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
+        $translator = $this->languageServiceFactory->createFromSiteLanguage($language);
 
-        if ($locale == 'de-DE') {
-            $settings['monthLabels'] = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-            $settings['dayLabels'] = ['M', 'D', 'M', 'D', 'F', 'S', 'S'];
-        }
-        if ($locale == 'da-DK') {
-            $settings['monthLabels'] = ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'];
-            $settings['dayLabels'] = ['M', 'D', 'M', 'D', 'F', 'S', 'S'];
-        }
-        if ($locale == 'lo-LA') {
-            $settings['monthLabels'] = ['ມັງກອນ', 'ກຸມພາ', 'ມີນາ', 'ເມສາ', 'ພຶດສະພາ', 'ມິຖຸນາ', 'ກໍລະກົດ', 'ສິງຫາ', 'ກັນຍາ', 'ຕຸລາ', 'ພະຈິກ', 'ທັນວາ'];
-            $settings['dayLabels'] = ['ຈ', 'ອ', 'ພ', 'ພຫ', 'ສຸ', 'ສ', 'ອ'];
-        }
-
-        // this did not work anymore in TYPO3 14
-//        $message = LocalizationUtility::translate(
-//            'monthLabels',
-//            'booking', []
-//            [$count, $tablename],
-//        );
-
+        $settings['monthLabels'] = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthNamesShort'));
+		$settings['dayLabels'] = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:dayNamesShortMultiRow'));		
 
         $weekday = 0;
         $out = '';
@@ -888,18 +872,15 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$view->assign('calendarWeekLabel', $this->translate('calendarWeek'));
 
 		$view->assign('now', time());
-        if ($locale == 'de-DE') {
-            $view->assign('dayLabels', ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']);
-            $view->assign('calendarWeekLabel', 'Kalenderwoche');
-        }
-        if ($locale == 'da-DK') {
-            $view->assign('dayLabels', ['Ma', 'Ti', 'On', 'To', 'Fr', 'Lø', 'Sø']);
-            $view->assign('calendarWeekLabel', 'Kalenderwoche');
-        }
-        if ($locale == 'lo-LA') {
-            $view->assign('dayLabels', ['ຈັນ', 'ອັງ', 'ພຸດ', 'ພຫ', 'ສຸ', 'ເສົາ', 'ອາ']);
-            $view->assign('calendarWeekLabel', 'Kalenderwoche');
-        }
+
+        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
+        $translator = $this->languageServiceFactory->createFromSiteLanguage($language);
+
+        $dayLabels = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:dayNamesShort2'));
+        $view->assign('dayLabels', ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']);
+
+        $calendarWeek = $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:calendarWeek');
+        $view->assign('calendarWeekLabel', $calendarWeek);
 
 		return $view->render($template);
     }
@@ -971,6 +952,13 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			else $disabledHours[] = 0;
 		}
 
+        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
+        $translator = $this->languageServiceFactory->createFromSiteLanguage($language);
+
+        $settings['monthLabels'] = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthNamesShort'));
+
+
+
         $assign = [
             'out' => $out ?? '',
             'message' => $this->deletedData['error'] ?? '',
@@ -981,45 +969,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             'hours' => $hours,
             'disabledHours' => $disabledHours,
             'now' => time(),
-            'bookDayLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('bookDay', 'booking'),
-            'deleteDayLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('deleteDay', 'booking'),
-            'weekViewLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('weekView', 'booking'),
-            'monthViewLabel' => \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('monthView', 'booking'),
-            'timeLabel' => LocalizationUtility::translate('time', 'booking'),
-            'bookLabel' => LocalizationUtility::translate('book', 'booking'),
-            'deleteLabel' => LocalizationUtility::translate('delete', 'booking')
+            'bookDayLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:bookDay'),
+            'deleteDayLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:deleteDay'),
+            'weekViewLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:weekView'),
+            'monthViewLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthView'),
+            'timeLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:time'),
+            'bookLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:book'),
+            'deleteLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:delete'),
             ];
-        $locale = $this->getLocale();
-        if ($locale == 'de-DE') {
-            $assign['weekViewLabel'] = 'Wochenansicht';
-            $assign['monthViewLabel'] = 'Monatsansicht';
-            $assign['timeLabel'] = 'Zeit';
-            $assign['bookLabel'] = 'Buchen';
-            $assign['deleteLabel'] = 'Löschen';
-            $assign['deleteDayLabel'] = 'Tag löschen';
-            $assign['bookDayLabel'] = 'Tag buchen';
-        }
-        if ($locale == 'da-DK') {
-            $assign['weekViewLabel'] = 'Uge kalender';
-            $assign['monthViewLabel'] = 'Måneds kalender';
-            $assign['timeLabel'] = 'Tid';
-            $assign['memoLabel'] = 'Notad';
-            $assign['bookLabel'] = 'Bestil';
-            $assign['deleteLabel'] = 'Slet';
-            $assign['deleteDayLabel'] = 'Selt dag';
-            $assign['bookDayLabel'] = 'Book dag';
-        }
-        if ($locale == 'lo-LA') {
-            $assign['weekViewLabel'] = 'ປື້ມ';
-            $assign['monthViewLabel'] = 'ປະຕິທິນລາຍເດືອນ';
-            $assign['timeLabel'] = 'ເວລາ';
-            $assign['memoLabel'] = 'ບັນທຶກຊ່ວຍຈຳ';
-            $assign['bookLabel'] = 'ປື້ມ';
-            $assign['deleteLabel'] = 'ປື້ມ';
-            $assign['deleteDayLabel'] = 'ລຶບມື້ນີ້';
-            $assign['bookDayLabel'] = 'ຈອງມື້ນີ້';
-        }
-
         $template = 'BookingForm.html';
 
 
