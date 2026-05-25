@@ -34,7 +34,6 @@ use WSR\Booking\Domain\Repository\BookobjectRepository;
 use WSR\Booking\Domain\Repository\BookRepository;
 use WSR\Booking\Domain\Repository\FeuserRepository;
 
-
 /***
  *
  * This file is part of the "Booking" Extension for TYPO3 CMS.
@@ -63,6 +62,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$this->mailer = GeneralUtility::makeInstance(MailerInterface::class);
 
 		$this->languageServiceFactory = GeneralUtility::makeInstance(LanguageServiceFactory::class);
+
 //        $this->LocalisationUtility = GeneralUtility::makeInstance(LocalizationUtility::class);
         }
 
@@ -228,7 +228,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 //		$this->bookobjectRepository = GeneralUtility::makeInstance(BookobjectRepository::class);
 //		$this->bookobjectRepository = GeneralUtility::makeInstance(BookRepository::class);
 
-	$bookObjects = $this->bookobjectRepository->findAll();
+    	$bookObjects = $this->bookobjectRepository->findAll();
 //        $id = $GLOBALS['TSFE']->contentPid;
 
         $pageArguments = $this->request->getAttribute('routing');
@@ -1268,7 +1268,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     function getLocale() {
         $language = $this->request1->getAttribute('language');
         if ($language instanceof SiteLanguage) {
-            $languageId = $language->getLanguageId(); // z.B. 0, 1, 2
+//            $languageId = $language->getLanguageId(); // z.B. 0, 1, 2
             $locale = $language->getLocale(); // z.B. de_DE
         //    $isoCode = $language->getTwoLetterIsoCode(); // z.B. de, en
         return $locale;

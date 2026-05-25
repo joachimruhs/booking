@@ -1,6 +1,9 @@
 <?php
 defined('TYPO3') or die();
 
+use \TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+
 call_user_func(
     function()
     {
@@ -14,7 +17,8 @@ call_user_func(
             // non-cacheable actions
             [
 				\WSR\Booking\Controller\BookobjectController::class => 'calendarBase, showMonth, showWeek, showBookingForm, insertBooking, deleteBooking'
-            ]
+            ],
+            ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
         );
 
 /*

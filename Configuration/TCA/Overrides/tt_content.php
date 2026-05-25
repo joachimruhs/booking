@@ -8,15 +8,12 @@ defined('TYPO3') or die();
     'Booking (Reservation)'
 );
 
+$GLOBALS['TCA']['tt_content']['types']['booking_reservation']['showitem'] = 'pi_flexform';
 
-
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['booking_reservation'] = 'recursive,select_key,pages';
-
-
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['booking_reservation'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    '*',
+    'FILE:EXT:booking/Configuration/FlexForms/Booking.xml',
     'booking_reservation',
-    'FILE:EXT:booking/Configuration/FlexForms/Booking.xml'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
@@ -26,8 +23,3 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['booking_rese
     'after:subheader',
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-    '*',
-	'FILE:EXT:booking/Configuration/FlexForms/Booking.xml',
-    'booking_reservation',
-);
