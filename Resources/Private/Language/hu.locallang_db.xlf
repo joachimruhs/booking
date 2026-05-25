@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="hu">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject">
+        <source>Bookobject</source>
+        <target state="needs-translation">Bookobject</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name">
+        <source>Name</source>
+        <target state="needs-translation">Name</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+        <source>Hours</source>
+        <target state="needs-translation">Hours</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book">
+        <source>Booking</source>
+        <target state="needs-translation">Booking</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid">
+        <source>Objectuid</source>
+        <target state="needs-translation">Objectuid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate">
+        <source>Startdate</source>
+        <target state="needs-translation">Startdate</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate">
+        <source>Enddate</source>
+        <target state="needs-translation">Enddate</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+        <source>Feuseruid</source>
+        <target state="needs-translation">Feuseruid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo">
+        <source>Memo</source>
+        <target state="needs-translation">Memo</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.name">
+        <source>Reservation</source>
+        <target state="needs-translation">Reservation</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.description">
+        <source/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

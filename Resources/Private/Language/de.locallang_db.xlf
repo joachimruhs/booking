@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
+        <source>Bookobject</source>
+        <target state="final">Bookobekt</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
+        <source>Name</source>
+        <target state="final">Name</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours" approved="yes">
+        <source>Hours</source>
+        <target state="final">Stunden</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book" approved="yes">
+        <source>Booking</source>
+        <target state="final">Buchungen</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid" approved="yes">
+        <source>Objectuid</source>
+        <target state="final">Objektuid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate" approved="yes">
+        <source>Startdate</source>
+        <target state="final">Startdatum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate" approved="yes">
+        <source>Enddate</source>
+        <target state="final">Enddatum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid" approved="yes">
+        <source>Feuseruid</source>
+        <target state="final">FeUserUid</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo" approved="yes">
+        <source>Memo</source>
+        <target state="final">Memo</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.name" approved="yes">
+        <source>Reservation</source>
+        <target state="final">Reservierung</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.description">
+        <source/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
