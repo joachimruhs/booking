@@ -300,7 +300,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
         $siteLanguage = $this->request1->getAttribute('language');
         $this->language = $siteLanguage->getTypo3Language();        
-        
+
+        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
+        $this->translator = $this->languageServiceFactory->createFromSiteLanguage($language);
+
 		// is startingpoint used ?
 		if ($requestArguments['startingpoint']) $this->conf['storagePid'] = intval($requestArguments['startingpoint']);
 
@@ -400,12 +403,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$conf['startOfWeek'] = 'monday';
 		$conf['markWeekends'] = 1; 
 
-
-        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
-        $translator = $this->languageServiceFactory->createFromSiteLanguage($language);
-
-        $settings['monthLabels'] = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthNamesShort'));
-		$settings['dayLabels'] = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:dayNamesShortMultiRow'));		
+        $settings['monthLabels'] = explode(',', $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthNamesShort'));
+		$settings['dayLabels'] = explode(',', $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:dayNamesShortMultiRow'));		
 
         $weekday = 0;
         $out = '';
@@ -873,13 +872,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		$view->assign('now', time());
 
-        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
-        $translator = $this->languageServiceFactory->createFromSiteLanguage($language);
-
-        $dayLabels = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:dayNamesShort2'));
+        $dayLabels = explode(',', $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:dayNamesShort2'));
         $view->assign('dayLabels', ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So']);
 
-        $calendarWeek = $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:calendarWeek');
+        $calendarWeek = $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:calendarWeek');
         $view->assign('calendarWeekLabel', $calendarWeek);
 
 		return $view->render($template);
@@ -952,10 +948,8 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 			else $disabledHours[] = 0;
 		}
 
-        $language = $this->request1->getAttribute('language') ?? $this->request1->getAttribute('site')->getDefaultLanguage();
-        $translator = $this->languageServiceFactory->createFromSiteLanguage($language);
 
-        $settings['monthLabels'] = explode(',', $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthNamesShort'));
+        $settings['monthLabels'] = explode(',', $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthNamesShort'));
 
 
 
@@ -969,13 +963,13 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
             'hours' => $hours,
             'disabledHours' => $disabledHours,
             'now' => time(),
-            'bookDayLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:bookDay'),
-            'deleteDayLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:deleteDay'),
-            'weekViewLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:weekView'),
-            'monthViewLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthView'),
-            'timeLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:time'),
-            'bookLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:book'),
-            'deleteLabel' => $translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:delete'),
+            'bookDayLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:bookDay'),
+            'deleteDayLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:deleteDay'),
+            'weekViewLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:weekView'),
+            'monthViewLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:monthView'),
+            'timeLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:time'),
+            'bookLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:book'),
+            'deleteLabel' => $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:delete'),
             ];
         $template = 'BookingForm.html';
 
@@ -1005,7 +999,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 		$feUserUid = $feUserUid ?? 0;
 		if (!$feUserUid) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
+			$error = '<div class="error">' . $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:insertBookingRequireFeUser') . '</div><script>$(".error").center();</script>';
 		}
 		
 		$this->deletedData = ['error' => $error ?? '', 'bookingDate' => $startdate, 'bookobjectUid' => $bookobjectUid]; 
@@ -1013,13 +1007,14 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		$startdate = $startdate + $hour * 3600;
 		$enddate = $startdate + 3600;
 		if ($startdate < time()) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertPastBooking', 'booking') . '</div><script>$(".error").center();</script>';
+			$error = '<div class="error">' . $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:insertPastBooking') . '</div><script>$(".error").center();</script>';
 		}
 		
 		$booking = $this->bookRepository->getBookingOfDateAndBookobject($this->conf['storagePid'], $bookobjectUid, $startdate);
 		if ($booking) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('objectAlreadyBooked', 'booking') . '</div><script>$(".error").center();</script>';
-		}
+			$error = '<div class="error">' . $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:objectAlreadyBooked') . '</div><script>$(".error").center();</script>';
+
+            }
 
 		// if no errors, insert booking now
 		if ($error == '') {
@@ -1189,9 +1184,10 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
         $context = GeneralUtility::makeInstance(Context::class);
         $feUserUid = $context->getPropertyFromAspect('frontend.user', 'id'); // Gibt 0 zurück, falls kein User eingeloggt ist
 
+
 		if (!$feUserUid) {
-			$error = '<div class="error">' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('insertBookingRequireFeUser', 'booking') . '</div><script>$(".error").center();</script>';
-		}
+			$error = '<div class="error">' . $this->translator->label('LLL:EXT:booking/Resources/Private/Language/locallang.xlf:insertBookingRequireFeUser') . '</div><script>$(".error").center();</script>';
+        }
 
 		if (!$error) {
 			$feUser = $this->feuserRepository->findByUidOverride($feUserUid);
