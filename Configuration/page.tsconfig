@@ -15,7 +15,8 @@ mod {
     }
 }
 
-// disable stadard startingpoint
-TCEFORM.tt_content.pages.disabled = 1
+// disable standard startingpoint
+//TCEFORM.tt_content.pages.disabled = 1
+//TCEFORM.tt_content.recursive.disabled = 1
 
 
