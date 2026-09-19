@@ -307,7 +307,7 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 		// is startingpoint used ?
 		if ($requestArguments['startingpoint']) $this->conf['storagePid'] = intval($requestArguments['startingpoint']);
 
-		if ($requestArguments['calendar'] === 'month') {	
+        if ($requestArguments['calendar'] === 'month') {	
 			$out = $this->showMonth();
 		}
 		if ($requestArguments['calendar'] === 'week') {	
