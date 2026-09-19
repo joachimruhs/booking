@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="lo">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject" approved="yes">
+        <source>Bookobject</source>
+        <target state="final">ວັດຖຸການຈອງ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name" approved="yes">
+        <source>Name</source>
+        <target state="final">ຊື່</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours" approved="yes">
+        <source>Hours</source>
+        <target state="final">ຊົ່ວໂມງ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book" approved="yes">
+        <source>Booking</source>
+        <target state="final">ການຈອງ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid" approved="yes">
+        <source>Objectuid</source>
+        <target state="final">UID ວັດຖຸ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate" approved="yes">
+        <source>Startdate</source>
+        <target state="final">ວັນທີເລີ່ມຕົ້ນ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate" approved="yes">
+        <source>Enddate</source>
+        <target state="final">ວັນທີສິ້ນສຸດ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid" approved="yes">
+        <source>Feuseruid</source>
+        <target state="final">UID ຜູ້ໃຊ້ລະບົບສ່ວນໜ້າ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo" approved="yes">
+        <source>Memo</source>
+        <target state="final">ບັນທຶກ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.name" approved="yes">
+        <source>Reservation</source>
+        <target state="final">ການສຳຮອງ</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.description">
+        <source/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

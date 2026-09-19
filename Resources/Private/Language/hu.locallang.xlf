@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="hu">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject">
+        <source>Bookobject</source>
+        <target state="translated">Foglalási objektum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name">
+        <source>Name</source>
+        <target state="translated">Név</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+        <source>Hours</source>
+        <target state="translated">Órák</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book">
+        <source>Book</source>
+        <target state="translated">Foglal</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid">
+        <source>Objectuid</source>
+        <target state="translated">Objektum UID</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate">
+        <source>Startdate</source>
+        <target state="translated">Kezdő dátum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate">
+        <source>Enddate</source>
+        <target state="translated">Befejező dátum</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+        <source>Feuseruid</source>
+        <target state="translated">Felhasználó UID</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo">
+        <source>Memo</source>
+        <target state="translated">Megjegyzés</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShortMultiRow">
+        <source>M,T,W,T,F,S,S</source>
+        <target state="translated">H,K,Sze,Cs,P,Szo,V</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShort2">
+        <source>Mo,Tu,We,Th,Fr,Sa,Su</source>
+        <target state="translated">H,K,Sze,Cs,P,Szo,V</target>
+      </trans-unit>
+      <trans-unit id="monthNamesShort">
+        <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
+        <target state="translated">Január,Február,Március,Április,Május,Június,Július,Augusztus,Szeptember,Október,November,December</target>
+      </trans-unit>
+      <trans-unit id="calendarWeek">
+        <source>Calendarweek</source>
+        <target state="translated">Naptári hét</target>
+      </trans-unit>
+      <trans-unit id="partialBooked">
+        <source>Partial booked</source>
+        <target state="translated">Részben foglalt</target>
+      </trans-unit>
+      <trans-unit id="notAvailable">
+        <source>Not available</source>
+        <target state="translated">Nem elérhető</target>
+      </trans-unit>
+      <trans-unit id="available">
+        <source>Available</source>
+        <target state="translated">Elérhető</target>
+      </trans-unit>
+      <trans-unit id="time">
+        <source>Time</source>
+        <target state="translated">Idő</target>
+      </trans-unit>
+      <trans-unit id="name">
+        <source>Name</source>
+        <target state="translated">Név</target>
+      </trans-unit>
+      <trans-unit id="Memo">
+        <source>Memo</source>
+        <target state="translated">Megjegyzés</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Book</source>
+        <target state="translated">Foglal</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Delete</source>
+        <target state="translated">Foglal</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Week calendar</source>
+        <target state="translated">Foglal</target>
+      </trans-unit>
+      <trans-unit id="monthView">
+        <source>Month calendar</source>
+        <target state="translated">Havi naptár</target>
+      </trans-unit>
+      <trans-unit id="Mon">
+        <source>Mo</source>
+        <target state="translated">H</target>
+      </trans-unit>
+      <trans-unit id="Tue">
+        <source>Tu</source>
+        <target state="translated">K</target>
+      </trans-unit>
+      <trans-unit id="Wed">
+        <source>We</source>
+        <target state="translated">Sze</target>
+      </trans-unit>
+      <trans-unit id="Thu">
+        <source>Th</source>
+        <target state="translated">Cs</target>
+      </trans-unit>
+      <trans-unit id="Fri">
+        <source>Fr</source>
+        <target state="translated">P</target>
+      </trans-unit>
+      <trans-unit id="Sat">
+        <source>Sa</source>
+        <target state="translated">Szo</target>
+      </trans-unit>
+      <trans-unit id="Sun">
+        <source>Su</source>
+        <target state="translated">V</target>
+      </trans-unit>
+      <trans-unit id="bookDay">
+        <source>Book day</source>
+        <target state="translated">Nap foglalása</target>
+      </trans-unit>
+      <trans-unit id="deleteDay">
+        <source>Delete day</source>
+        <target state="translated">Nap törlése</target>
+      </trans-unit>
+      <!-- messages -->
+      <trans-unit id="dateInputError">
+        <source>Date input error!</source>
+        <target state="translated">Dátumbeviteli hiba!</target>
+      </trans-unit>
+      <trans-unit id="insertPastBooking">
+        <source>Past bookings can not be inserted!</source>
+        <target state="translated">A múltbeli foglalások nem rögzíthetők!</target>
+      </trans-unit>
+      <trans-unit id="deletePastBooking">
+        <source>Past bookings can not be deleted!</source>
+        <target state="translated">A múltbeli foglalások nem törölhetők!</target>
+      </trans-unit>
+      <trans-unit id="notAllowedToDeleteBooking">
+        <source>You are not allowed to delete this booking!</source>
+        <target state="translated">Nincs jogosultsága a foglalás törlésére!</target>
+      </trans-unit>
+      <trans-unit id="insertBookingRequireFeUser">
+        <source>To insert booking a logged in FE user is required!</source>
+        <target state="translated">A foglalás létrehozásához bejelentkezett FE felhasználó szükséges!</target>
+      </trans-unit>
+      <trans-unit id="objectAlreadyBooked">
+        <source>The object is already booked at this time!</source>
+        <target state="translated">Az objektum ebben az időpontban már foglalt!</target>
+      </trans-unit>
+      <trans-unit id="foreignBookingsFound">
+        <source>There exist foreign bookings or not all hours are booked from you!</source>
+        <target state="translated">Más foglalások léteznek, vagy nem minden óra az Ön foglalása!</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
