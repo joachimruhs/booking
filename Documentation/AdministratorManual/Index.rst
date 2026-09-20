@@ -20,7 +20,8 @@ Create some pages as shown below.
 
 On the page Booking insert the plugin Booking (Reservation) and limit the access to the plugin for logged in FE users.
 
-On page 'Booking' or on your root page insert 'Typoscript Include static' (from extension) Booking (booking).
+You can now insert a Set Booking for this site and set the desired settings or
+on page 'Booking' or on your root page insert 'Typoscript Include static' (from extension) Booking (booking).
 With the constant editor insert the desired settings of the extension like storage Pid, default calendar [week|month], jQuery options, path to templates etc.
 
 .. image:: ../Images/AdministratorManual/IncludeStatic.png
