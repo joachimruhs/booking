@@ -1081,7 +1081,11 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
         if ($this->settings['mailAttachment']) {
             $attachment = $this->settings['mailAttachment'];
-            $mail->attachFromPath($attachment);
+            $filePath = Environment::getPublicPath() . $this->settings['mailAttachment'];
+            if (file_exists($filePath)) {
+                $mail->attachFromPath($filePath);
+            }
+ 
         }
 		return $this->mailer->send($mail);
 //        $mail->send();

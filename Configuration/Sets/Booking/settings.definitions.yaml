@@ -109,7 +109,7 @@ settings:
   plugin.tx_booking.settings.mailAttachment:
     label: 'Mail attachment'
     category: Booking.options
-    description: 'The attachment of the mail, f.e. fileadmin/includes/ext/booking/mailattachment.txt'
+    description: 'The attachment of the mail, f.e. /fileadmin/includes/ext/booking/mailattachment.txt'
     type: string
     default: ''
 
