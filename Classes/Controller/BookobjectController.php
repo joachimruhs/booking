@@ -189,19 +189,6 @@ class BookobjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
     }
 
     /**
-     * action update
-     * 
-     * @param \WSR\Booking\Domain\Model\Bookobject $bookobject
-     * @return void
-     */
-    public function updateAction(\WSR\Booking\Domain\Model\Bookobject $bookobject)
-    {
-        $this->addFlashMessage('This function is disabled!', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
-//        $this->bookobjectRepository->update($bookobject);
-        $this->redirect('list');
-    }
-
-    /**
      * action showMonth
      * 
      * @return void

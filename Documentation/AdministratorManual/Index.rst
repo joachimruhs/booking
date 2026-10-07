@@ -253,7 +253,7 @@ mailAttachment
          string
 
    Description
-         Mail atttachment, f.e fileadmin/booking/mailattachment.txt
+         Mail atttachment, f.e /fileadmin/booking/mailattachment.txt
 
    Default
          -
