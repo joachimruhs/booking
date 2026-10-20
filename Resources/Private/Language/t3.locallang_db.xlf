@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject">
+        <source>Bookobject</source>
+        <target>crwdns227349:0crwdne227349:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name">
+        <source>Name</source>
+        <target>crwdns227351:0crwdne227351:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+        <source>Hours</source>
+        <target>crwdns227353:0crwdne227353:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book">
+        <source>Booking</source>
+        <target>crwdns227391:0crwdne227391:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid">
+        <source>Objectuid</source>
+        <target>crwdns227357:0crwdne227357:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate">
+        <source>Startdate</source>
+        <target>crwdns227359:0crwdne227359:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate">
+        <source>Enddate</source>
+        <target>crwdns227361:0crwdne227361:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+        <source>Feuseruid</source>
+        <target>crwdns227363:0crwdne227363:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo">
+        <source>Memo</source>
+        <target>crwdns227365:0crwdne227365:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.name">
+        <source>Reservation</source>
+        <target>crwdns227367:0crwdne227367:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_reservation.description">
+        <source/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
