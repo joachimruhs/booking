@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2020-02-29T19:15:43Z" product-name="booking" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="tx_booking_domain_model_bookobject">
+        <source>Bookobject</source>
+        <target>crwdns227251:0crwdne227251:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.name">
+        <source>Name</source>
+        <target>crwdns227253:0crwdne227253:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_bookobject.hours">
+        <source>Hours</source>
+        <target>crwdns227255:0crwdne227255:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book">
+        <source>Book</source>
+        <target>crwdns227257:0crwdne227257:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.objectuid">
+        <source>Objectuid</source>
+        <target>crwdns227259:0crwdne227259:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.startdate">
+        <source>Startdate</source>
+        <target>crwdns227261:0crwdne227261:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.enddate">
+        <source>Enddate</source>
+        <target>crwdns227263:0crwdne227263:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.feuseruid">
+        <source>Feuseruid</source>
+        <target>crwdns227265:0crwdne227265:0</target>
+      </trans-unit>
+      <trans-unit id="tx_booking_domain_model_book.memo">
+        <source>Memo</source>
+        <target>crwdns227267:0crwdne227267:0</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShortMultiRow">
+        <source>M,T,W,T,F,S,S</source>
+        <target>crwdns227269:0crwdne227269:0</target>
+      </trans-unit>
+      <trans-unit id="dayNamesShort2">
+        <source>Mo,Tu,We,Th,Fr,Sa,Su</source>
+        <target>crwdns227387:0crwdne227387:0</target>
+      </trans-unit>
+      <trans-unit id="monthNamesShort">
+        <source>January,Februar,March,April,May,June,July,August,September,October,November,December</source>
+        <target>crwdns227271:0crwdne227271:0</target>
+      </trans-unit>
+      <trans-unit id="calendarWeek">
+        <source>Calendarweek</source>
+        <target>crwdns227273:0crwdne227273:0</target>
+      </trans-unit>
+      <trans-unit id="partialBooked">
+        <source>Partial booked</source>
+        <target>crwdns227275:0crwdne227275:0</target>
+      </trans-unit>
+      <trans-unit id="notAvailable">
+        <source>Not available</source>
+        <target>crwdns227277:0crwdne227277:0</target>
+      </trans-unit>
+      <trans-unit id="available">
+        <source>Available</source>
+        <target>crwdns227279:0crwdne227279:0</target>
+      </trans-unit>
+      <trans-unit id="time">
+        <source>Time</source>
+        <target>crwdns227281:0crwdne227281:0</target>
+      </trans-unit>
+      <trans-unit id="name">
+        <source>Name</source>
+        <target>crwdns227283:0crwdne227283:0</target>
+      </trans-unit>
+      <trans-unit id="Memo">
+        <source>Memo</source>
+        <target>crwdns227285:0crwdne227285:0</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Book</source>
+        <target>crwdns391510:0crwdne391510:0</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Delete</source>
+        <target>crwdns391510:0crwdne391510:0</target>
+      </trans-unit>
+      <trans-unit id="weekView">
+        <source>Week calendar</source>
+        <target>crwdns391510:0crwdne391510:0</target>
+      </trans-unit>
+      <trans-unit id="monthView">
+        <source>Month calendar</source>
+        <target>crwdns227293:0crwdne227293:0</target>
+      </trans-unit>
+      <trans-unit id="Mon">
+        <source>Mo</source>
+        <target>crwdns227295:0crwdne227295:0</target>
+      </trans-unit>
+      <trans-unit id="Tue">
+        <source>Tu</source>
+        <target>crwdns227297:0crwdne227297:0</target>
+      </trans-unit>
+      <trans-unit id="Wed">
+        <source>We</source>
+        <target>crwdns227299:0crwdne227299:0</target>
+      </trans-unit>
+      <trans-unit id="Thu">
+        <source>Th</source>
+        <target>crwdns227301:0crwdne227301:0</target>
+      </trans-unit>
+      <trans-unit id="Fri">
+        <source>Fr</source>
+        <target>crwdns227303:0crwdne227303:0</target>
+      </trans-unit>
+      <trans-unit id="Sat">
+        <source>Sa</source>
+        <target>crwdns227305:0crwdne227305:0</target>
+      </trans-unit>
+      <trans-unit id="Sun">
+        <source>Su</source>
+        <target>crwdns227307:0crwdne227307:0</target>
+      </trans-unit>
+      <trans-unit id="bookDay">
+        <source>Book day</source>
+        <target>crwdns227309:0crwdne227309:0</target>
+      </trans-unit>
+      <trans-unit id="deleteDay">
+        <source>Delete day</source>
+        <target>crwdns227311:0crwdne227311:0</target>
+      </trans-unit>
+      <!-- messages -->
+      <trans-unit id="dateInputError">
+        <source>Date input error!</source>
+        <target>crwdns227313:0crwdne227313:0</target>
+      </trans-unit>
+      <trans-unit id="insertPastBooking">
+        <source>Past bookings can not be inserted!</source>
+        <target>crwdns227315:0crwdne227315:0</target>
+      </trans-unit>
+      <trans-unit id="deletePastBooking">
+        <source>Past bookings can not be deleted!</source>
+        <target>crwdns227317:0crwdne227317:0</target>
+      </trans-unit>
+      <trans-unit id="notAllowedToDeleteBooking">
+        <source>You are not allowed to delete this booking!</source>
+        <target>crwdns227319:0crwdne227319:0</target>
+      </trans-unit>
+      <trans-unit id="insertBookingRequireFeUser">
+        <source>To insert booking a logged in FE user is required!</source>
+        <target>crwdns227321:0crwdne227321:0</target>
+      </trans-unit>
+      <trans-unit id="objectAlreadyBooked">
+        <source>The object is already booked at this time!</source>
+        <target>crwdns227323:0crwdne227323:0</target>
+      </trans-unit>
+      <trans-unit id="foreignBookingsFound">
+        <source>There exist foreign bookings or not all hours are booked from you!</source>
+        <target>crwdns227325:0crwdne227325:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
